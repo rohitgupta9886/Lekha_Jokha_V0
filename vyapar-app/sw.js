@@ -3,7 +3,7 @@
 // Enables Instant Sub-100ms Boot Time, Offline Billing, and Background Sync
 // ==============================================================================
 
-const CACHE_NAME = 'lekha-jokha-cache-v15';
+const CACHE_NAME = 'lekha-jokha-cache-v16';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

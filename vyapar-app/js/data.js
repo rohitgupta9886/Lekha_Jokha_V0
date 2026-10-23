@@ -1996,6 +1996,106 @@ class DataStore {
     }
   }
 
+  // --- Item Categories & Sub-Categories Hierarchy ---
+  getItemCategories() {
+    const activeBiz = this.getActiveBusiness();
+    if (!activeBiz.itemCategories || !Array.isArray(activeBiz.itemCategories) || activeBiz.itemCategories.length === 0) {
+      activeBiz.itemCategories = [
+        {
+          id: 'cat_groceries',
+          name: 'Groceries & Food',
+          subcategories: ['Flour & Grains', 'Edible Oils', 'Spices & Masalas', 'Dairy Products', 'Beverages & Snacks']
+        },
+        {
+          id: 'cat_electronics',
+          name: 'Electronics & Hardware',
+          subcategories: ['Lighting & Bulbs', 'Wires & Cables', 'Switches & Sockets', 'Appliances', 'Accessories']
+        },
+        {
+          id: 'cat_fmcg',
+          name: 'FMCG & Consumer Goods',
+          subcategories: ['Soaps & Shampoos', 'Oral Care', 'Cleaning & Detergents', 'Personal Care']
+        },
+        {
+          id: 'cat_apparel',
+          name: 'Apparel & Textiles',
+          subcategories: ["Men's Wear", "Women's Wear", "Kids Wear", "Fabrics & Suits"]
+        },
+        {
+          id: 'cat_services',
+          name: 'Services & Other',
+          subcategories: ['Repair & Maintenance', 'Consulting & Setup', 'Installation', 'General Services']
+        }
+      ];
+      this.save();
+    }
+    return activeBiz.itemCategories;
+  }
+
+  saveItemCategories(categories) {
+    const activeBiz = this.getActiveBusiness();
+    activeBiz.itemCategories = categories;
+    this.save();
+    return activeBiz.itemCategories;
+  }
+
+  addItemCategory(categoryName) {
+    if (!categoryName || !categoryName.trim()) return null;
+    const trimmed = categoryName.trim();
+    const categories = this.getItemCategories();
+    const existing = categories.find(c => c.name.toLowerCase() === trimmed.toLowerCase());
+    if (existing) return existing;
+    const newCat = {
+      id: 'cat_' + Date.now(),
+      name: trimmed,
+      subcategories: []
+    };
+    categories.push(newCat);
+    this.saveItemCategories(categories);
+    this.logAction("Added Item Category", `Created category: ${trimmed}`);
+    return newCat;
+  }
+
+  addItemSubCategory(categoryName, subCategoryName) {
+    if (!categoryName || !subCategoryName || !subCategoryName.trim()) return false;
+    const catTrimmed = categoryName.trim();
+    const subTrimmed = subCategoryName.trim();
+    const categories = this.getItemCategories();
+    let cat = categories.find(c => c.name.toLowerCase() === catTrimmed.toLowerCase());
+    if (!cat) {
+      cat = this.addItemCategory(catTrimmed);
+    }
+    if (!cat.subcategories) cat.subcategories = [];
+    if (!cat.subcategories.some(s => s.toLowerCase() === subTrimmed.toLowerCase())) {
+      cat.subcategories.push(subTrimmed);
+      this.saveItemCategories(categories);
+      this.logAction("Added Item Sub-Category", `Added "${subTrimmed}" to ${cat.name}`);
+      return true;
+    }
+    return false;
+  }
+
+  deleteItemCategory(categoryName) {
+    let categories = this.getItemCategories();
+    categories = categories.filter(c => c.name.toLowerCase() !== String(categoryName).toLowerCase());
+    this.saveItemCategories(categories);
+    this.logAction("Deleted Item Category", `Removed category: ${categoryName}`);
+    return true;
+  }
+
+  deleteItemSubCategory(categoryName, subCategoryName) {
+    const categories = this.getItemCategories();
+    const cat = categories.find(c => c.name.toLowerCase() === String(categoryName).toLowerCase());
+    if (cat && cat.subcategories) {
+      cat.subcategories = cat.subcategories.filter(s => s.toLowerCase() !== String(subCategoryName).toLowerCase());
+      this.saveItemCategories(categories);
+      this.logAction("Deleted Item Sub-Category", `Removed sub-category "${subCategoryName}" from ${categoryName}`);
+      return true;
+    }
+    return false;
+  }
+
+
   // --- Sales (Scoped to Active Business) ---
   getSales() {
     return this.getActiveBusiness().sales || [];

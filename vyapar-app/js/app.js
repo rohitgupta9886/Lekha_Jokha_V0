@@ -1227,13 +1227,39 @@ class VyaparApp {
     form.reset();
     const idField = document.getElementById('itemId');
     const titleEl = document.getElementById('itemModalTitle');
+    const catSelect = document.getElementById('itemCategory');
+    const subCatSelect = document.getElementById('itemSubCategory');
+
+    // Populate categories dynamically from Store
+    const categories = (window.Store && window.Store.getItemCategories) ? window.Store.getItemCategories() : [];
+    if (catSelect && categories.length > 0) {
+      catSelect.innerHTML = categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    }
+
+    const updateSubCategories = (selectedCatName, selectedSub = '') => {
+      if (!subCatSelect) return;
+      const found = categories.find(c => c.name.toLowerCase() === String(selectedCatName || '').toLowerCase());
+      const subs = (found && found.subcategories) ? found.subcategories : [];
+      if (subs.length > 0) {
+        subCatSelect.innerHTML = `<option value="">-- Select Sub-Category (Optional) --</option>` +
+          subs.map(s => `<option value="${s}">${s}</option>`).join('');
+      } else {
+        subCatSelect.innerHTML = `<option value="">-- No Sub-Categories Available --</option>`;
+      }
+      if (selectedSub) subCatSelect.value = selectedSub;
+    };
+
+    if (catSelect) {
+      catSelect.onchange = () => updateSubCategories(catSelect.value);
+    }
 
     if (itemId) {
       const item = window.Store.getItem(itemId);
       if (item) {
         idField.value = item.id;
         document.getElementById('itemName').value = item.name || '';
-        document.getElementById('itemCategory').value = item.category || 'Groceries';
+        if (catSelect) catSelect.value = item.category || (categories[0] ? categories[0].name : 'Groceries & Food');
+        updateSubCategories(catSelect ? catSelect.value : '', item.subCategory || '');
         document.getElementById('itemHsn').value = item.hsn || '';
         document.getElementById('itemSalePrice').value = item.salePrice || 0;
         document.getElementById('itemPurchasePrice').value = item.purchasePrice || 0;
@@ -1245,6 +1271,10 @@ class VyaparApp {
       }
     } else {
       idField.value = '';
+      if (catSelect && categories[0]) {
+        catSelect.value = categories[0].name;
+        updateSubCategories(categories[0].name);
+      }
       if (titleEl) titleEl.textContent = 'Add Item to Inventory';
     }
     this.itemModal.classList.add('active');
@@ -1259,6 +1289,7 @@ class VyaparApp {
     const id = document.getElementById('itemId').value.trim();
     const name = document.getElementById('itemName').value.trim();
     const category = document.getElementById('itemCategory').value;
+    const subCategory = document.getElementById('itemSubCategory') ? document.getElementById('itemSubCategory').value : '';
     const hsn = document.getElementById('itemHsn').value.trim();
     const salePrice = Number(document.getElementById('itemSalePrice').value);
     const purchasePrice = Number(document.getElementById('itemPurchasePrice').value);
@@ -1268,11 +1299,11 @@ class VyaparApp {
     const minStock = Number(document.getElementById('itemMinStock').value);
 
     if (id) {
-      window.Store.updateItem(id, { name, category, hsn, salePrice, purchasePrice, gstRate, unit, stock, minStock });
+      window.Store.updateItem(id, { name, category, subCategory, hsn, salePrice, purchasePrice, gstRate, unit, stock, minStock });
       this.closeItemModal();
       this.showToast(`Item "${name}" updated successfully!`, 'success');
     } else {
-      window.Store.addItem({ name, category, hsn, salePrice, purchasePrice, gstRate, unit, stock, minStock });
+      window.Store.addItem({ name, category, subCategory, hsn, salePrice, purchasePrice, gstRate, unit, stock, minStock });
       this.closeItemModal();
       this.showToast(`Item "${name}" added to inventory!`, 'success');
     }

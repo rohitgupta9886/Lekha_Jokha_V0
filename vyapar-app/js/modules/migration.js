@@ -30,24 +30,24 @@ window.MigrationModule = {
 
     container.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <!-- Header Banner (Reduced Vertical Expansion, Full Horizontal Expansion) -->
-        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #151d30 100%);color:#fff;padding:0.75rem 1.25rem;border-radius:12px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+        <!-- Header Banner -->
+        <div class="card" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #fff; padding: 1.75rem; border-radius: var(--radius-lg);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#fff;" data-i18n="mig.title">
-                  ${window.i18n.t('mig.title', 'Data Import & Migration Center')}
-                </h2>
-                <span class="badge" style="background:#38bdf8;color:#000;font-weight:800;font-size:10px;padding:2px 7px;">DATA PORTABILITY</span>
-                <span style="font-size:12px;color:#94a3b8;">SaaS Plan: <b>${activePlan.name}</b></span>
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                <span class="badge" style="background: #38bdf8; color: #000; font-weight: 800; font-size: 11px;">DATA PORTABILITY</span>
+                <span style="font-size: 13px; color: #94a3b8;">SaaS Plan: <b>${activePlan.name}</b></span>
               </div>
-              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;max-width:650px;" data-i18n="mig.subtitle">
+              <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.25rem;" data-i18n="mig.title">
+                ${window.i18n.t('mig.title', 'Data Import & Migration Center')}
+              </h2>
+              <p style="color: #cbd5e1; font-size: 14px; margin: 0; max-width: 650px;" data-i18n="mig.subtitle">
                 ${window.i18n.t('mig.subtitle', 'Seamlessly switch from Tally, Vyapar, Khatabook, Zoho or Excel without data loss or downtime.')}
               </p>
             </div>
 
-            <div style="display:flex;gap:0.75rem;">
-              <button class="btn btn-outline btn-sm" id="migDownloadTemplatesBtn" style="color:#fff;border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.05);font-size:12px;padding:6px 12px;border-radius:7px;">
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn btn-outline btn-sm" id="migDownloadTemplatesBtn" style="color:#fff; border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.05);">
                 📥 Sample Templates (.CSV)
               </button>
             </div>

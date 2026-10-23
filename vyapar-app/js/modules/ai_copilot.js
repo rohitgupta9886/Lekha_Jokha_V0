@@ -59,37 +59,37 @@ window.AICopilotModule = {
     const hasApiKey = window.GeminiService && !!window.GeminiService.getApiKey();
 
     container.innerHTML = `
-      <!-- AI Intelligence Header (Reduced Vertical Expansion, Full Horizontal Expansion) -->
-      <div class="card" style="width:100%;background:linear-gradient(135deg, #1e1b4b 0%, #4338ca 60%, #991b1b 100%);color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:12px;margin-bottom:1.5rem;padding:0.75rem 1.25rem;box-shadow:0 4px 16px rgba(15,23,42,0.2);">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+      <!-- AI Intelligence Header (Matches all system banners) -->
+      <div class="card" style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;padding:1.75rem;border-radius:var(--radius-lg);border-left:4px solid #3b82f6;margin-bottom:1.5rem;box-shadow:0 10px 25px -5px rgba(0,0,0,0.25);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
           <div>
-            <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-              <h2 style="font-size:1.25rem;font-weight:800;color:#fff;margin:0;">
-                Business Intelligence & Smart Automation
-              </h2>
-              <span class="brand-badge" style="background:rgba(255,255,255,0.2);color:#fff;font-weight:800;letter-spacing:0.5px;font-size:10px;padding:2px 6px;">AI COPILOT</span>
-              <span class="badge" style="background:#10b981;color:#fff;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:4px;padding:2px 6px;">
-                <span style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;"></span>
+            <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+              <span class="badge" style="background:#3b82f6;color:#ffffff;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;">AI COPILOT</span>
+              <span class="badge" style="background:#10b981;color:#ffffff;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:4px;">
+                <span style="width:7px;height:7px;background:#ffffff;border-radius:50%;display:inline-block;"></span>
                 <span>${activeModel.toUpperCase()} ONLINE</span>
               </span>
-              <span class="badge" style="background:rgba(0,0,0,0.3);color:#fbbf24;font-size:10px;font-weight:700;padding:2px 6px;">
+              <span class="badge" style="background:rgba(255,255,255,0.1);color:#fbbf24;font-size:11px;font-weight:700;border:1px solid rgba(251,191,36,0.3);padding:3px 8px;border-radius:4px;">
                 🛡️ GUARDRAILS ACTIVE
               </span>
             </div>
-            <div style="font-size:0.85rem;opacity:0.92;margin-top:2px;">
+            <h2 style="font-size:1.8rem;font-weight:800;color:#f8fafc;margin:6px 0 3px 0;">
+              Business Intelligence & Smart Automation
+            </h2>
+            <div style="font-size:13.5px;color:#cbd5e1;line-height:1.4;">
               Real-time deep analysis of cashflow, debtors risk, restocking advice & voice billing for <b>${biz.name}</b>.
             </div>
           </div>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <button class="btn btn-outline" id="aiVoiceBillingNavBtn" style="color:#fff;border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.12);font-size:12px;padding:5px 12px;border-radius:7px;">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-              <span>Voice Billing</span>
+            <button class="btn btn-outline" id="aiVoiceBillingNavBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.08);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+              <span>Voice / NLP Billing</span>
             </button>
-            <button class="btn btn-primary" id="aiOcrExpenseBtn" style="background:#fff;color:#4338ca;font-weight:700;font-size:12px;padding:5px 12px;border-radius:7px;">
+            <button class="btn btn-primary" id="aiOcrExpenseBtn" style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);color:#ffffff;font-weight:700;box-shadow:0 4px 14px rgba(37,99,235,0.4);">
               <span>Receipt OCR</span>
             </button>
-            <button class="btn btn-outline" id="aiConfigModalBtn" style="color:#fff;border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.12);font-size:12px;padding:5px 9px;border-radius:7px;" title="Configure Model & Guardrails">
-              ⚙️
+            <button class="btn btn-outline" id="aiConfigModalBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.08);" title="Configure Model & Guardrails">
+              ⚙️ <span>AI Settings</span>
             </button>
           </div>
         </div>

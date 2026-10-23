@@ -144,29 +144,29 @@ window.AppSettingsModule = {
     container.innerHTML = `
       <div class="app-settings-wrapper" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1200px;margin:0 auto;">
         
-        <!-- Top Hero Card (Reduced Vertical Expansion, Full Horizontal Expansion) -->
-        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #151b32 100%);color:#ffffff;padding:0.75rem 1.25rem;border-radius:12px;border-left:4px solid #6366f1;border-top:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+        <!-- Top Hero Card -->
+        <div class="card" style="background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);color:#ffffff;padding:1.5rem 2rem;border-radius:var(--radius-lg);border-left:4px solid #6366f1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
             <div>
-              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                <h1 style="font-size:1.25rem;font-weight:800;margin:0;color:#f8fafc;line-height:1.2;">
-                  Application Settings
-                </h1>
-                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:10px;padding:2px 7px;border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.25rem;">
+                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:10px;padding:2px 8px;border-radius:4px;">
                   SYSTEM CONTROL & PREFERENCES
                 </span>
                 <span style="font-size:12px;color:#a5b4fc;">Lekha Jokha Enterprise Engine</span>
               </div>
-              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;line-height:1.3;">
+              <h1 style="font-size:1.6rem;font-weight:800;margin:0;color:#f8fafc;">
+                Application Settings
+              </h1>
+              <p style="color:#cbd5e1;font-size:13px;margin:0.25rem 0 0 0;">
                 Configure global workflow automation, invoice layouts, GST compliance, SMS gateways, party credit rules, inventory & multi-currency.
               </p>
             </div>
 
-            <div style="display:flex;gap:8px;align-items:center;">
-              <button class="btn btn-outline" id="resetAppSettingsBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);font-size:12px;padding:5px 12px;border-radius:7px;">
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-outline" id="resetAppSettingsBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);font-size:12.5px;">
                 ↺ Reset Defaults
               </button>
-              <button class="btn btn-primary" id="saveAppSettingsTopBtn" style="background:#22c55e;border-color:#16a34a;color:#ffffff;font-weight:700;font-size:12.5px;padding:6px 14px;border-radius:7px;box-shadow:0 4px 12px rgba(34,197,94,0.35);">
+              <button class="btn btn-primary" id="saveAppSettingsTopBtn" style="background:#22c55e;border-color:#16a34a;font-weight:700;font-size:13px;box-shadow:0 4px 12px rgba(34,197,94,0.35);">
                 💾 Save All Settings
               </button>
             </div>
@@ -711,47 +711,143 @@ window.AppSettingsModule = {
 
   // 9. ITEM TAB
   renderItemTab(cfg) {
+    const categories = (window.Store && window.Store.getItemCategories) ? window.Store.getItemCategories() : [];
+
     return `
-      <div class="card" style="padding:1.75rem;">
-        <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;margin:0 0 1rem 0;display:flex;align-items:center;gap:8px;">
-          <span>📦</span> Item & Inventory Master Controls
-        </h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.5rem;">
-          
-          <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
-            <input type="checkbox" id="cfg_barcodeAutoAdd" style="width:20px;height:20px;cursor:pointer;" ${cfg.barcodeAutoAdd ? 'checked' : ''}>
-            <div>
-              <label for="cfg_barcodeAutoAdd" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Barcode Auto-Add to Bill</label>
-              <div style="font-size:11.5px;color:#64748b;">Scanning a barcode instantly appends 1 quantity to current cart.</div>
+      <div style="display:flex;flex-direction:column;gap:1.5rem;">
+        
+        <!-- Inventory Rules & Policies -->
+        <div class="card" style="padding:1.75rem;">
+          <h3 style="font-size:1.1rem;font-weight:800;color:#0f172a;margin:0 0 1rem 0;display:flex;align-items:center;gap:8px;">
+            <span>📦</span> Item & Inventory Master Controls
+          </h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:1.5rem;">
+            
+            <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
+              <input type="checkbox" id="cfg_barcodeAutoAdd" style="width:20px;height:20px;cursor:pointer;" ${cfg.barcodeAutoAdd ? 'checked' : ''}>
+              <div>
+                <label for="cfg_barcodeAutoAdd" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Barcode Auto-Add to Bill</label>
+                <div style="font-size:11.5px;color:#64748b;">Scanning a barcode instantly appends 1 quantity to current cart.</div>
+              </div>
             </div>
+
+            <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
+              <input type="checkbox" id="cfg_enableBatchExpiry" style="width:20px;height:20px;cursor:pointer;" ${cfg.enableBatchExpiry ? 'checked' : ''}>
+              <div>
+                <label for="cfg_enableBatchExpiry" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Batch Number & Expiry Tracking</label>
+                <div style="font-size:11.5px;color:#64748b;">Essential for Pharmacy, FMCG & Perishables. Alerts on near-expiry stock.</div>
+              </div>
+            </div>
+
+            <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
+              <input type="checkbox" id="cfg_enableMultiTierPricing" style="width:20px;height:20px;cursor:pointer;" ${cfg.enableMultiTierPricing ? 'checked' : ''}>
+              <div>
+                <label for="cfg_enableMultiTierPricing" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Multi-Tier Pricing (Retail vs Wholesale)</label>
+                <div style="font-size:11.5px;color:#64748b;">Maintains MRP, Wholesale Rate, and Minimum Selling Price per SKU.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label style="font-size:13px;font-weight:700;color:#1e293b;">Negative Stock Billing Policy</label>
+              <select id="cfg_negativeStockAction" class="form-control" style="height:38px;">
+                <option value="warn" ${cfg.negativeStockAction === 'warn' ? 'selected' : ''}>⚠️ Show Warning (Allow negative billing)</option>
+                <option value="block" ${cfg.negativeStockAction === 'block' ? 'selected' : ''}>🚫 Block Sale when stock is 0</option>
+                <option value="allow" ${cfg.negativeStockAction === 'allow' ? 'selected' : ''}>Allow Silently</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Item Categories & Sub-Categories Hierarchy -->
+        <div class="card" style="padding:1.75rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem;">
+            <div>
+              <h3 style="font-size:1.15rem;font-weight:800;color:#0f172a;margin:0;display:flex;align-items:center;gap:8px;">
+                <span>🏷️</span> Item Categories & Sub-Categories Management
+              </h3>
+              <p style="font-size:12.5px;color:#64748b;margin:3px 0 0 0;">
+                Configure merchandise categories and nested sub-categories. These seamlessly populate Item creation, POS filters, Barcode catalog, and Inventory reports.
+              </p>
+            </div>
+            <span class="badge" style="background:#e0e7ff;color:#4338ca;font-weight:800;font-size:12px;padding:4px 10px;border-radius:20px;">
+              ${categories.length} Categories Configured
+            </span>
           </div>
 
-          <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
-            <input type="checkbox" id="cfg_enableBatchExpiry" style="width:20px;height:20px;cursor:pointer;" ${cfg.enableBatchExpiry ? 'checked' : ''}>
-            <div>
-              <label for="cfg_enableBatchExpiry" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Batch Number & Expiry Tracking</label>
-              <div style="font-size:11.5px;color:#64748b;">Essential for Pharmacy, FMCG & Perishables. Alerts on near-expiry stock.</div>
+          <!-- Dual Creation Forms -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:1.25rem;margin-bottom:1.5rem;">
+            
+            <!-- Add Category Card -->
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1.25rem;">
+              <h4 style="font-size:13px;font-weight:700;color:#1e293b;margin:0 0 0.75rem 0;display:flex;align-items:center;gap:6px;">
+                <span>➕</span> Add New Item Category
+              </h4>
+              <div style="display:flex;gap:8px;">
+                <input type="text" id="newCategoryInput" class="form-control" placeholder="e.g. Footwear & Shoes" style="height:38px;font-size:13px;">
+                <button type="button" id="addNewCategoryBtn" class="btn btn-primary" style="white-space:nowrap;background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);font-size:12.5px;font-weight:700;">
+                  + Add Category
+                </button>
+              </div>
+              <small style="color:#64748b;font-size:11px;margin-top:4px;display:block;">Creates a primary classification for items in your inventory.</small>
             </div>
+
+            <!-- Add Sub-Category Card -->
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1.25rem;">
+              <h4 style="font-size:13px;font-weight:700;color:#1e293b;margin:0 0 0.75rem 0;display:flex;align-items:center;gap:6px;">
+                <span>➕</span> Add Sub-Category to Category
+              </h4>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <select id="parentCategorySelect" class="form-control" style="height:36px;font-size:13px;">
+                  ${categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+                </select>
+                <div style="display:flex;gap:8px;">
+                  <input type="text" id="newSubCategoryInput" class="form-control" placeholder="e.g. Sports Shoes / Formal" style="height:38px;font-size:13px;">
+                  <button type="button" id="addNewSubCategoryBtn" class="btn btn-primary" style="white-space:nowrap;background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);font-size:12.5px;font-weight:700;">
+                    + Add Sub-Category
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:15px;">
-            <input type="checkbox" id="cfg_enableMultiTierPricing" style="width:20px;height:20px;cursor:pointer;" ${cfg.enableMultiTierPricing ? 'checked' : ''}>
-            <div>
-              <label for="cfg_enableMultiTierPricing" style="font-size:13px;font-weight:700;color:#1e293b;cursor:pointer;">Multi-Tier Pricing (Retail vs Wholesale)</label>
-              <div style="font-size:11.5px;color:#64748b;">Maintains MRP, Wholesale Rate, and Minimum Selling Price per SKU.</div>
+          <!-- Active Hierarchy Tree View -->
+          <div>
+            <h4 style="font-size:13px;font-weight:700;color:#1e293b;margin:0 0 0.75rem 0;">
+              Current Categories & Nested Sub-Categories
+            </h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:1rem;">
+              ${categories.map(c => `
+                <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.03);display:flex;flex-direction:column;gap:0.75rem;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f1f5f9;padding-bottom:0.5rem;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:15px;">📁</span>
+                      <strong style="color:#0f172a;font-size:13.5px;">${c.name}</strong>
+                      <span class="badge" style="background:#f1f5f9;color:#64748b;font-size:10.5px;">${(c.subcategories || []).length} subs</span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-outline delete-cat-btn" data-category="${c.name}" style="color:#ef4444;border-color:rgba(239,68,68,0.3);padding:2px 7px;font-size:11px;" title="Delete Category">
+                      🗑️ Delete
+                    </button>
+                  </div>
+                  
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;min-height:32px;align-items:center;">
+                    ${(c.subcategories && c.subcategories.length > 0) ? c.subcategories.map(sub => `
+                      <span class="badge" style="background:#f8fafc;color:#334155;border:1px solid #cbd5e1;font-size:11.5px;font-weight:600;padding:4px 8px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;">
+                        <span>${sub}</span>
+                        <span class="delete-subcat-btn" data-category="${c.name}" data-subcategory="${sub}" style="cursor:pointer;color:#ef4444;font-weight:800;font-size:13px;line-height:1;" title="Remove Sub-category">×</span>
+                      </span>
+                    `).join('') : `
+                      <span style="font-size:11.5px;color:#94a3b8;font-style:italic;">No sub-categories yet.</span>
+                    `}
+                  </div>
+                </div>
+              `).join('')}
             </div>
-          </div>
-
-          <div class="form-group">
-            <label style="font-size:13px;font-weight:700;color:#1e293b;">Negative Stock Billing Policy</label>
-            <select id="cfg_negativeStockAction" class="form-control" style="height:38px;">
-              <option value="warn" ${cfg.negativeStockAction === 'warn' ? 'selected' : ''}>⚠️ Show Warning (Allow negative billing)</option>
-              <option value="block" ${cfg.negativeStockAction === 'block' ? 'selected' : ''}>🚫 Block Sale when stock is 0</option>
-              <option value="allow" ${cfg.negativeStockAction === 'allow' ? 'selected' : ''}>Allow Silently</option>
-            </select>
           </div>
 
         </div>
+
       </div>
     `;
   },
@@ -937,7 +1033,70 @@ window.AppSettingsModule = {
     const bottomSaveBtn = container.querySelector('#saveAppSettingsBottomBtn');
     if (bottomSaveBtn) bottomSaveBtn.onclick = handleSave;
 
-    // 3. Reset Defaults
+    // 3. Item Category & Sub-Category Events
+    const addCatBtn = container.querySelector('#addNewCategoryBtn');
+    if (addCatBtn) {
+      addCatBtn.onclick = () => {
+        const input = container.querySelector('#newCategoryInput');
+        const val = input ? input.value.trim() : '';
+        if (!val) {
+          if (window.app && window.app.showToast) window.app.showToast('Please enter a category name.', 'warning');
+          return;
+        }
+        if (window.Store && window.Store.addItemCategory) {
+          window.Store.addItemCategory(val);
+          if (window.app && window.app.showToast) window.app.showToast(`Category "${val}" added successfully!`, 'success');
+          this.render(container);
+        }
+      };
+    }
+
+    const addSubCatBtn = container.querySelector('#addNewSubCategoryBtn');
+    if (addSubCatBtn) {
+      addSubCatBtn.onclick = () => {
+        const catSelect = container.querySelector('#parentCategorySelect');
+        const subInput = container.querySelector('#newSubCategoryInput');
+        const parentCat = catSelect ? catSelect.value : '';
+        const subVal = subInput ? subInput.value.trim() : '';
+        if (!parentCat || !subVal) {
+          if (window.app && window.app.showToast) window.app.showToast('Select a parent category and enter a sub-category name.', 'warning');
+          return;
+        }
+        if (window.Store && window.Store.addItemSubCategory) {
+          window.Store.addItemSubCategory(parentCat, subVal);
+          if (window.app && window.app.showToast) window.app.showToast(`Sub-category "${subVal}" added under "${parentCat}"!`, 'success');
+          this.render(container);
+        }
+      };
+    }
+
+    container.querySelectorAll('.delete-cat-btn').forEach(btn => {
+      btn.onclick = () => {
+        const catName = btn.getAttribute('data-category');
+        if (confirm(`Are you sure you want to delete category "${catName}" and all its sub-categories?`)) {
+          if (window.Store && window.Store.deleteItemCategory) {
+            window.Store.deleteItemCategory(catName);
+            if (window.app && window.app.showToast) window.app.showToast(`Category "${catName}" deleted.`, 'info');
+            this.render(container);
+          }
+        }
+      };
+    });
+
+    container.querySelectorAll('.delete-subcat-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const catName = btn.getAttribute('data-category');
+        const subName = btn.getAttribute('data-subcategory');
+        if (window.Store && window.Store.deleteItemSubCategory) {
+          window.Store.deleteItemSubCategory(catName, subName);
+          if (window.app && window.app.showToast) window.app.showToast(`Removed "${subName}" from "${catName}".`, 'info');
+          this.render(container);
+        }
+      };
+    });
+
+    // 4. Reset Defaults
     const resetBtn = container.querySelector('#resetAppSettingsBtn');
     if (resetBtn) {
       resetBtn.onclick = () => {

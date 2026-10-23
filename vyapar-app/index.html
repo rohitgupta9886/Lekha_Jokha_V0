@@ -822,17 +822,23 @@
             <div class="form-group">
               <label for="itemCategory">Category</label>
               <select id="itemCategory" class="form-control">
-                <option value="Groceries">Groceries & Food</option>
-                <option value="Electronics">Electronics & Hardware</option>
-                <option value="Apparel">Apparel & Textiles</option>
-                <option value="FMCG">FMCG & Consumer Goods</option>
-                <option value="Services">Services / Other</option>
+                <option value="Groceries & Food">Groceries & Food</option>
+                <option value="Electronics & Hardware">Electronics & Hardware</option>
+                <option value="FMCG & Consumer Goods">FMCG & Consumer Goods</option>
+                <option value="Apparel & Textiles">Apparel & Textiles</option>
+                <option value="Services & Other">Services & Other</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="itemHsn">HSN / SAC Code</label>
-              <input type="text" id="itemHsn" class="form-control" placeholder="e.g. 1006">
+              <label for="itemSubCategory">Sub-Category</label>
+              <select id="itemSubCategory" class="form-control">
+                <option value="">-- Select Sub-Category --</option>
+              </select>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="itemHsn">HSN / SAC Code</label>
+            <input type="text" id="itemHsn" class="form-control" placeholder="e.g. 1006">
           </div>
           <div class="form-grid-3">
             <div class="form-group">
