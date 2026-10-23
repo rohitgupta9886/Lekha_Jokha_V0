@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Barcode Engine & Scanner Module
+// LekhaJokha - Barcode Engine & Scanner Module
 // Supports: Camera Scanner, USB Hardware Scanner & Printable SVG Barcodes
 // ========================================================
 

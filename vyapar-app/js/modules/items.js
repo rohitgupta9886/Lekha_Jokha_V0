@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Items & Inventory Management Module
+// LekhaJokha - Items & Inventory Management Module
 // Workflows: Product Catalog, Stock Adjustments, Units & Categories, Stock Movement History
 // ==============================================================================
 

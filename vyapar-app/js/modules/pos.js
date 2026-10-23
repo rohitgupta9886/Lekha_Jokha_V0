@@ -1,5 +1,5 @@
 // ==============================================================================
-// Lekha Jokha / Vyapar Pro - Fast Point of Sale (POS) Counter Billing Module
+// LekhaJokha - Fast Point of Sale (POS) Counter Billing Module
 // Designed for High-Speed Retail, Supermarket & Wholesale Counter Operations
 // Features: Instant Barcode Add, Quick-Tender Calculator, Thermal Slip Printing
 // ==============================================================================

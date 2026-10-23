@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Expenses Module
+// LekhaJokha - Expenses Module
 // ========================================================
 
 window.ExpensesModule = {

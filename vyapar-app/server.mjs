@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Production-Grade Scalable Multi-Tenant Server
+// LekhaJokha - Production-Grade Scalable Multi-Tenant Server
 // Features: Multi-Business RBAC, SaaS Subscription Engine, Gzip, Rate Limiting,
 //           Official GSTIN Verification, Delta Sync & REST API
 // Scalable Architecture: Ready for 10+ Lakh Users with Cluster & Cloud Deployment
@@ -588,7 +588,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200);
       res.end(JSON.stringify({
         status: 'UP',
-        service: 'vyapar-pro-core',
+        service: 'lekhajokha-pro-core',
         uptimeSeconds: Math.floor(process.uptime()),
         timestamp: new Date().toISOString(),
         nodeVersion: process.version,
@@ -935,7 +935,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     // ============================================================================
-    // VYAPAR-STYLE MOBILE OTP AUTHENTICATION & MULTI-DEVICE ONBOARDING
+    // LEKHAJOKHA-STYLE MOBILE OTP AUTHENTICATION & MULTI-DEVICE ONBOARDING
     // ============================================================================
 
     // 3a-1. Send Cryptographic OTP (/api/v1/auth/otp/send)

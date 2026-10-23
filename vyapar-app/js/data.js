@@ -1,9 +1,9 @@
 // ==============================================================================
-// Vyapar Pro - Enterprise Multi-Tenant & Multi-Business Data Store
+// LekhaJokha - Enterprise Multi-Tenant & Multi-Business Data Store
 // Supports up to 5 Isolated Businesses per Subscriber, RBAC, SaaS Plans & Delta Sync
 // ==============================================================================
 
-const STORAGE_KEY = 'vyapar_pro_enterprise_store_v3';
+const STORAGE_KEY = 'lekhajokha_pro_enterprise_store_v3';
 
 // Unified API Base URL & Network Client (Supports Web, Android APK & Local Server)
 window.getApiUrl = function(endpoint) {
@@ -58,7 +58,7 @@ window.apiFetch = async function(endpoint, options = {}) {
 const SAAS_PLANS = {
   Free: {
     id: 'Free',
-    name: 'Vyapar Free',
+    name: 'LekhaJokha Free',
     badge: 'STARTER',
     priceMonthly: 0,
     priceYearly: 0,
@@ -79,7 +79,7 @@ const SAAS_PLANS = {
   },
   Pro: {
     id: 'Pro',
-    name: 'Vyapar Pro',
+    name: 'LekhaJokha Pro',
     badge: 'POPULAR',
     priceMonthly: 299,
     priceYearly: 2999,
@@ -100,7 +100,7 @@ const SAAS_PLANS = {
   },
   Max: {
     id: 'Max',
-    name: 'Vyapar Enterprise Max',
+    name: 'LekhaJokha Enterprise Max',
     badge: 'ENTERPRISE',
     priceMonthly: 599,
     priceYearly: 5999,
@@ -1089,7 +1089,7 @@ class DataStore {
             });
             this.save();
             if (typeof window !== 'undefined') {
-              window.dispatchEvent(new CustomEvent('vyapar:data-synced'));
+              window.dispatchEvent(new CustomEvent('lekhajokha:data-synced'));
             }
           }
         }
@@ -1160,16 +1160,16 @@ class DataStore {
     }
 
     // Persist to IndexedDB asynchronously
-    if (window.VyaparDB) {
+    if (window.LekhaJokhaDB) {
       setTimeout(() => {
         try {
           const activeBiz = this.getActiveBusiness();
           if (activeBiz) {
-            if (activeBiz.sales) window.VyaparDB.bulkPut('sales', activeBiz.sales);
-            if (activeBiz.items) window.VyaparDB.bulkPut('items', activeBiz.items);
-            if (activeBiz.parties) window.VyaparDB.bulkPut('parties', activeBiz.parties);
-            if (activeBiz.ewayBills) window.VyaparDB.bulkPut('ewayBills', activeBiz.ewayBills);
-            if (activeBiz.auditLogs) window.VyaparDB.bulkPut('auditLogs', activeBiz.auditLogs);
+            if (activeBiz.sales) window.LekhaJokhaDB.bulkPut('sales', activeBiz.sales);
+            if (activeBiz.items) window.LekhaJokhaDB.bulkPut('items', activeBiz.items);
+            if (activeBiz.parties) window.LekhaJokhaDB.bulkPut('parties', activeBiz.parties);
+            if (activeBiz.ewayBills) window.LekhaJokhaDB.bulkPut('ewayBills', activeBiz.ewayBills);
+            if (activeBiz.auditLogs) window.LekhaJokhaDB.bulkPut('auditLogs', activeBiz.auditLogs);
           }
         } catch (idbErr) {
           // Non-blocking

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Production Service Worker & Offline-First Cache Engine
+// LekhaJokha - Production Service Worker & Offline-First Cache Engine
 // Enables Instant Sub-100ms Boot Time, Offline Billing, and Background Sync
 // ==============================================================================
 

@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Purchases & Supplier Sourcing Module
+// LekhaJokha - Purchases & Supplier Sourcing Module
 // Workflows: Purchase Bills, Purchase Orders, Supplier Payment Out & Purchase Returns
 // ==============================================================================
 

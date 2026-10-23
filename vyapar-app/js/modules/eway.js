@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - GST e-Way Bill Management & Generator Engine
+// LekhaJokha - GST e-Way Bill Management & Generator Engine
 // Compliant with Government of India (NIC) e-Way Bill Portal Standards
 // ========================================================
 

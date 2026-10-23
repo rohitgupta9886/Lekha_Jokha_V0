@@ -66,7 +66,7 @@ const migCode = fs.readFileSync(path.join(__dirname, '../js/modules/migration.js
 eval(migCode);
 
 console.log('------------------------------------------------------------');
-console.log('   VYAPAR PRO ENTERPRISE - ACCEPTANCE TEST SUITE');
+console.log('   LEKHAJOKHA ENTERPRISE - ACCEPTANCE TEST SUITE');
 console.log('   PART A: Data Migration & PART B: Hindi/English i18n');
 console.log('------------------------------------------------------------\n');
 
@@ -119,7 +119,7 @@ window.i18n.setLanguage('hi');
 assert(window.i18n.getLanguage() === 'hi', 'Language switched to Hindi');
 assert(window.i18n.t('nav.sales') === window.TRANSLATIONS.hi['nav.sales'], 'Hindi translation resolves for nav.sales');
 assert(window.i18n.t('nav.migration') === window.TRANSLATIONS.hi['nav.migration'], 'Hindi translation resolves for nav.migration');
-assert(localStorage.getItem('vyapar_lang') === 'hi', 'Language preference persisted to localStorage');
+assert(localStorage.getItem('lekhajokha_lang') === 'hi', 'Language preference persisted to localStorage');
 
 // 1.4 Verify toggle
 window.i18n.toggleLanguage();
@@ -161,9 +161,9 @@ assert(window.MigrationModule.parsedRecords.items.length > 0, 'Tally ERP/Prime s
 window.MigrationModule.loadSampleDataForSource('khatabook');
 assert(window.MigrationModule.parsedRecords.parties.length > 0, 'Khatabook export sample loaded parties');
 
-window.MigrationModule.loadSampleDataForSource('vyapar');
-assert(window.MigrationModule.parsedRecords.parties.length > 0, 'Vyapar backup sample loaded parties');
-assert(window.MigrationModule.parsedRecords.items.length > 0, 'Vyapar backup sample loaded items');
+window.MigrationModule.loadSampleDataForSource('lekhajokha');
+assert(window.MigrationModule.parsedRecords.parties.length > 0, 'LekhaJokha backup sample loaded parties');
+assert(window.MigrationModule.parsedRecords.items.length > 0, 'LekhaJokha backup sample loaded items');
 
 window.MigrationModule.loadSampleDataForSource('zoho');
 assert(window.MigrationModule.parsedRecords.parties.length > 0, 'Zoho Books export sample loaded parties');

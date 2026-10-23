@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
-class VyaparApp {
+class LekhaJokhaApp {
   constructor() {
     this.currentView = 'dashboard';
     window.app = this;
@@ -274,7 +274,7 @@ class VyaparApp {
       });
     }
 
-    // Global Frictionless Keyboard Shortcuts (Vyapar Pro Power Shortcuts)
+    // Global Frictionless Keyboard Shortcuts (LekhaJokha Power Shortcuts)
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         this.closeAllModals();
@@ -734,7 +734,7 @@ class VyaparApp {
         break;
       case 'migration':
         this.pageTitle.innerText = window.i18n ? window.i18n.t('mig.title', 'Data Import & Migration Center') : 'Data Import & Migration Center';
-        this.pageSubtitle.innerText = window.i18n ? window.i18n.t('mig.subtitle', 'Seamlessly switch from Tally, Vyapar, Khatabook, Zoho or Excel without data loss') : 'Seamlessly switch from Tally, Vyapar, Khatabook, Zoho or Excel without data loss';
+        this.pageSubtitle.innerText = window.i18n ? window.i18n.t('mig.subtitle', 'Seamlessly switch from Tally, LekhaJokha, Khatabook, Zoho or Excel without data loss') : 'Seamlessly switch from Tally, LekhaJokha, Khatabook, Zoho or Excel without data loss';
         if (window.MigrationModule) {
           window.MigrationModule.render(this.viewContainer);
         }
@@ -1357,7 +1357,7 @@ class VyaparApp {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(window.Store.data, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
-    a.download = `Vyapar_Data_Backup_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `LekhaJokha_Data_Backup_${new Date().toISOString().split('T')[0]}.json`;
     a.click();
     this.showToast('Backup JSON exported successfully!', 'success');
   }
@@ -1838,15 +1838,17 @@ class VyaparApp {
   }
 }
 
-window.VyaparApp = VyaparApp;
+window.LekhaJokhaApp = LekhaJokhaApp;
+// alias
+window.LekhaJokhaApp = LekhaJokhaApp;
 
 // Instantiate on DOMContentLoaded or immediately if DOM is already ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
-    window.App = new VyaparApp();
+    window.App = new LekhaJokhaApp();
     window.app = window.App;
   });
 } else {
-  window.App = new VyaparApp();
+  window.App = new LekhaJokhaApp();
   window.app = window.App;
 }

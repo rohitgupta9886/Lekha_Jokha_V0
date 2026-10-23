@@ -1,6 +1,6 @@
 // ==============================================================================
-// Vyapar Pro - Parties Module (Screenshot Faithful Design)
-// Matches desktop Vyapar UI layout with 2-column split, party details & transactions
+// LekhaJokha - Parties Module (Screenshot Faithful Design)
+// Matches desktop LekhaJokha UI layout with 2-column split, party details & transactions
 // ==============================================================================
 
 window.PartiesModule = {
@@ -422,7 +422,7 @@ window.PartiesModule = {
     if (waBtn) {
       waBtn.addEventListener('click', () => {
         const phone = currentParty.phone || '9876543210';
-        const business = (window.Store && window.Store.getBusiness()) || { name: 'Vyapar' };
+        const business = (window.Store && window.Store.getBusiness()) || { name: 'LekhaJokha' };
         const bal = Number(currentParty.balance || 1000).toLocaleString('en-IN', { minimumFractionDigits: 2 });
         const text = encodeURIComponent(`Dear ${currentParty.name},\n\nThis is a friendly reminder from ${business.name}. Your outstanding balance is ₹${bal}.\n\nThank you for doing business with us!`);
         window.open(`https://api.whatsapp.com/send?phone=91${phone}&text=${text}`, '_blank');

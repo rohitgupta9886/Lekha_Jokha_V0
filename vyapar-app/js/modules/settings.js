@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Settings & Business Profile Module
+// LekhaJokha - Settings & Business Profile Module
 // ========================================================
 
 window.SettingsModule = {
@@ -190,7 +190,7 @@ window.SettingsModule = {
               🚀 Switch from Another Software / Data Migration
             </h3>
             <p style="color:var(--text-muted); font-size:13px; margin:0; max-width:600px;">
-              Migrate your existing customers, suppliers, inventory stock, and historical vouchers from Tally ERP 9/TallyPrime, Vyapar, Khatabook, Zoho Books, or Excel files.
+              Migrate your existing customers, suppliers, inventory stock, and historical vouchers from Tally ERP 9/TallyPrime, LekhaJokha, Khatabook, Zoho Books, or Excel files.
             </p>
           </div>
           <a href="#migration" class="btn btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem;">

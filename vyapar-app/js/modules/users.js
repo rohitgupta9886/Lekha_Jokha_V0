@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Multi-User Management & Role-Based Access Control (RBAC)
+// LekhaJokha - Multi-User Management & Role-Based Access Control (RBAC)
 // Roles: Admin, Accountant, Biller, Sales Executive + Security Audit Trail
 // ========================================================
 
@@ -39,12 +39,12 @@ window.UsersModule = {
         </div>
       </div>
       
-      <!-- Vyapar Company Sharing & Multi-User Business Access -->
+      <!-- LekhaJokha Company Sharing & Multi-User Business Access -->
       <div class="card" style="margin-bottom:2rem;">
         <div class="card-header" style="flex-wrap:wrap;gap:0.75rem;">
           <div style="display:flex;align-items:center;gap:0.75rem;">
             <span class="brand-badge" style="background:#0284c7;color:#fff;">MULTI-USER ACCESS</span>
-            <h2 class="card-title">Authorized Company Members (Vyapar Multi-User Model)</h2>
+            <h2 class="card-title">Authorized Company Members (LekhaJokha Multi-User Model)</h2>
             <span class="badge badge-info" id="teamMemberCountBadge">Loading...</span>
           </div>
           <button class="btn btn-primary btn-sm" id="inviteCompanyMemberBtn">
@@ -910,7 +910,7 @@ window.UsersModule = {
     loadSessions();
   },
 
-  // Central Unified Authentication & Registration Modal with Vyapar Mobile OTP Flow
+  // Central Unified Authentication & Registration Modal with LekhaJokha Mobile OTP Flow
   openAuthModal(defaultMode = 'otp') {
     let modal = document.getElementById('unifiedAuthModal');
     if (!modal) {

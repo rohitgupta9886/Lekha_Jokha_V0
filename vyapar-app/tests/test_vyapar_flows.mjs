@@ -1,5 +1,5 @@
 // ==============================================================================
-// LekhaJokha — Vyapar-Style Unified Auth, Business Access & Isolation Test Suite
+// LekhaJokha — LekhaJokha-Style Unified Auth, Business Access & Isolation Test Suite
 // Verifies all 14 mandatory security, isolation, and synchronization scenarios
 // ==============================================================================
 
@@ -61,7 +61,7 @@ function fail(name, error) {
 
 async function run14Scenarios() {
   console.log('\n=================================================================');
-  console.log('RUNNING 14 MANDATORY VYAPAR-STYLE VERIFICATION SCENARIOS');
+  console.log('RUNNING 14 MANDATORY LEKHAJOKHA-STYLE VERIFICATION SCENARIOS');
   console.log('=================================================================\n');
 
   const ts = Date.now();

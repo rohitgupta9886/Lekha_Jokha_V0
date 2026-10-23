@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - High-Speed Table Pagination & Virtualized Slicing Utility
+// LekhaJokha - High-Speed Table Pagination & Virtualized Slicing Utility
 // Handles 100,000+ Records with Sub-10ms Render Times and Zero UI Lag
 // ==============================================================================
 

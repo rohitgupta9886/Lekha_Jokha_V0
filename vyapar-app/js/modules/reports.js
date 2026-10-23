@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Financial Reports, Balance Sheet & GST Compliance Module
+// LekhaJokha - Financial Reports, Balance Sheet & GST Compliance Module
 // Workflows: Profit & Loss, Balance Sheet, Cash Flow, Daybook & GSTR-1 JSON Portal Export
 // ==============================================================================
 

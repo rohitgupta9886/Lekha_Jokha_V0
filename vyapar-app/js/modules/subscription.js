@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - SaaS Subscription & Multi-Business Entitlement Module
+// LekhaJokha - SaaS Subscription & Multi-Business Entitlement Module
 // Plans: Free (1 Biz), Pro (2 Biz), Max (up to 5 Biz) with Real Backend Enforcement
 // ==============================================================================
 

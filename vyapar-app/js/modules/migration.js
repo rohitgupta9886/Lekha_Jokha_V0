@@ -1,6 +1,6 @@
 // ==============================================================================
-// Vyapar Pro - Data Import & Software Migration Center
-// Supported Sources: Tally ERP 9/TallyPrime, Vyapar App, Khatabook, Zoho Books, Generic CSV/Excel/JSON
+// LekhaJokha - Data Import & Software Migration Center
+// Supported Sources: Tally ERP 9/TallyPrime, LekhaJokha App, Khatabook, Zoho Books, Generic CSV/Excel/JSON
 // Features: Smart Field Mapping, Reconciliation, Duplicate Policy, Batch Audit & Safe Rollback
 // ==============================================================================
 
@@ -42,7 +42,7 @@ window.MigrationModule = {
                 ${window.i18n.t('mig.title', 'Data Import & Migration Center')}
               </h2>
               <p style="color: #cbd5e1; font-size: 14px; margin: 0; max-width: 650px;" data-i18n="mig.subtitle">
-                ${window.i18n.t('mig.subtitle', 'Seamlessly switch from Tally, Vyapar, Khatabook, Zoho or Excel without data loss or downtime.')}
+                ${window.i18n.t('mig.subtitle', 'Seamlessly switch from Tally, LekhaJokha, Khatabook, Zoho or Excel without data loss or downtime.')}
               </p>
             </div>
 
@@ -168,7 +168,7 @@ window.MigrationModule = {
   renderStep1Source() {
     const sources = [
       { id: 'tally', name: 'Tally ERP 9 / TallyPrime', icon: '📊', desc: 'Import Ledgers, Stock Items, Balances and Vouchers from Tally XML or Excel.', badge: 'POPULAR' },
-      { id: 'vyapar', name: 'Vyapar App', icon: '💼', desc: 'Direct migration from Vyapar JSON backups or exported Excel workbooks.', badge: 'DIRECT' },
+      { id: 'lekhajokha', name: 'LekhaJokha App', icon: '💼', desc: 'Direct migration from LekhaJokha JSON backups or exported Excel workbooks.', badge: 'DIRECT' },
       { id: 'khatabook', name: 'Khatabook', icon: '📖', desc: 'Import Customer / Supplier Khata registers, Udhar & Jama balances.', badge: 'INSTANT' },
       { id: 'zoho', name: 'Zoho Books', icon: '⚡', desc: 'Migrate Contacts, Items, and Sales Invoices from Zoho standard CSVs.', badge: 'OAUTH / CSV' },
       { id: 'generic_excel', name: 'Excel / CSV Spreadsheets', icon: '📑', desc: 'Upload custom .xlsx or .csv files with auto-detected columns.', badge: 'CUSTOM' }
@@ -286,7 +286,7 @@ window.MigrationModule = {
               Drop your export file here, or click to browse
             </h4>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">
-              Supports <b>.XML (Tally)</b>, <b>.JSON (Vyapar)</b>, <b>.CSV (Khatabook/Zoho/Excel)</b> or <b>.XLSX</b> (Max file size: 25 MB)
+              Supports <b>.XML (Tally)</b>, <b>.JSON (LekhaJokha)</b>, <b>.CSV (Khatabook/Zoho/Excel)</b> or <b>.XLSX</b> (Max file size: 25 MB)
             </p>
             <input type="file" id="migFileInput" accept=".xml,.json,.csv,.txt" style="display:none;">
             <button class="btn btn-primary" onclick="document.getElementById('migFileInput').click()">
@@ -581,7 +581,7 @@ window.MigrationModule = {
       this.parsedRecords.items = [];
       this.fieldMappings = { partyName: 'Customer Name', balance: 'Net Udhar Balance', phone: 'Mobile' };
     } else {
-      // Vyapar / Zoho / Generic CSV
+      // LekhaJokha / Zoho / Generic CSV
       this.parsedRecords.parties = [
         { name: "Pooja Stationery Mart", type: "Customer", phone: "9812300011", gstin: "07AAACP9988H1Z1", state: "Delhi", balance: 22000 },
         { name: "Bansal Paper Mills", type: "Supplier", phone: "9812300022", gstin: "07AAACB4455J1Z3", state: "Delhi", balance: -45000 }
@@ -699,7 +699,7 @@ window.MigrationModule = {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = "Vyapar_Migration_Party_Template.csv";
+    a.download = "LekhaJokha_Migration_Party_Template.csv";
     a.click();
     window.app.showToast('Downloaded sample CSV template!', 'success');
   }

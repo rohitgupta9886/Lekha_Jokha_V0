@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Professional GST Invoice Renderer & QR Engine
+// LekhaJokha - Professional GST Invoice Renderer & QR Engine
 // ========================================================
 
 window.InvoicePrint = {

@@ -1,5 +1,5 @@
 // ========================================================
-// Vyapar Pro - Dashboard View Component
+// LekhaJokha - Dashboard View Component
 // ========================================================
 
 window.DashboardModule = {

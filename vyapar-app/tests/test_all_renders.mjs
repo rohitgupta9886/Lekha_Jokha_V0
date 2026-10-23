@@ -150,8 +150,8 @@ for (const [name, mod] of modules) {
   }
 }
 
-console.log('\nTesting VyaparApp instantiation and handleRoute for all hashes...');
-const app = new VyaparApp();
+console.log('\nTesting LekhaJokhaApp instantiation and handleRoute for all hashes...');
+const app = new window.LekhaJokhaApp();
 const views = [
   'dashboard', 'sales', 'pos', 'purchases', 'parties', 'items',
   'cashbank', 'expenses', 'eway', 'ai-copilot', 'users',

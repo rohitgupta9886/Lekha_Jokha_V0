@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Internationalization (i18n) Engine
+// LekhaJokha - Internationalization (i18n) Engine
 // Comprehensive Bilingual Support: English (EN) & हिंदी (HI)
 // Covers Navigation, Dashboards, Invoicing, Inventory, Reports, Settings & Migration
 // ==============================================================================
@@ -160,7 +160,7 @@ const TRANSLATIONS = {
 
     // Data Migration & Switcher
     'mig.title': 'Data Import & Migration Center',
-    'mig.subtitle': 'Seamlessly switch from Tally, Vyapar, Khatabook, Zoho or Excel without data loss',
+    'mig.subtitle': 'Seamlessly switch from Tally, LekhaJokha, Khatabook, Zoho or Excel without data loss',
     'mig.step1': '1. Select Source Software',
     'mig.step2': '2. Destination & Mode',
     'mig.step3': '3. Upload File & Analyze',
@@ -242,7 +242,7 @@ const TRANSLATIONS = {
 
     // Migration Extra Keys
     'mig.tally_prime': 'Tally ERP 9 / TallyPrime',
-    'mig.vyapar_app': 'Vyapar App Backup',
+    'mig.lekhajokha_app': 'LekhaJokha App Backup',
     'mig.khatabook': 'Khatabook Ledger',
     'mig.zoho_books': 'Zoho Books Export',
     'mig.excel_csv': 'Excel / CSV Spreadsheets',
@@ -499,7 +499,7 @@ const TRANSLATIONS = {
 
     // Migration Extra Keys
     'mig.tally_prime': 'टैली ईआरपी ९ / टैलीप्राइम',
-    'mig.vyapar_app': 'व्यापार ऐप बैकअप',
+    'mig.lekhajokha_app': 'लेखाजोखा ऐप बैकअप',
     'mig.khatabook': 'खाताबुक बहीखाता',
     'mig.zoho_books': 'ज़ोहो बुक्स एक्सपोर्ट',
     'mig.excel_csv': 'एक्सेल / सीएसवी स्प्रेडशीट',
@@ -522,7 +522,7 @@ const TRANSLATIONS = {
 
 class I18nManager {
   constructor() {
-    this.currentLang = localStorage.getItem('vyapar_lang') || 'en';
+    this.currentLang = localStorage.getItem('lekhajokha_lang') || 'en';
   }
 
   t(key, defaultVal = '') {
@@ -540,7 +540,7 @@ class I18nManager {
   setLanguage(lang) {
     if (lang !== 'en' && lang !== 'hi') lang = 'en';
     this.currentLang = lang;
-    localStorage.setItem('vyapar_lang', lang);
+    localStorage.setItem('lekhajokha_lang', lang);
 
     // Persist to store if available
     if (window.Store && window.Store.getSubscriber()) {

@@ -14,6 +14,21 @@
       "version": 1,
       "createdAt": "2026-10-23",
       "updatedAt": "2026-10-23T10:13:13.111Z"
+    },
+    {
+      "id": "P002",
+      "name": "foofoofof",
+      "type": "Customer",
+      "phone": "9876543217",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T19:34:14.394Z"
     }
   ],
   "items": [
@@ -27,12 +42,12 @@
       "purchasePrice": 3333,
       "gstRate": 18,
       "unit": "PCS",
-      "stock": 765,
+      "stock": 741,
       "minStock": 5,
       "businessId": "BIZ-015",
       "createdBy": "U-3770",
-      "version": 2,
-      "updatedAt": "2026-10-23T10:14:02.561Z"
+      "version": 8,
+      "updatedAt": "2026-10-23T19:36:14.052Z"
     },
     {
       "id": "ITM001",
@@ -71,6 +86,194 @@
   ],
   "sales": [
     {
+      "id": "INV-2026-005",
+      "number": "INV-2026-005",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P002",
+      "partyName": "foofoofof",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "UPI / QR",
+      "paymentMention": "PAID (via UPI / QR)",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 3,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 283285,
+      "tax": 14164.25,
+      "total": 297449.25,
+      "paid": 297449.25,
+      "balance": 0,
+      "status": "Paid",
+      "orderId": "ORD-2026-002",
+      "orderNumber": "ORD-2026-002",
+      "source": "Online Portal",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "notes": "sssssssssssssssssss • Generated from Order #ORD-2026-002 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T19:36:14.051Z"
+    },
+    {
+      "id": "INV-2026-004",
+      "number": "INV-2026-004",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P002",
+      "partyName": "foofoofof",
+      "placeOfSupply": "DELHI (07)",
+      "paymentMode": "UPI / QR",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 3,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 283285,
+      "tax": 14164.25,
+      "total": 297449.25,
+      "paid": 297449.25,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "sssssssssssssssssss • Generated from Order #ORD-2026-002 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T19:36:07.203Z"
+    },
+    {
+      "id": "INV-2026-003",
+      "number": "INV-2026-003",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P_LALU",
+      "partyName": "Kallu singh",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "UPI / QR",
+      "paymentMention": "PAID (via UPI / QR)",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 169971,
+      "tax": 8498.550000000001,
+      "total": 178469.55,
+      "paid": 178469.55,
+      "balance": 0,
+      "status": "Paid",
+      "orderId": "ORD-2026-001",
+      "orderNumber": "ORD-2026-001",
+      "source": "Direct Counter",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "notes": "Generated from Order #ORD-2026-001 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T18:54:37.522Z"
+    },
+    {
+      "id": "INV-2026-002",
+      "number": "INV-2026-002",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P_LALU",
+      "partyName": "Kallu singh",
+      "placeOfSupply": "DELHI (07)",
+      "paymentMode": "UPI / QR",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 169971,
+      "tax": 8498.550000000001,
+      "total": 178469.55,
+      "paid": 178469.55,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "Generated from Order #ORD-2026-001 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T18:54:24.472Z"
+    },
+    {
       "id": "INV-2026-001",
       "number": "INV-2026-001",
       "docType": "Invoice",
@@ -105,7 +308,113 @@
   ],
   "purchases": [],
   "expenses": [],
-  "orders": [],
+  "orders": [
+    {
+      "id": "ORD-2026-002",
+      "number": "ORD-2026-002",
+      "date": "2026-10-23",
+      "timestamp": "2026-10-23T19:33:02.981Z",
+      "source": "Online Portal",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "partyId": "P002",
+      "partyName": "foofoofof",
+      "phone": "9876543217",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 3,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 283285,
+      "tax": 14164.25,
+      "total": 297449.25,
+      "paymentStatus": "Paid",
+      "paymentMode": "UPI / QR",
+      "paidAmount": 297449.25,
+      "balanceDue": 0,
+      "orderStatus": "Billed",
+      "invoiceId": "INV-2026-005",
+      "invoiceNumber": "INV-2026-005",
+      "paymentMention": "PAID (via UPI / QR)",
+      "notes": "sssssssssssssssssss",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "createdAt": "2026-10-23T19:33:03.085Z",
+      "updatedAt": "2026-10-23T19:36:14.052Z",
+      "paidAt": "2026-10-23T19:34:14.393Z"
+    },
+    {
+      "id": "ORD-2026-001",
+      "number": "ORD-2026-001",
+      "date": "2026-10-23",
+      "timestamp": "2026-10-23T18:53:05.174Z",
+      "source": "Direct Counter",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "partyId": "P_LALU",
+      "partyName": "Kallu singh",
+      "phone": "9876543210",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "qty": 1,
+          "rate": 56657,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 169971,
+      "tax": 8498.550000000001,
+      "total": 178469.55,
+      "paymentStatus": "Paid",
+      "paymentMode": "UPI / QR",
+      "paidAmount": 178469.55,
+      "balanceDue": 0,
+      "orderStatus": "Billed",
+      "invoiceId": "INV-2026-003",
+      "invoiceNumber": "INV-2026-003",
+      "paymentMention": "PAID (via UPI / QR)",
+      "notes": "",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "createdAt": "2026-10-23T18:53:07.713Z",
+      "updatedAt": "2026-10-23T18:54:37.523Z"
+    }
+  ],
   "cashBank": {
     "cashInHand": 0,
     "bankAccounts": []

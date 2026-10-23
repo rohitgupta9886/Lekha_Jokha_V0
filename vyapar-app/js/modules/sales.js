@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Comprehensive Sales & Invoicing Module
+// LekhaJokha - Comprehensive Sales & Invoicing Module
 // Workflows: Tax Invoices, Quotations/Estimates, Sales Returns, Delivery Challans & Payment In
 // ==============================================================================
 

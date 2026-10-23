@@ -1,5 +1,5 @@
 // ==============================================================================
-// Vyapar Pro - Cash & Bank Accounting Module
+// LekhaJokha - Cash & Bank Accounting Module
 // Workflows: Passbook Ledger, Multiple Bank Accounts & Contra Transfers
 // ==============================================================================
 

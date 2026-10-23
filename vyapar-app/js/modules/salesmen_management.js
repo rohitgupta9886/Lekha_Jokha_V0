@@ -1220,7 +1220,7 @@ window.SalesmenModule = {
   launchSalesmanApp(salesmanId) {
     const s = window.Store.getSalesman(salesmanId);
     if (!s) return;
-    localStorage.setItem('vyapar_active_salesman', JSON.stringify(s));
+    localStorage.setItem('lekhajokha_active_salesman', JSON.stringify(s));
     window.location.hash = '#salesman-app';
     if (window.app && window.app.showToast) {
       window.app.showToast(`Switched to Field Salesman App mode for ${s.name}!`, 'info');

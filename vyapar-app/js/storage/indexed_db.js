@@ -1,12 +1,12 @@
 // ========================================================
-// Vyapar Pro - Enterprise High-Throughput IndexedDB Storage Engine
+// LekhaJokha - Enterprise High-Throughput IndexedDB Storage Engine
 // Built for Scale: Supports Millions of Records with Non-Blocking Asynchronous IO
 // ========================================================
 
-const DB_NAME = 'VyaparEnterpriseDB_v1';
+const DB_NAME = 'LekhaJokhaEnterpriseDB_v1';
 const DB_VERSION = 1;
 
-class VyaparIndexedDB {
+class LekhaJokhaIndexedDB {
   constructor() {
     this.db = null;
     this.isReady = false;
@@ -271,4 +271,6 @@ class VyaparIndexedDB {
 }
 
 // Global enterprise database instance
-window.VyaparDB = new VyaparIndexedDB();
+window.LekhaJokhaDB = new LekhaJokhaIndexedDB();
+// alias
+window.LekhaJokhaDB = window.LekhaJokhaDB;
