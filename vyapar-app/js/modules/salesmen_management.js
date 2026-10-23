@@ -28,30 +28,30 @@ window.SalesmenModule = {
     container.innerHTML = `
       <div class="salesmen-module-wrapper" style="display:flex;flex-direction:column;gap:1.5rem;">
         
-        <!-- Header Banner -->
-        <div class="card" style="background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);color:#ffffff;padding:1.75rem;border-radius:var(--radius-lg);border-left:4px solid #6366f1;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+        <!-- Header Banner (Reduced Vertical Expansion, Full Horizontal Expansion) -->
+        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #151b32 100%);color:#ffffff;padding:0.75rem 1.25rem;border-radius:12px;border-left:4px solid #6366f1;border-top:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
             <div>
-              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.35rem;">
-                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#f8fafc;line-height:1.2;">
+                  Track Your Salesmen & Field Force
+                </h2>
+                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:10px;padding:2px 7px;border-radius:4px;">
                   FIELD FORCE COMMAND CENTER
                 </span>
-                <span style="font-size:13px;color:#a5b4fc;display:flex;align-items:center;gap:4px;">
-                  <span class="live-dot" style="display:inline-block;width:7px;height:7px;background:#22c55e;border-radius:50%;"></span>
+                <span style="font-size:12px;color:#a5b4fc;display:flex;align-items:center;gap:4px;">
+                  <span class="live-dot" style="display:inline-block;width:6px;height:6px;background:#22c55e;border-radius:50%;"></span>
                   ${onDutyCount} Staff Currently Live On Field
                 </span>
               </div>
-              <h2 style="font-size:1.8rem;font-weight:800;margin:0 0 0.3rem 0;color:#f8fafc;">
-                Track Your Salesmen & Field Force
-              </h2>
-              <p style="color:#cbd5e1;font-size:13.5px;margin:0;max-width:720px;line-height:1.4;">
-                Real-time field staff directory with Owner CRUD management, GPS telemetry, punch-in/out timestamps, daily distance tracking, customer visit logs, and comprehensive sales performance analytics.
+              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;line-height:1.3;">
+                Real-time field staff directory with Owner CRUD management, GPS telemetry, punch-in/out timestamps, and sales performance analytics.
               </p>
             </div>
 
             <div style="display:flex;gap:0.75rem;align-items:center;">
-              <button class="btn btn-primary" id="openAddSalesmanModalBtn" onclick="window.SalesmenModule.openAddSalesmanModal()" style="background:linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);box-shadow:0 4px 14px rgba(79,70,229,0.4);cursor:pointer;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <button class="btn btn-primary" id="openAddSalesmanModalBtn" onclick="window.SalesmenModule.openAddSalesmanModal()" style="background:linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);box-shadow:0 4px 14px rgba(79,70,229,0.4);font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 + Add New Salesman
               </button>
             </div>

@@ -10,29 +10,29 @@ window.UsersModule = {
     const auditLogs = window.Store.getAuditLogs();
 
     container.innerHTML = `
-      <!-- Active User Profile Banner -->
-      <div class="card" style="margin-bottom:1.5rem;background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#fff;border:none;">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-          <div style="display:flex;align-items:center;gap:1.25rem;">
-            <div style="font-size:3rem;background:rgba(255,255,255,0.1);width:70px;height:70px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,0.2);">
+      <!-- Active User Profile Banner (Reduced Vertical Expansion, Full Horizontal Expansion) -->
+      <div class="card" style="width:100%;margin-bottom:1.5rem;background:linear-gradient(135deg, #090d16 0%, #151d30 100%);color:#fff;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.75rem 1.25rem;box-shadow:0 4px 16px rgba(15,23,42,0.2);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="font-size:2rem;background:rgba(255,255,255,0.1);width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,0.2);">
               ${currentUser.avatar || '👨‍💼'}
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:0.5rem;">
-                <h2 style="font-size:1.5rem;font-weight:800;color:#fff;">${currentUser.name}</h2>
-                <span class="brand-badge" style="background:#ed1a3b;color:#fff;">${currentUser.role}</span>
+                <h2 style="font-size:1.25rem;font-weight:800;color:#fff;margin:0;">${currentUser.name}</h2>
+                <span class="brand-badge" style="background:#ed1a3b;color:#fff;font-size:11px;padding:2px 6px;">${currentUser.role}</span>
               </div>
-              <div style="color:#94a3b8;font-size:0.9rem;margin-top:2px;">
+              <div style="color:#94a3b8;font-size:0.85rem;margin-top:2px;">
                 ${currentUser.title} • Active Session (${currentUser.email})
               </div>
             </div>
           </div>
           <div style="display:flex;gap:0.75rem;">
-            <button class="btn btn-primary" id="switchUserQuickBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              <span>Switch User / Cashier</span>
+            <button class="btn btn-primary" id="switchUserQuickBtn" style="font-size:12.5px;padding:6px 12px;border-radius:7px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>Switch User</span>
             </button>
-            <button class="btn btn-outline" id="addNewUserBtn" style="color:#fff;border-color:rgba(255,255,255,0.3);">
+            <button class="btn btn-outline" id="addNewUserBtn" style="color:#fff;border-color:rgba(255,255,255,0.3);font-size:12.5px;padding:6px 12px;border-radius:7px;">
               <span>+ Add User</span>
             </button>
           </div>

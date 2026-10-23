@@ -27,31 +27,31 @@ window.OrdersModule = {
     container.innerHTML = `
       <div class="orders-module-wrapper" style="display:flex;flex-direction:column;gap:1.5rem;">
         
-        <!-- Header Banner & Action Bar -->
-        <div class="card" style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;padding:1.75rem;border-radius:var(--radius-lg);border-left:4px solid #3b82f6;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+        <!-- Header Banner (Reduced Vertical Expansion, Full Horizontal Expansion) -->
+        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #151d30 100%);color:#ffffff;padding:0.75rem 1.25rem;border-radius:12px;border-left:4px solid #3b82f6;border-top:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
             <div>
-              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.35rem;">
-                <span class="badge" style="background:#3b82f6;color:#ffffff;font-weight:800;font-size:11px;padding:3px 8px;border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#f8fafc;line-height:1.2;">
+                  Order Management Center
+                </h2>
+                <span class="badge" style="background:#3b82f6;color:#ffffff;font-weight:800;font-size:10px;padding:2px 7px;border-radius:4px;">
                   OMNI-CHANNEL ORDERS
                 </span>
-                <span style="font-size:13px;color:#94a3b8;display:flex;align-items:center;gap:4px;">
-                  <span class="live-dot" style="display:inline-block;width:7px;height:7px;background:#22c55e;border-radius:50%;"></span>
+                <span style="font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:4px;">
+                  <span class="live-dot" style="display:inline-block;width:6px;height:6px;background:#22c55e;border-radius:50%;"></span>
                   Real-time Field Force Sync Active
                 </span>
               </div>
-              <h2 style="font-size:1.8rem;font-weight:800;margin:0 0 0.3rem 0;color:#f8fafc;">
-                Order Management Center
-              </h2>
-              <p style="color:#cbd5e1;font-size:13.5px;margin:0;max-width:720px;line-height:1.4;">
-                Centralized dashboard aggregating orders booked directly at counter, by field salesmen via Field Force App, or received via WhatsApp. Convert orders to GST Tax Invoices in 1-click with payment verification.
+              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;line-height:1.3;">
+                Centralized dashboard aggregating orders booked directly at counter, by field salesmen via Field Force App, or received via WhatsApp.
               </p>
             </div>
 
             <div style="display:flex;gap:0.75rem;align-items:center;">
-              <button class="btn btn-primary" id="openCreateOrderBtn" style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);box-shadow:0 4px 14px rgba(37,99,235,0.4);">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                + New Direct Order
+              <button class="btn btn-primary" id="openCreateOrderBtn" style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);box-shadow:0 4px 14px rgba(37,99,235,0.4);font-size:13px;padding:7px 14px;border-radius:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:5px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Direct Order
               </button>
             </div>
           </div>

@@ -99,7 +99,7 @@ window.SalesModule = {
             </button>
             <button class="btn btn-primary btn-sm" id="newSaleBtn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>+ Create Tax Invoice</span>
+              <span data-i18n="sales.create_invoice">Create Sale</span>
             </button>
           </div>
         </div>
@@ -122,7 +122,7 @@ window.SalesModule = {
               </thead>
               <tbody id="salesTableBody">
                 ${paginated.items.length === 0 ? `
-                  <tr><td colspan="9" class="text-center text-muted" style="padding: 2.5rem;">No invoices found. Click <b>+ Create Tax Invoice</b> to issue your first bill.</td></tr>
+                  <tr><td colspan="9" class="text-center text-muted" style="padding: 2.5rem;">No invoices found. Click <b>Create Sale</b> to issue your first bill.</td></tr>
                 ` : paginated.items.map(sale => `
                   <tr>
                     <td class="table-mono">

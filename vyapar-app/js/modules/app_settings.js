@@ -144,29 +144,29 @@ window.AppSettingsModule = {
     container.innerHTML = `
       <div class="app-settings-wrapper" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1200px;margin:0 auto;">
         
-        <!-- Top Hero Card -->
-        <div class="card" style="background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);color:#ffffff;padding:1.5rem 2rem;border-radius:var(--radius-lg);border-left:4px solid #6366f1;">
-          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+        <!-- Top Hero Card (Reduced Vertical Expansion, Full Horizontal Expansion) -->
+        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #151b32 100%);color:#ffffff;padding:0.75rem 1.25rem;border-radius:12px;border-left:4px solid #6366f1;border-top:1px solid rgba(255,255,255,0.08);border-right:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
             <div>
-              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.25rem;">
-                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:10px;padding:2px 8px;border-radius:4px;">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <h1 style="font-size:1.25rem;font-weight:800;margin:0;color:#f8fafc;line-height:1.2;">
+                  Application Settings
+                </h1>
+                <span class="badge" style="background:#6366f1;color:#ffffff;font-weight:800;font-size:10px;padding:2px 7px;border-radius:4px;">
                   SYSTEM CONTROL & PREFERENCES
                 </span>
                 <span style="font-size:12px;color:#a5b4fc;">Lekha Jokha Enterprise Engine</span>
               </div>
-              <h1 style="font-size:1.6rem;font-weight:800;margin:0;color:#f8fafc;">
-                Application Settings
-              </h1>
-              <p style="color:#cbd5e1;font-size:13px;margin:0.25rem 0 0 0;">
+              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;line-height:1.3;">
                 Configure global workflow automation, invoice layouts, GST compliance, SMS gateways, party credit rules, inventory & multi-currency.
               </p>
             </div>
 
-            <div style="display:flex;gap:10px;">
-              <button class="btn btn-outline" id="resetAppSettingsBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);font-size:12.5px;">
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="btn btn-outline" id="resetAppSettingsBtn" style="color:#ffffff;border-color:rgba(255,255,255,0.3);font-size:12px;padding:5px 12px;border-radius:7px;">
                 ↺ Reset Defaults
               </button>
-              <button class="btn btn-primary" id="saveAppSettingsTopBtn" style="background:#22c55e;border-color:#16a34a;font-weight:700;font-size:13px;box-shadow:0 4px 12px rgba(34,197,94,0.35);">
+              <button class="btn btn-primary" id="saveAppSettingsTopBtn" style="background:#22c55e;border-color:#16a34a;color:#ffffff;font-weight:700;font-size:12.5px;padding:6px 14px;border-radius:7px;box-shadow:0 4px 12px rgba(34,197,94,0.35);">
                 💾 Save All Settings
               </button>
             </div>

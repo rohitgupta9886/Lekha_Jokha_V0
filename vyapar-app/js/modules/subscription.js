@@ -13,29 +13,29 @@ window.SubscriptionModule = {
 
     container.innerHTML = `
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <!-- Top Status Banner -->
-        <div class="card" style="background: linear-gradient(135deg, var(--navy-900) 0%, #1e1b4b 100%); color: #fff; padding: 2rem; border-radius: var(--radius-lg);">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <!-- Top Status Banner (Reduced Vertical Expansion, Full Horizontal Expansion) -->
+        <div class="card" style="width:100%;background:linear-gradient(135deg, #090d16 0%, #181534 100%);color:#fff;padding:0.75rem 1.25rem;border-radius:12px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 4px 16px rgba(15,23,42,0.2);">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
             <div>
-              <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                <span class="badge" style="background: #eab308; color: #000; font-weight: 800; font-size: 11px; padding: 4px 10px;">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <h2 style="font-size:1.25rem;font-weight:800;margin:0;color:#fff;">
+                  ${activePlan.name} Plan
+                </h2>
+                <span class="badge" style="background:#eab308;color:#000;font-weight:800;font-size:10px;padding:2px 7px;border-radius:4px;">
                   ${activePlan.badge}
                 </span>
-                <span style="font-size: 14px; opacity: 0.85;">Active Subscriber ID: <b>${subscriber.id}</b></span>
+                <span style="font-size:12px;color:#94a3b8;">Subscriber ID: <b>${subscriber.id}</b></span>
               </div>
-              <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 0.25rem;">
-                ${activePlan.name} Plan
-              </h2>
-              <p style="color: #cbd5e1; font-size: 14px; margin: 0;">
-                Valid until: <b>${subscriber.planExpiresAt || '2027-03-31'}</b> &bull; Account Holder: <b>${subscriber.name} (${subscriber.phone})</b>
+              <p style="color:#cbd5e1;font-size:12px;margin:3px 0 0 0;">
+                Valid until: <b>${subscriber.planExpiresAt || '2027-03-31'}</b> &bull; Account: <b>${subscriber.name}</b>
               </p>
             </div>
 
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <div style="text-align: right; background: rgba(255,255,255,0.08); padding: 1rem 1.5rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.12);">
-                <div style="font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; letter-spacing: 0.5px;">Business Slots Used</div>
-                <div style="font-size: 1.8rem; font-weight: 800; color: #38bdf8;">
-                  ${activeBizCount} <span style="font-size: 1.1rem; color: #94a3b8;">/ ${activePlan.maxBusinesses}</span>
+            <div style="display:flex;gap:1rem;align-items:center;">
+              <div style="text-align:right;background:rgba(255,255,255,0.08);padding:0.4rem 0.9rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);">
+                <div style="font-size:10px;text-transform:uppercase;color:#94a3b8;font-weight:700;">Business Slots</div>
+                <div style="font-size:1.35rem;font-weight:800;color:#38bdf8;line-height:1.1;">
+                  ${activeBizCount} <span style="font-size:0.9rem;color:#94a3b8;">/ ${activePlan.maxBusinesses}</span>
                 </div>
               </div>
             </div>

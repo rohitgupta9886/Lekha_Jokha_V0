@@ -62,7 +62,7 @@ const TRANSLATIONS = {
 
     // Sales Module
     'sales.title': 'Tax Invoices (GST)',
-    'sales.create_invoice': '+ Create Tax Invoice',
+    'sales.create_invoice': 'Create Sale',
     'sales.smart_bill': '✨ AI Smart Bill',
     'sales.search_placeholder': 'Search invoice or party...',
     'sales.tab_invoices': 'Sale Invoices',
@@ -181,7 +181,7 @@ const TRANSLATIONS = {
     'set.save_btn': 'Save Settings & Preferences',
 
     // Modals & Billing Forms
-    'modal.create_sale': 'Create Tax Invoice (GST)',
+    'modal.create_sale': 'Create Sale',
     'modal.invoice_no': 'Invoice No.',
     'modal.invoice_date': 'Invoice Date',
     'modal.bill_to': 'Bill To (Party)',
@@ -319,7 +319,7 @@ const TRANSLATIONS = {
 
     // Sales Module
     'sales.title': 'जीएसटी टैक्स इनवॉइस (बिक्री)',
-    'sales.create_invoice': '+ नया टैक्स इनवॉइस बनाएं',
+    'sales.create_invoice': 'बिक्री बनाएं (Create Sale)',
     'sales.smart_bill': '✨ AI स्मार्ट बिलिंग',
     'sales.search_placeholder': 'बिल नंबर या ग्राहक खोजें...',
     'sales.tab_invoices': 'बिक्री बिल (इनवॉइस)',
@@ -438,7 +438,7 @@ const TRANSLATIONS = {
     'set.save_btn': 'सेटिंग्स और प्राथमिकताएं सहेजें',
 
     // Modals & Billing Forms
-    'modal.create_sale': 'टैक्स चालान बनाएं (जीएसटी इनवॉइस)',
+    'modal.create_sale': 'बिक्री बनाएं (Create Sale)',
     'modal.invoice_no': 'चालान संख्या (बिल नं.)',
     'modal.invoice_date': 'चालान तिथि',
     'modal.bill_to': 'बिल पार्टी (ग्राहक का नाम)',
