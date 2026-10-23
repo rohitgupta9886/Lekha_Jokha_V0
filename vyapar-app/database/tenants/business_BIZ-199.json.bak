@@ -1,0 +1,109 @@
+{
+  "parties": [
+    {
+      "id": "P002",
+      "name": "BABU LAL",
+      "type": "Customer",
+      "phone": "98542546234",
+      "gstin": "",
+      "address": "KA676",
+      "state": "Karnataka",
+      "balance": 100000,
+      "businessId": "BIZ-199",
+      "createdBy": "U-9404",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T22:29:07.598Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103000001",
+      "name": "NCM2",
+      "category": "Groceries",
+      "hsn": "6568",
+      "salePrice": 626,
+      "purchasePrice": 620,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 56523,
+      "minStock": 52,
+      "businessId": "BIZ-199",
+      "createdBy": "U-9404",
+      "version": 2,
+      "updatedAt": "2026-10-22T22:29:42.589Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-002",
+      "number": "INV-2026-002",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P002",
+      "partyName": "BABU LAL",
+      "placeOfSupply": "KARNATAKA (29)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "NCM2",
+          "hsn": "6568",
+          "qty": 20,
+          "rate": 626,
+          "gstRate": 18,
+          "amount": 14773.6
+        }
+      ],
+      "subtotal": 12520,
+      "tax": 2253.6,
+      "total": 14774,
+      "paid": 14774,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-199",
+      "createdBy": "U-9404",
+      "version": 1,
+      "updatedAt": "2026-10-22T22:29:42.587Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-199",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "parties": [
+    {
+      "id": "P-A1-1792769853443",
+      "name": "Customer Alpha One",
+      "type": "Customer",
+      "phone": "9911001122",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 5000,
+      "businessId": "BIZ-216",
+      "createdBy": "U-1802",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T15:37:33.447Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM-A1-1792769853574",
+      "barcode": "890103244959",
+      "name": "Item Alpha Basmati 10kg",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 1200,
+      "purchasePrice": 1000,
+      "gstRate": 5,
+      "unit": "PCS",
+      "stock": 95,
+      "minStock": 5,
+      "businessId": "BIZ-216",
+      "createdBy": "U-1802",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:37:33.725Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-001",
+      "number": "INV-A1-1792769853721",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P-A1-1792769853443",
+      "partyName": "Customer Alpha One",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM-A1-1792769853574",
+          "name": "Item Alpha Basmati 10kg",
+          "qty": 5,
+          "rate": 1200,
+          "amount": 6000
+        }
+      ],
+      "subtotal": 5714.28,
+      "tax": 285.72,
+      "total": 6000,
+      "paid": 6000,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-216",
+      "createdBy": "U-1802",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:37:33.725Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-216",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  },
+  "appliedMutations": {}
+}

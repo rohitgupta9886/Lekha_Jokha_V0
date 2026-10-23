@@ -1,0 +1,107 @@
+{
+  "parties": [
+    {
+      "id": "P-A2-1792693276983",
+      "name": "Customer Alpha Two",
+      "type": "Customer",
+      "phone": "9922002233",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 15000,
+      "businessId": "BIZ-069",
+      "createdBy": "U-1475",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T18:21:16.988Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM-A2-1792693276999",
+      "barcode": "890103869841",
+      "name": "Item Alpha Industrial Motor 5HP",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 25000,
+      "purchasePrice": 20000,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 8,
+      "minStock": 5,
+      "businessId": "BIZ-069",
+      "createdBy": "U-1475",
+      "version": 1,
+      "updatedAt": "2026-10-22T18:21:17.018Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-001",
+      "number": "INV-A2-1792693277013",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P-A2-1792693276983",
+      "partyName": "Customer Alpha Two",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM-A2-1792693276999",
+          "name": "Item Alpha Industrial Motor 5HP",
+          "qty": 2,
+          "rate": 25000,
+          "amount": 50000
+        }
+      ],
+      "subtotal": 42372.88,
+      "tax": 7627.12,
+      "total": 50000,
+      "paid": 20000,
+      "balance": 30000,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-069",
+      "createdBy": "U-1475",
+      "version": 1,
+      "updatedAt": "2026-10-22T18:21:17.018Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-069",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

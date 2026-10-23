@@ -1,0 +1,580 @@
+{
+  "parties": [
+    {
+      "id": "P001",
+      "name": "Gupta General Store",
+      "type": "Customer",
+      "phone": "9810123456",
+      "gstin": "07BZZPG1234C1Z9",
+      "address": "B-12, Sector 15, Rohini, Delhi",
+      "state": "Delhi",
+      "balance": 14500,
+      "createdAt": "2026-03-01"
+    },
+    {
+      "id": "P002",
+      "name": "Metro Retail Mart",
+      "type": "Customer",
+      "phone": "9871234567",
+      "gstin": "07AAACM4321D1Z2",
+      "address": "Shop 4, Karol Bagh, Delhi",
+      "state": "Delhi",
+      "balance": 28400,
+      "createdAt": "2026-03-05"
+    },
+    {
+      "id": "P003",
+      "name": "Apex Electronics Hub",
+      "type": "Customer",
+      "phone": "9988776655",
+      "gstin": "27AABCA5678E1Z4",
+      "address": "Lamington Road, Mumbai",
+      "state": "Maharashtra",
+      "balance": 0,
+      "createdAt": "2026-03-10"
+    },
+    {
+      "id": "P004",
+      "name": "Hindustan FMCG Suppliers",
+      "type": "Supplier",
+      "phone": "9811223344",
+      "gstin": "07AABCH9876F1Z1",
+      "address": "Transport Nagar, Azadpur, Delhi",
+      "state": "Delhi",
+      "balance": -32000,
+      "createdAt": "2026-02-15"
+    },
+    {
+      "id": "P005",
+      "name": "Aggarwal Mills & Grains",
+      "type": "Supplier",
+      "phone": "9899112233",
+      "gstin": "07AAACA1122B1Z8",
+      "address": "Naya Bazar, Old Delhi",
+      "state": "Delhi",
+      "balance": -18500,
+      "createdAt": "2026-02-20"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103000001",
+      "name": "Basmati Rice Royal Premium (10 Kg)",
+      "category": "Groceries",
+      "hsn": "1006",
+      "salePrice": 1150,
+      "purchasePrice": 950,
+      "gstRate": 5,
+      "unit": "BAG",
+      "stock": 45,
+      "minStock": 10
+    },
+    {
+      "id": "ITM002",
+      "barcode": "890103000002",
+      "name": "Fortune Refined Mustard Oil (1 Ltr)",
+      "category": "Groceries",
+      "hsn": "1514",
+      "salePrice": 145,
+      "purchasePrice": 125,
+      "gstRate": 5,
+      "unit": "LTR",
+      "stock": 120,
+      "minStock": 25
+    },
+    {
+      "id": "ITM003",
+      "barcode": "890103000003",
+      "name": "Tata Tea Gold (500g)",
+      "category": "FMCG",
+      "hsn": "0902",
+      "salePrice": 320,
+      "purchasePrice": 275,
+      "gstRate": 5,
+      "unit": "PCS",
+      "stock": 4,
+      "minStock": 15
+    },
+    {
+      "id": "ITM004",
+      "barcode": "890103000004",
+      "name": "Syska Smart LED Bulb 12W",
+      "category": "Electronics",
+      "hsn": "8539",
+      "salePrice": 280,
+      "purchasePrice": 190,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 35,
+      "minStock": 10
+    },
+    {
+      "id": "ITM005",
+      "barcode": "890103000005",
+      "name": "Anchor 3-Pin Extension Cord 4m",
+      "category": "Electronics",
+      "hsn": "8544",
+      "salePrice": 450,
+      "purchasePrice": 310,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 3,
+      "minStock": 8
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-001",
+      "number": "INV-2026-001",
+      "docType": "Invoice",
+      "date": "2026-10-15",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Bank / UPI",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium (10 Kg)",
+          "hsn": "1006",
+          "qty": 10,
+          "rate": 1150,
+          "gstRate": 5,
+          "amount": 12075
+        }
+      ],
+      "subtotal": 11500,
+      "tax": 575,
+      "total": 12075,
+      "paid": 12075,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "Delivered via Tempo DL-1L-4421"
+    },
+    {
+      "id": "INV-2026-002",
+      "number": "INV-2026-002",
+      "docType": "Invoice",
+      "date": "2026-10-17",
+      "partyId": "P002",
+      "partyName": "Metro Retail Mart",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Credit",
+      "items": [
+        {
+          "itemId": "ITM002",
+          "name": "Fortune Refined Mustard Oil (1 Ltr)",
+          "hsn": "1514",
+          "qty": 50,
+          "rate": 145,
+          "gstRate": 5,
+          "amount": 7612.5
+        },
+        {
+          "itemId": "ITM004",
+          "name": "Syska Smart LED Bulb 12W",
+          "hsn": "8539",
+          "qty": 20,
+          "rate": 280,
+          "gstRate": 18,
+          "amount": 6608
+        }
+      ],
+      "subtotal": 12850,
+      "tax": 1370.5,
+      "total": 14220.5,
+      "paid": 0,
+      "balance": 14220.5,
+      "status": "Unpaid",
+      "notes": "30 days credit terms apply"
+    }
+  ],
+  "purchases": [
+    {
+      "id": "PUR-2026-001",
+      "number": "PUR-2026-001",
+      "date": "2026-10-10",
+      "partyId": "P004",
+      "partyName": "Hindustan FMCG Suppliers",
+      "paymentMode": "Bank / Cheque",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium (10 Kg)",
+          "qty": 50,
+          "rate": 950,
+          "gstRate": 5,
+          "amount": 49875
+        }
+      ],
+      "subtotal": 47500,
+      "tax": 2375,
+      "total": 49875,
+      "paid": 49875,
+      "balance": 0,
+      "status": "Paid"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "EXP-001",
+      "date": "2026-10-01",
+      "category": "Shop Rent",
+      "description": "Monthly shop rent for October 2026",
+      "amount": 25000,
+      "paymentMode": "Bank Transfer",
+      "ref": "RENT/OCT/42"
+    },
+    {
+      "id": "EXP-002",
+      "date": "2026-10-05",
+      "category": "Electricity",
+      "description": "BSES Commercial Electricity Bill",
+      "amount": 6420,
+      "paymentMode": "Net Banking",
+      "ref": "BSES-992144"
+    },
+    {
+      "id": "EXP-003",
+      "date": "2026-10-07",
+      "category": "Staff Salary",
+      "description": "Helper & Loading Staff Wages",
+      "amount": 18000,
+      "paymentMode": "Cash",
+      "ref": "WAGE/OCT/WK1"
+    }
+  ],
+  "cashBank": {
+    "cashInHand": 42850,
+    "bankAccounts": [
+      {
+        "id": "BANK-01",
+        "name": "HDFC Current A/c",
+        "accountNo": "50200012345678",
+        "ifsc": "HDFC0001234",
+        "balance": 342600
+      }
+    ]
+  },
+  "ewayBills": [
+    {
+      "id": "EWB-2026-001",
+      "ewbNo": "101928374650",
+      "invoiceNo": "INV-2026-001",
+      "date": "2026-10-15",
+      "partyName": "Gupta General Store",
+      "vehicleNo": "DL-1L-4421",
+      "transporter": "SafeXpress Logistics",
+      "fromState": "Delhi (07)",
+      "toState": "Mumbai (27)",
+      "distanceKm": 1420,
+      "totalValue": 49875,
+      "status": "Active",
+      "validTill": "2026-10-21"
+    },
+    {
+      "id": "EWB-2026-002",
+      "ewbNo": "101928374651",
+      "invoiceNo": "INV-2026-002",
+      "date": "2026-10-17",
+      "partyName": "Metro Retail Mart",
+      "vehicleNo": "HR-55-9082",
+      "transporter": "Delhi Cargo Trans",
+      "fromState": "Delhi (07)",
+      "toState": "Haryana (06)",
+      "distanceKm": 85,
+      "totalValue": 12075,
+      "status": "Active",
+      "validTill": "2026-10-20"
+    }
+  ],
+  "estimates": [
+    {
+      "id": "EST-2026-001",
+      "number": "EST-2026-001",
+      "partyName": "Rajesh Enterprises (Delhi)",
+      "date": "2026-10-18",
+      "total": 16500,
+      "status": "Pending",
+      "validTill": "2026-10-25",
+      "remarks": "Festival stock quote"
+    },
+    {
+      "id": "EST-2026-002",
+      "number": "EST-2026-002",
+      "partyName": "Metro Retail Mart",
+      "date": "2026-10-16",
+      "total": 22400,
+      "status": "Approved",
+      "validTill": "2026-10-23",
+      "remarks": "Bulk order quote"
+    }
+  ],
+  "salesReturns": [
+    {
+      "id": "SR-2026-001",
+      "number": "SR-2026-001",
+      "docType": "SalesReturn",
+      "date": "2026-10-16",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium (10 Kg)",
+          "qty": 2,
+          "rate": 1150,
+          "amount": 2415
+        }
+      ],
+      "total": 2415,
+      "reason": "Damaged packaging in transit",
+      "status": "Restocked"
+    }
+  ],
+  "deliveryChallans": [
+    {
+      "id": "DC-2026-001",
+      "number": "DC-2026-001",
+      "date": "2026-10-18",
+      "partyId": "P002",
+      "partyName": "Metro Retail Mart",
+      "vehicleNo": "DL-1L-4421",
+      "driverName": "Sunil Yadav",
+      "items": [
+        {
+          "itemId": "ITM002",
+          "name": "Fortune Refined Mustard Oil (1 Ltr)",
+          "qty": 20
+        }
+      ],
+      "status": "Dispatched",
+      "notes": "Fragile goods"
+    }
+  ],
+  "purchaseReturns": [
+    {
+      "id": "PR-2026-001",
+      "number": "PR-2026-001",
+      "date": "2026-10-12",
+      "partyId": "P004",
+      "partyName": "Hindustan FMCG Suppliers",
+      "items": [
+        {
+          "itemId": "ITM003",
+          "name": "Tata Tea Gold (500g)",
+          "qty": 5,
+          "rate": 275,
+          "amount": 1443.75
+        }
+      ],
+      "total": 1443.75,
+      "reason": "Expiry date mismatch",
+      "status": "Returned"
+    }
+  ],
+  "paymentsIn": [
+    {
+      "id": "REC-2026-001",
+      "number": "REC-2026-001",
+      "date": "2026-10-17",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "amount": 10000,
+      "paymentMode": "UPI",
+      "txRef": "UPI-8849201",
+      "notes": "Part settlement against old balance"
+    }
+  ],
+  "paymentsOut": [
+    {
+      "id": "PAY-2026-001",
+      "number": "PAY-2026-001",
+      "date": "2026-10-14",
+      "partyId": "P004",
+      "partyName": "Hindustan FMCG Suppliers",
+      "amount": 15000,
+      "paymentMode": "Bank Transfer",
+      "txRef": "NEFT-991200",
+      "notes": "Vendor advance payment"
+    }
+  ],
+  "salesmen": [
+    {
+      "id": "SALES-002",
+      "name": "Amit Shah",
+      "phone": "9113004901",
+      "email": "guptarohit148@gmail.com",
+      "employeeId": "EMP-002",
+      "role": "Field Salesman",
+      "territory": "Delhi central",
+      "businessId": "BIZ-003",
+      "subscriberId": "SUB-88990",
+      "status": "Active",
+      "joiningStatus": "JOINING PENDING",
+      "inviteStatus": "Pending",
+      "inviteToken": "INV-3D2778F9ADCF1EC2",
+      "inviteExpiresAt": "2026-10-27T17:22:22.975Z",
+      "inviteCreatedAt": "2026-10-20T17:22:23.041Z",
+      "whatsAppInviteUrl": "https://wa.me/919113004901?text=Namaste%20Amit%20Shah!%20You%20are%20invited%20to%20join%20*Royal%20Garments%20%26%20Textiles*%20as%20*Field%20Salesman*%20on%20Lekha%20Jokha.%0A%0APlease%20open%20this%20link%20to%20activate%20your%20marketing%20app%3A%20http%3A%2F%2Flocalhost%3A3000%2F%23invite%3Ftoken%3DINV-3D2778F9ADCF1EC2%0A(Token%3A%20INV-3D2778F9ADCF1EC2)",
+      "whatsAppMessage": "Namaste Amit Shah! You are invited to join *Royal Garments & Textiles* as *Field Salesman* on Lekha Jokha.\n\nPlease open this link to activate your marketing app: http://localhost:3000/#invite?token=INV-3D2778F9ADCF1EC2\n(Token: INV-3D2778F9ADCF1EC2)",
+      "attendanceStatus": "Punched Out",
+      "lastPunchIn": null,
+      "lastPunchOut": null,
+      "lastLocation": null,
+      "locationHistory": [],
+      "attendanceSessions": []
+    },
+    {
+      "id": "SALES-001",
+      "name": "Narendra Modi",
+      "phone": "+91 98765 01234",
+      "email": "narendra@sharmatraders.in",
+      "employeeId": "EMP-001",
+      "role": "Field Salesman",
+      "territory": "Central Bengaluru / Gandhinagar",
+      "businessId": "BIZ-003",
+      "status": "Active",
+      "joiningStatus": "JOINING PENDING",
+      "inviteStatus": "Pending",
+      "inviteToken": "INV-NM-2026-99",
+      "inviteExpiresAt": "2026-10-27T17:22:22.772Z",
+      "inviteCreatedAt": "2026-10-20T17:22:22.781Z",
+      "attendanceStatus": "Punched Out",
+      "lastPunchIn": null,
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic / Okalipuram, Bengaluru, Karnataka",
+        "timestamp": "2026-10-20T17:22:22.781Z",
+        "accuracy": 12
+      },
+      "locationHistory": [
+        {
+          "lat": 12.9778,
+          "lng": 77.5726,
+          "timestamp": "2026-10-20T17:22:22.782Z",
+          "battery": 88
+        }
+      ],
+      "attendanceSessions": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-001",
+      "title": "Client Visit - Basmati Rice & Oil Restock",
+      "customerName": "Gupta General Store",
+      "partyId": "P001",
+      "address": "B-12, Sector 15, Rohini, Delhi",
+      "dueDate": "2026-10-21",
+      "dueTime": "11:30 AM",
+      "status": "Pending",
+      "priority": "High",
+      "instructions": "Verify physical stock level and collect balance due",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    },
+    {
+      "id": "TSK-002",
+      "title": "Product Sample Catalog Presentation",
+      "customerName": "Metro Retail Mart",
+      "partyId": "P002",
+      "address": "Shop 4, Karol Bagh, Delhi",
+      "dueDate": "2026-10-22",
+      "dueTime": "02:00 PM",
+      "status": "In Progress",
+      "priority": "Medium",
+      "instructions": "Showcase new Syska LED bulbs line and take advance order",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    }
+  ],
+  "leads": [
+    {
+      "id": "LEAD-001",
+      "name": "Deepak Wholesale Kirana",
+      "contactPerson": "Deepak Agarwal",
+      "phone": "+91 98450 11223",
+      "email": "deepak@kirana.in",
+      "address": "Gandhinagar Main Road, Bengaluru",
+      "status": "Qualified",
+      "potentialValue": 45000,
+      "notes": "Interested in monthly 50 Bags Basmati Rice consignment",
+      "nextFollowUp": "2026-10-23",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-18"
+    },
+    {
+      "id": "LEAD-002",
+      "name": "Shree Krishna Departmental Store",
+      "contactPerson": "Gopal Krishna",
+      "phone": "+91 98451 99887",
+      "email": "gopal@krishnastores.in",
+      "address": "Seshadripuram, Bengaluru",
+      "status": "Contacted",
+      "potentialValue": 28000,
+      "notes": "Requested price quote for edible oils & FMCG",
+      "nextFollowUp": "2026-10-24",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-19"
+    }
+  ],
+  "visits": [
+    {
+      "id": "VIS-001",
+      "salesmanId": "SALES-001",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "startTime": "2026-10-20T10:15:00.000Z",
+      "endTime": "2026-10-20T11:00:00.000Z",
+      "durationMinutes": 45,
+      "location": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic Market, Bengaluru"
+      },
+      "notes": "Customer confirmed requirement of 15 bags Basmati Rice. Payment collected ₹10,000.",
+      "outcome": "Order Taken & Cheque Collected",
+      "followUpDate": "2026-10-28"
+    }
+  ],
+  "accountantAccess": [
+    {
+      "id": "ACC-001",
+      "name": "Priya Singh & Associates",
+      "email": "priya.ca@auditfirm.in",
+      "phone": "+91 98234 56789",
+      "permissions": [
+        "GSTR1_VIEW",
+        "P_AND_L",
+        "LEDGER_AUDIT",
+        "EXPORT_TALLY"
+      ],
+      "status": "Active",
+      "invitedAt": "2026-10-10",
+      "token": "ACC-TOK-998811"
+    }
+  ],
+  "businessProfile": {
+    "businessName": "Royal Garments & Textiles",
+    "legalName": "Sharma Traders & Distributors Private Limited",
+    "phone": "+91 98765 43210",
+    "email": "info@sharmatraders.in",
+    "address": "Shop 12-14, Commercial Complex, Sector 15, Rohini, Delhi - 110085",
+    "state": "Delhi (07)",
+    "gstin": "07AAAAA0000A1Z5",
+    "pan": "AAAAA0000A",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.\n3. Interest @ 18% p.a. will be charged after 30 days credit.",
+    "bankName": "HDFC Bank",
+    "accountNumber": "50200012345678",
+    "ifscCode": "HDFC0001234",
+    "branchName": "Rohini Sector 15",
+    "logoUrl": ""
+  },
+  "orders": []
+}

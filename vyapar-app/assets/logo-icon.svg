@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <defs>
+    <!-- Outer Shield Gradient -->
+    <linearGradient id="iconBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E11D48"/>
+      <stop offset="45%" stop-color="#BE123C"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </linearGradient>
+
+    <!-- Rich Indian Gold Gradient -->
+    <linearGradient id="iconGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFBEB"/>
+      <stop offset="25%" stop-color="#FDE047"/>
+      <stop offset="55%" stop-color="#EAB308"/>
+      <stop offset="85%" stop-color="#CA8A04"/>
+      <stop offset="100%" stop-color="#854D0E"/>
+    </linearGradient>
+
+    <!-- Auspicious Ruby Bahi-Khata Cover -->
+    <linearGradient id="iconBookGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#991B1B"/>
+      <stop offset="50%" stop-color="#7F1D1D"/>
+      <stop offset="100%" stop-color="#450A0A"/>
+    </linearGradient>
+
+    <!-- Page Sheets Gradient -->
+    <linearGradient id="iconPageGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FEFCE8"/>
+      <stop offset="80%" stop-color="#FFFDF0"/>
+      <stop offset="100%" stop-color="#FEF08A"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="iconShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#881337" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+
+    <filter id="goldShine" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#CA8A04" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Base App Squircle Container -->
+  <g filter="url(#iconShadow)">
+    <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#iconBgGrad)"/>
+    <!-- Sleek Inset Border -->
+    <rect x="27" y="27" width="458" height="458" rx="105" fill="none" stroke="url(#iconGoldGrad)" stroke-width="6" stroke-opacity="0.85"/>
+  </g>
+
+  <!-- Ambient Light Reflection on Top Border -->
+  <path d="M 132 30 Q 256 50 380 30" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- ==================================================== -->
+  <!-- Auspicious Modern Bahi-Khata (Accounting Ledger) -->
+  <!-- ==================================================== -->
+  <g transform="translate(106, 96)">
+    <!-- Back Cover Shadow -->
+    <rect x="18" y="18" width="264" height="284" rx="24" fill="#2E040E" opacity="0.45"/>
+
+    <!-- Main Front Bahi-Khata Ledger -->
+    <rect x="8" y="8" width="264" height="284" rx="24" fill="url(#iconBookGrad)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+
+    <!-- Traditional Gold Spine Ribbon -->
+    <rect x="8" y="8" width="62" height="284" rx="14" fill="url(#iconGoldGrad)"/>
+    <!-- Gold Spine Stitches -->
+    <circle cx="39" cy="48" r="5" fill="#713F12"/>
+    <circle cx="39" cy="98" r="5" fill="#713F12"/>
+    <circle cx="39" cy="150" r="5" fill="#713F12"/>
+    <circle cx="39" cy="202" r="5" fill="#713F12"/>
+    <circle cx="39" cy="252" r="5" fill="#713F12"/>
+
+    <!-- Premium Cream Parchment Pages Edge -->
+    <rect x="68" y="24" width="188" height="252" rx="14" fill="url(#iconPageGrad)"/>
+    
+    <!-- Ledger Accounting Rule Lines -->
+    <line x1="88" y1="64" x2="236" y2="64" stroke="#FDE047" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="88" y1="98" x2="236" y2="98" stroke="#FDE047" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="88" y1="132" x2="236" y2="132" stroke="#FDE047" stroke-width="4.5" stroke-linecap="round"/>
+    <line x1="88" y1="166" x2="200" y2="166" stroke="#FDE047" stroke-width="4.5" stroke-linecap="round"/>
+
+    <!-- Centerpiece: Royal Rupee (₹) Emblem Medallion -->
+    <g transform="translate(162, 185)" filter="url(#goldShine)">
+      <circle cx="0" cy="0" r="44" fill="url(#iconGoldGrad)"/>
+      <circle cx="0" cy="0" r="39" fill="#991B1B"/>
+      <text x="0" y="16" font-family="'Plus Jakarta Sans', 'Mukta', sans-serif" font-weight="900" font-size="46" fill="url(#iconGoldGrad)" text-anchor="middle">₹</text>
+    </g>
+
+    <!-- Auspicious Gold Bookmark Ribbon extending below book -->
+    <path d="M 108 260 L 108 320 L 126 304 L 144 320 L 144 260 Z" fill="url(#iconGoldGrad)" filter="url(#goldShine)"/>
+  </g>
+
+  <!-- Star Sparkle Highlights for World-Class Polish -->
+  <path d="M 384 102 Q 396 114 408 114 Q 396 114 384 126 Q 372 114 360 114 Q 372 114 384 102 Z" fill="#FFFBEB" opacity="0.9"/>
+  <circle cx="118" cy="406" r="4" fill="#FDE047" opacity="0.8"/>
+</svg>

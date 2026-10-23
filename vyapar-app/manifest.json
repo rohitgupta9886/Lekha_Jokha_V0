@@ -1,0 +1,24 @@
+{
+  "name": "Lekha Jokha - GST Billing, Inventory & Accounting",
+  "short_name": "Lekha Jokha",
+  "description": "India's leading GST billing, accounting, and inventory management software for small and medium businesses.",
+  "start_url": "/#dashboard",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#ed1a3b",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/app-logo.png",
+      "sizes": "1024x350",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo-icon.svg",
+      "sizes": "120x120 192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "parties": [
+    {
+      "id": "PV01",
+      "name": "Verma Loyal Customer",
+      "type": "Customer",
+      "phone": "9988770000",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-210",
+      "createdBy": "U-5549",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T15:24:41.053Z"
+    },
+    {
+      "id": "P-A2-1792769499532",
+      "name": "Customer Alpha Two",
+      "type": "Customer",
+      "phone": "9922002233",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 15000,
+      "businessId": "BIZ-210",
+      "createdBy": "U-5883",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T15:31:39.534Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM-A2-1792769502435",
+      "barcode": "890103312530",
+      "name": "Item Alpha Industrial Motor 5HP",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 25000,
+      "purchasePrice": 20000,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 8,
+      "minStock": 5,
+      "businessId": "BIZ-210",
+      "createdBy": "U-5883",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:31:45.997Z"
+    },
+    {
+      "id": "ITMV01",
+      "barcode": "890103380269",
+      "name": "Fresh Organic Mustard 500g",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 80,
+      "purchasePrice": 60,
+      "gstRate": 0,
+      "unit": "PCS",
+      "stock": 98,
+      "minStock": 5,
+      "businessId": "BIZ-210",
+      "createdBy": "U-5549",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:41.239Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-002",
+      "number": "INV-A2-1792769505992",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P-A2-1792769499532",
+      "partyName": "Customer Alpha Two",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM-A2-1792769502435",
+          "name": "Item Alpha Industrial Motor 5HP",
+          "qty": 2,
+          "rate": 25000,
+          "amount": 50000
+        }
+      ],
+      "subtotal": 42372.88,
+      "tax": 7627.12,
+      "total": 50000,
+      "paid": 20000,
+      "balance": 30000,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-210",
+      "createdBy": "U-5883",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:31:45.997Z"
+    },
+    {
+      "id": "INV_VERMA_LEGIT_01",
+      "number": "INV-2026-001",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "PV01",
+      "partyName": "Verma Loyal Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITMV01",
+          "name": "Fresh Organic Mustard 500g",
+          "qty": 2,
+          "rate": 80,
+          "amount": 160
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 160,
+      "paid": 0,
+      "balance": 0,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-210",
+      "createdBy": "U-5549",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:41.239Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-210",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

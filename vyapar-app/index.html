@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekha Jokha - GST Billing, Inventory & Accounting App</title>
+  <meta name="description" content="Lekha Jokha - India's leading GST billing, accounting, and inventory management software for small and medium businesses.">
+  <meta name="theme-color" content="#ed1a3b">
+  <link rel="icon" type="image/png" href="assets/app-logo.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Rozha+One&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=2.6.2">
+  <link rel="stylesheet" href="css/mobile.css?v=2.6.0">
+  <link rel="stylesheet" href="css/parties.css?v=2.7.0">
+  <link rel="stylesheet" href="css/home.css?v=1.0.0">
+  <style id="critical-utilities-nav-style">
+    /* Robust Embedded Submenu Styles - Immune to Browser Cache Drift */
+    .nav-dropdown {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .nav-dropdown-toggle {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      cursor: pointer !important;
+      user-select: none !important;
+    }
+    .nav-dropdown-toggle.active {
+      background: rgba(255, 255, 255, 0.08) !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
+    }
+    .nav-sublinks-menu {
+      display: none;
+      flex-direction: column !important;
+      padding: 6px 0 8px 0 !important;
+      margin: 2px 8px 8px 14px !important;
+      background: rgba(10, 14, 30, 0.85) !important;
+      border-left: 2px solid rgba(225, 29, 72, 0.45) !important;
+      border-radius: 0 8px 8px 0 !important;
+      gap: 2px !important;
+    }
+    .nav-dropdown.open .nav-sublinks-menu {
+      display: flex !important;
+    }
+    .sidebar-parties-subnav {
+      display: none !important;
+    }
+    .nav-dropdown.open .sidebar-parties-subnav,
+    #partiesNavGroup.open .sidebar-parties-subnav {
+      display: flex !important;
+    }
+    .nav-sublink {
+      display: flex !important;
+      align-items: center !important;
+      padding: 7px 12px 7px 12px !important;
+      color: #94a3b8 !important;
+      font-size: 12.5px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      border-radius: 6px !important;
+      margin: 1px 6px !important;
+      transition: all 0.15s ease-in-out !important;
+      cursor: pointer !important;
+      gap: 9px !important;
+      line-height: 1.3 !important;
+    }
+    .nav-sublink svg {
+      flex-shrink: 0 !important;
+      color: #64748b !important;
+      transition: color 0.15s, transform 0.15s !important;
+    }
+    .nav-sublink:hover {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.09) !important;
+      transform: translateX(2px) !important;
+      text-decoration: none !important;
+    }
+    .nav-sublink:hover svg {
+      color: #f43f5e !important;
+    }
+    .nav-sublink.active {
+      color: #ffffff !important;
+      background: linear-gradient(90deg, rgba(225, 29, 72, 0.25) 0%, rgba(225, 29, 72, 0.06) 100%) !important;
+      border-left: 3px solid #e11d48 !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+    }
+    .nav-sublink.active svg {
+      color: #fb7185 !important;
+    }
+    .sub-badge {
+      font-size: 9px !important;
+      font-weight: 700 !important;
+      padding: 1px 6px !important;
+      border-radius: 4px !important;
+      letter-spacing: 0.4px !important;
+      text-transform: uppercase !important;
+      margin-left: auto !important;
+      line-height: 1.4 !important;
+    }
+    .sub-badge-tally {
+      background: rgba(59, 130, 246, 0.2) !important;
+      color: #60a5fa !important;
+      border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    }
+    .sub-badge-live {
+      background: rgba(16, 185, 129, 0.2) !important;
+      color: #34d399 !important;
+      border: 1px solid rgba(16, 185, 129, 0.4) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+    }
+    .live-dot {
+      width: 5px !important;
+      height: 5px !important;
+      border-radius: 50% !important;
+      background: #10b981 !important;
+      box-shadow: 0 0 6px #10b981 !important;
+      animation: pulse-dot 1.5s infinite !important;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header" style="height: auto; min-height: 96px; padding: 14px 8px 10px; flex-direction: column; align-items: stretch; gap: 10px;">
+        <div class="sidebar-header-top" style="display: flex; align-items: center; justify-content: center; width: 100%; position: relative;">
+          <div class="brand-logo" id="sidebarBrandTrigger" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 100%;" title="Lekha Jokha PRO">
+            <img src="assets/app-logo.png?v=transp1" alt="Lekha Jokha Logo" class="brand-banner-logo" style="width: 100%; max-width: 254px; height: auto; max-height: 92px; object-fit: contain; filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.55));">
+          </div>
+          <button class="icon-btn mobile-close-sidebar" id="closeSidebarBtn" aria-label="Close Sidebar" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="sidebar-biz-switcher-bar" id="sidebarBusinessSwitcherTrigger" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 5px 10px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; cursor: pointer; transition: all 0.2s;" title="Click to Switch Business / कंपनी बदलें">
+          <div style="display: flex; align-items: center; gap: 6px; overflow: hidden; min-width: 0;">
+            <span style="font-size: 11px; color: #94a3b8; flex-shrink: 0;">🏢</span>
+            <span class="company-name-display" id="sidebarCompany" style="font-size: 12px; font-weight: 600; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">My Business</span>
+          </div>
+          <span style="font-size: 9px; color: #94a3b8; flex-shrink: 0; margin-left: 4px;">▼</span>
+        </div>
+      </div>
+
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-link" data-view="dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span data-i18n="nav.dashboard">Dashboard</span>
+        </a>
+
+        <!-- 1. SALES & BILLING -->
+        <div class="nav-section-title" data-i18n="nav.transactions">SALES & BILLING</div>
+
+        <a href="#sales" class="nav-link" data-view="sales" style="justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span data-i18n="nav.sales">Sale Invoices</span>
+          </div>
+          <span style="font-size: 10px; color: #94a3b8;">▼</span>
+        </a>
+
+        <a href="#pos" class="nav-link" data-view="pos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span>POS Counter Billing</span>
+          <span class="badge badge-primary ml-auto" style="font-size:10px;background:#2563eb;color:#fff;">FAST</span>
+        </a>
+
+        <a href="#orders" class="nav-link" data-view="orders">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14l2 2 4-4"></path></svg>
+          <span data-i18n="nav.orders">Order Management</span>
+          <span class="badge badge-warning ml-auto" id="ordersCountBadge">0</span>
+        </a>
+
+        <a href="#eway" class="nav-link" data-view="eway">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span data-i18n="nav.eway">e-Way Bills (GST)</span>
+          <span class="badge badge-info ml-auto" id="ewayCountBadge">1</span>
+        </a>
+
+        <!-- 2. PURCHASES & EXPENSES -->
+        <div class="nav-section-title">PURCHASES & EXPENSES</div>
+
+        <a href="#purchases" class="nav-link" data-view="purchases" style="justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span data-i18n="nav.purchases">Purchase Bills</span>
+          </div>
+          <span style="font-size: 10px; color: #94a3b8;">▼</span>
+        </a>
+
+        <a href="#expenses" class="nav-link" data-view="expenses">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          <span data-i18n="nav.expenses">Expenses</span>
+        </a>
+
+        <!-- 3. INVENTORY & PARTIES -->
+        <div class="nav-section-title" data-i18n="nav.catalog_money">INVENTORY & PARTIES</div>
+
+        <div class="nav-dropdown" id="partiesNavGroup">
+          <a href="#parties" class="nav-link nav-dropdown-toggle" data-view="parties" id="partiesToggleLink" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>Parties</span>
+            </div>
+            <span class="dropdown-chevron ml-auto" style="font-size: 10px;">▼</span>
+          </a>
+          <div class="sidebar-parties-subnav" id="partiesSublinks">
+            <a href="#parties" class="sidebar-parties-sublink" data-view="parties">
+              <span>Party Details</span>
+              <span style="font-size: 14px; font-weight: 700; color: #94a3b8;">+</span>
+            </a>
+            <a href="#parties" class="sidebar-parties-sublink" data-view="parties">
+              <span>Whatsapp Connect</span>
+            </a>
+            <a href="#parties" class="sidebar-parties-sublink" data-view="parties">
+              <span>Vyapar Network</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#items" class="nav-link" data-view="items" style="justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <span data-i18n="nav.items">Items & Inventory</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="badge badge-warning" id="lowStockCountBadge" style="display:none;">0</span>
+            <span style="font-size: 14px; font-weight: 700; color: #94a3b8;">+</span>
+          </div>
+        </a>
+
+        <!-- 4. BANKING & CASH FLOW -->
+        <div class="nav-section-title">BANKING & CASH</div>
+
+        <a href="#cashbank" class="nav-link" data-view="cashbank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          <span data-i18n="nav.cashbank">Cash & Bank</span>
+        </a>
+
+        <!-- 5. REPORTS & INTELLIGENCE -->
+        <div class="nav-section-title" data-i18n="nav.intelligence">REPORTS & INTELLIGENCE</div>
+
+        <a href="#reports" class="nav-link" data-view="reports">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span data-i18n="nav.reports">Reports & GST Filing</span>
+        </a>
+
+        <a href="#ai-copilot" class="nav-link" data-view="ai-copilot">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <span data-i18n="nav.ai_advisor">Lekha Jokha AI Advisor</span>
+          <span class="badge badge-danger ml-auto" style="background:#7c3aed;color:#fff;font-size:10px;">SMART</span>
+        </a>
+
+        <a href="#track-salesmen" class="nav-link" data-view="track-salesmen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span data-i18n="nav.track_salesmen">Track Your Salesmen</span>
+          <span class="badge badge-info ml-auto" id="salesmenCountBadge"><span class="live-dot" style="display:inline-block;width:6px;height:6px;background:#22c55e;border-radius:50%;margin-right:4px;"></span>LIVE</span>
+        </a>
+
+        <!-- 6. ADMINISTRATION & SETTINGS -->
+        <div class="nav-section-title" data-i18n="nav.utilities">ADMIN & SETTINGS</div>
+
+        <a href="#users" class="nav-link" data-view="users">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span data-i18n="nav.users">Staff & Roles (RBAC)</span>
+        </a>
+
+        <div class="nav-dropdown" id="utilitiesNavGroup">
+          <a href="#utilities" class="nav-link nav-dropdown-toggle" data-view="utilities" id="utilitiesToggleLink">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            <span>Utilities</span>
+            <span class="dropdown-chevron ml-auto">▼</span>
+          </a>
+          <div class="nav-sublinks-menu" id="utilitiesSublinks">
+            <a href="#util-track-salesmen" class="nav-sublink" data-view="util-track-salesmen">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Track Your Salesmen</span>
+              <span class="sub-badge" style="background:#22c55e;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;">LIVE</span>
+            </a>
+            <a href="#util-import-items" class="nav-sublink" data-view="util-import-items">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              <span>Import Items</span>
+            </a>
+            <a href="#util-setup-business" class="nav-sublink" data-view="util-setup-business">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 11h4M6 15h4M14 11h4M14 15h4M9 21v-4h6v4M12 3l9 4H3l9-4z"/></svg>
+              <span>Set Up My Business</span>
+            </a>
+            <a href="#util-accountant-access" class="nav-sublink" data-view="util-accountant-access">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 11l-3 3-2-2"></path></svg>
+              <span>Accountant Access</span>
+            </a>
+            <a href="#util-barcode-generator" class="nav-sublink" data-view="util-barcode-generator">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5v14M8 5v14M12 5v14M17 5v14M21 5v14"/></svg>
+              <span>Barcode Generator</span>
+            </a>
+            <a href="#util-bulk-update" class="nav-sublink" data-view="util-bulk-update">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              <span>Update Items In Bulk</span>
+            </a>
+            <a href="#util-import-tally" class="nav-sublink" data-view="util-import-tally">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Import From Tally</span>
+              <span class="sub-badge sub-badge-tally">TALLY</span>
+            </a>
+            <a href="#util-import-parties" class="nav-sublink" data-view="util-import-parties">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>Import Parties</span>
+            </a>
+            <a href="#util-export-tally" class="nav-sublink" data-view="util-export-tally">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              <span>Exports To Tally</span>
+              <span class="sub-badge sub-badge-tally">XML</span>
+            </a>
+            <a href="#util-export-items" class="nav-sublink" data-view="util-export-items">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+              <span>Export Items</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#migration" class="nav-link" data-view="migration">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span data-i18n="nav.migration">Data Import & Migration</span>
+          <span class="badge badge-success ml-auto" style="font-size:10px;">IMPORT</span>
+        </a>
+
+        <a href="#subscription" class="nav-link" data-view="subscription">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span data-i18n="nav.subscription">SaaS Plans & Multi-Biz</span>
+          <span class="badge ml-auto" id="subPlanBadge" style="background:#eab308;color:#000;font-size:10px;font-weight:800;">MAX</span>
+        </a>
+
+        <div class="nav-dropdown" id="settingsNavGroup">
+          <a href="#settings" class="nav-link nav-dropdown-toggle" data-view="settings" id="settingsToggleLink" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <span>Settings</span>
+            </div>
+            <span class="dropdown-chevron ml-auto" style="font-size: 10px;">▼</span>
+          </a>
+          <div class="nav-sublinks-menu" id="settingsSublinks">
+            <a href="#business-settings" class="nav-sublink" data-view="business-settings">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <span>Business Settings</span>
+            </a>
+            <a href="#app-settings" class="nav-sublink" data-view="app-settings">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <span>Application Settings</span>
+              <span class="sub-badge" style="background:#2563eb;color:#fff;font-size:9px;padding:1px 5px;border-radius:3px;">PRO</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer: Offline Sync Status & Backup (Hidden to match screenshot) -->
+      <div class="sidebar-footer" style="display: none;">
+        <div class="sync-indicator">
+          <span class="sync-dot"></span>
+          <span class="sync-text">Offline-First Engine Active</span>
+        </div>
+        <div class="backup-actions">
+          <button class="btn btn-sm btn-outline" id="exportDataBtn" title="Export Backup JSON">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Backup</span>
+          </button>
+          <button class="btn btn-sm btn-outline" id="resetDataBtn" title="Reset Demo Data">Reset</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Backdrop Overlay for Sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header Bar Matching Screenshot -->
+      <header class="topbar">
+        <div class="topbar-left" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-width: fit-content;">
+          <button class="icon-btn mobile-menu-toggle" id="openSidebarBtn" aria-label="Toggle Sidebar" title="Toggle Sidebar Menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          
+          <!-- Universal Search Input (Search Transactions) -->
+          <div class="search-box" style="max-width: 260px; width: 100%;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="globalSearchInput" placeholder="Search Transactions">
+          </div>
+          <h1 id="pageTitle" style="display: none;">Parties</h1>
+          <span id="pageSubtitle" style="display: none;"></span>
+        </div>
+
+        <div class="topbar-right" style="display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: auto;">
+          <!-- + Add Sale badge button -->
+          <button class="btn-topbar-sale" id="topbarAddSaleBtn" onclick="window.App.openSaleModal()">
+            + Add Sale
+          </button>
+
+          <!-- + Add Purchase badge button -->
+          <button class="btn-topbar-purchase" id="topbarAddPurchaseBtn" onclick="window.location.hash='#purchases'">
+            + Add Purchase
+          </button>
+
+          <!-- Round plus button with Quick Add Anything Menu -->
+          <div class="quick-add-wrapper" style="position: relative;">
+            <button class="btn-topbar-round-plus" id="topbarRoundPlusBtn" title="Quick Add Anything (+ Create New)" onclick="window.App.toggleQuickAddMenu(event)">
+              +
+            </button>
+            <div class="quick-add-menu-popup" id="quickAddMenuPopup" style="display: none;">
+              <div class="quick-add-menu-header">
+                <div style="font-weight: 700; color: #0f172a; font-size: 13.5px;">⚡ Quick Create / Add New</div>
+                <div class="quick-add-badge">Left Menu Actions</div>
+              </div>
+              <div class="quick-add-menu-grid">
+                <!-- Group 1: Sales & Orders -->
+                <div class="quick-add-col">
+                  <div class="quick-add-col-title">🧾 SALES & BILLING</div>
+                  <button type="button" class="quick-add-item" onclick="window.App.openSaleModal(); window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon sale-icon">+</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Sale Invoice</div>
+                      <div class="quick-add-sub">Create customer bill (Alt+S)</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#sales'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon receipt-icon">₹</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Payment-In (Receipt)</div>
+                      <div class="quick-add-sub">Receive money from party</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#orders'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon order-icon">📋</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Sale Order / Estimate</div>
+                      <div class="quick-add-sub">Quotation & order booking</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#pos'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon pos-icon">⚡</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">POS Counter Billing</div>
+                      <div class="quick-add-sub">Fast retail cash checkout</div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Group 2: Purchases & Expenses -->
+                <div class="quick-add-col">
+                  <div class="quick-add-col-title">📦 PURCHASES & EXPENSES</div>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#purchases'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon pur-icon">+</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Purchase Bill</div>
+                      <div class="quick-add-sub">Record vendor stock-in</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#purchases'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon payout-icon">💸</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Payment-Out</div>
+                      <div class="quick-add-sub">Pay supplier or vendor</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#expenses'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon exp-icon">📉</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Record Expense</div>
+                      <div class="quick-add-sub">Rent, salary, bills & fuel</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#eway'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon eway-icon">🚚</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">e-Way Bill</div>
+                      <div class="quick-add-sub">GST goods transit permit</div>
+                    </div>
+                  </button>
+                </div>
+
+                <!-- Group 3: Masters & People -->
+                <div class="quick-add-col">
+                  <div class="quick-add-col-title">👥 MASTERS & FIELD STAFF</div>
+                  <button type="button" class="quick-add-item" onclick="window.App.openPartyModal(); window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon party-icon">👤</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Add New Party</div>
+                      <div class="quick-add-sub">Customer or supplier profile</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.App.openItemModal(); window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon item-icon">🏷️</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Add New Item</div>
+                      <div class="quick-add-sub">Product, service or barcode</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#track-salesmen'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon staff-icon">📍</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Add Field Salesman</div>
+                      <div class="quick-add-sub">GPS attendance & live orders</div>
+                    </div>
+                  </button>
+                  <button type="button" class="quick-add-item" onclick="window.location.hash='#cashbank'; window.App.closeQuickAddMenu();">
+                    <span class="quick-add-icon bank-icon">🏦</span>
+                    <div class="quick-add-text">
+                      <div class="quick-add-label">Bank / Cash Account</div>
+                      <div class="quick-add-sub">Ledger accounts & UPI</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vertical 3-dots icon with System Utilities Menu -->
+          <div class="topbar-more-wrapper" style="position: relative;">
+            <button class="parties-ghost-icon-btn" id="topbarMoreOptionsBtn" title="More Options & Utilities" onclick="window.App.toggleMoreMenu(event)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="5" r="1.2"></circle>
+                <circle cx="12" cy="12" r="1.2"></circle>
+                <circle cx="12" cy="19" r="1.2"></circle>
+              </svg>
+            </button>
+            <div class="topbar-more-menu-popup" id="topbarMoreMenuPopup" style="display: none;">
+              <div class="more-menu-header">Quick Utilities & Settings</div>
+              <button type="button" class="more-menu-item" onclick="window.location.hash='#settings'; window.App.closeMoreMenu();">
+                <span class="more-item-icon">⚙️</span>
+                <span class="more-item-label">Business Settings & Themes</span>
+              </button>
+              <button type="button" class="more-menu-item" onclick="window.location.hash='#reports'; window.App.closeMoreMenu();">
+                <span class="more-item-icon">📊</span>
+                <span class="more-item-label">GST Reports & Profit/Loss</span>
+              </button>
+              <button type="button" class="more-menu-item" onclick="window.location.hash='#util-import-tally'; window.App.closeMoreMenu();">
+                <span class="more-item-icon">📥</span>
+                <span class="more-item-label">Import from Tally / Excel</span>
+              </button>
+              <button type="button" class="more-menu-item" onclick="window.App.exportBackup(); window.App.closeMoreMenu();">
+                <span class="more-item-icon">💾</span>
+                <span class="more-item-label">Download Business Data Backup</span>
+              </button>
+              <button type="button" class="more-menu-item" onclick="window.App.toggleFullScreen(); window.App.closeMoreMenu();">
+                <span class="more-item-icon">🖥️</span>
+                <span class="more-item-label">Toggle Full Screen (Cashier Mode)</span>
+              </button>
+              <button type="button" class="more-menu-item" onclick="window.App.showKeyboardShortcutsModal(); window.App.closeMoreMenu();">
+                <span class="more-item-icon">⌨️</span>
+                <span class="more-item-label">Keyboard Shortcuts (Alt+S, Alt+P)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Prominent Highlighted Lekha Jokha AI Copilot Button at Top of Screen -->
+          <button class="topbar-ai-highlight-btn" id="topbarAiBtn" onclick="window.location.hash='#ai-copilot'" title="लेखा जोखा AI - Business Copilot & Automation (Alt+A)">
+            <span class="ai-sparkle-star">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+              </svg>
+            </span>
+            <span class="ai-highlight-label">लेखा जोखा AI</span>
+            <span class="ai-live-badge">COPILOT</span>
+          </button>
+
+          <!-- Multi-Business Switcher Pill -->
+          <div class="user-pill-btn topbar-business-pill" id="topbarBusinessPill" title="Switch Active Business (Up to 5 Under Account)">
+            <span class="pill-icon">🏢</span>
+            <div class="pill-text-col">
+              <span class="pill-title" id="topbarBusinessName">My Business</span>
+            </div>
+            <span class="pill-chevron">▼</span>
+          </div>
+
+          <!-- Logged-in User Switcher Pill -->
+          <div class="user-pill-btn topbar-user-pill" id="topbarUserPill" title="Active Operator Profile & Fast Switch">
+            <span class="pill-icon" id="topbarUserAvatar">👨‍💼</span>
+            <div class="pill-text-col" id="topbarUserTextCol">
+              <span class="pill-title" id="topbarUserName">Admin</span>
+              <span class="pill-subtitle" id="topbarUserRole">ADMIN</span>
+            </div>
+            <span class="pill-chevron">▼</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Container (Swapped dynamically by router) -->
+      <div class="view-content" id="viewContainer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Global Modal: Create / Edit Sale Invoice -->
+  <div class="modal-overlay" id="saleModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <div class="modal-badge-sale">SALE INVOICE</div>
+          <h2 class="modal-title">Create Tax Invoice (GST)</h2>
+        </div>
+        <button class="modal-close-btn" id="closeSaleModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="saleInvoiceForm">
+          <!-- Top Row: Invoice Metadata -->
+          <div class="form-grid-4">
+            <div class="form-group">
+              <label for="invNumber">Invoice No. *</label>
+              <input type="text" id="invNumber" class="form-control" required readonly>
+            </div>
+            <div class="form-group">
+              <label for="invDate">Invoice Date *</label>
+              <input type="date" id="invDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="invParty">Bill To (Party) *</label>
+              <div class="input-with-button">
+                <select id="invParty" class="form-control" required>
+                  <option value="">Select Customer...</option>
+                </select>
+                <button type="button" class="btn btn-outline btn-icon" id="quickAddPartyFromSaleBtn" title="Add New Customer">+</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="invStateOfSupply">Place of Supply *</label>
+              <select id="invStateOfSupply" class="form-control">
+                <option value="DELHI (07)">Delhi (Intra-state: CGST+SGST)</option>
+                <option value="MAHARASHTRA (27)">Maharashtra (Inter-state: IGST)</option>
+                <option value="KARNATAKA (29)">Karnataka (Inter-state: IGST)</option>
+                <option value="UTTAR PRADESH (09)">Uttar Pradesh (Inter-state: IGST)</option>
+                <option value="GUJARAT (24)">Gujarat (Inter-state: IGST)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Items Table Builder -->
+          <div class="invoice-items-section">
+            <div class="section-subhead">
+              <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+                <h3>Items & Goods Breakdown</h3>
+                <button type="button" class="btn btn-sm btn-outline" id="saleScanBarcodeBtn" style="border-color:#ed1a3b;color:#ed1a3b;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"></path><line x1="7" y1="12" x2="17" y2="12"></line></svg>
+                  <span>Scan Barcode</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline" id="saleVoiceBillingBtn" style="border-color:#7c3aed;color:#7c3aed;">
+                  <span>✨ AI Voice / Prompt</span>
+                </button>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline" id="addInvoiceRowBtn">+ Add Item Row</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table invoice-item-table" id="invoiceItemsTable">
+                <thead>
+                  <tr>
+                    <th style="width: 30%">Item Details</th>
+                    <th style="width: 12%">HSN/SAC</th>
+                    <th style="width: 10%">Qty</th>
+                    <th style="width: 14%">Rate (₹)</th>
+                    <th style="width: 12%">GST Rate</th>
+                    <th style="width: 14%">Amount (₹)</th>
+                    <th style="width: 8%"></th>
+                  </tr>
+                </thead>
+                <tbody id="invoiceItemsBody">
+                  <!-- Dynamic rows added via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Payment & Calculations -->
+          <div class="invoice-footer-grid">
+            <div class="invoice-notes-col">
+              <div class="form-group">
+                <label for="invNotes">Notes / Terms & Conditions</label>
+                <textarea id="invNotes" class="form-control" rows="3" placeholder="Thank you for your business. E.&O.E."></textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="invPaymentMode">Payment Type</label>
+                  <select id="invPaymentMode" class="form-control">
+                    <option value="Cash">Cash</option>
+                    <option value="Bank / UPI">Bank Transfer / UPI QR</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Credit">Credit (Pay Later)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="invPaidAmount">Amount Paid (₹)</label>
+                  <input type="number" id="invPaidAmount" class="form-control" step="0.01" min="0" value="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="invoice-summary-card">
+              <div class="summary-line">
+                <span>Subtotal (Taxable):</span>
+                <span class="mono-val" id="invSubtotal">₹0.00</span>
+              </div>
+              <div class="summary-line" id="invTaxBreakdownRow">
+                <span>GST (CGST + SGST / IGST):</span>
+                <span class="mono-val" id="invTotalTax">₹0.00</span>
+              </div>
+              <div class="summary-line">
+                <span>Round Off:</span>
+                <span class="mono-val" id="invRoundOff">₹0.00</span>
+              </div>
+              <div class="summary-line total-line">
+                <span>Total Amount:</span>
+                <span class="mono-val text-primary" id="invGrandTotal">₹0.00</span>
+              </div>
+              <div class="summary-line balance-line">
+                <span>Balance Due:</span>
+                <span class="mono-val text-danger" id="invBalanceDue">₹0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelSaleBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveAndPrintBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <span>Save & View Invoice</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Modal: Add / Edit Party (Customer / Supplier) -->
+  <div class="modal-overlay" id="partyModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 class="modal-title" id="partyModalTitle">Add New Party</h2>
+        <button class="modal-close-btn" id="closePartyModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="partyForm">
+          <input type="hidden" id="partyId">
+          <div class="form-group">
+            <label for="partyType">Party Type *</label>
+            <div class="radio-pill-group">
+              <label class="radio-pill"><input type="radio" name="partyType" value="Customer" checked> Customer</label>
+              <label class="radio-pill"><input type="radio" name="partyType" value="Supplier"> Supplier (Vendor)</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="partyName">Party Name *</label>
+            <input type="text" id="partyName" class="form-control" required placeholder="e.g. Ramesh Hardware Store">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="partyPhone">Mobile / WhatsApp Number *</label>
+              <input type="tel" id="partyPhone" class="form-control" required placeholder="e.g. 9876543210">
+            </div>
+            <div class="form-group">
+              <label for="partyGstin">GSTIN (Optional)</label>
+              <input type="text" id="partyGstin" class="form-control" placeholder="22AAAAA0000A1Z5" maxlength="15">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="partyAddress">Billing Address</label>
+            <input type="text" id="partyAddress" class="form-control" placeholder="Shop No, Street, City">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="partyState">State</label>
+              <select id="partyState" class="form-control">
+                <option value="Delhi">Delhi</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Gujarat">Gujarat</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="partyOpeningBalance">Opening Balance (₹)</label>
+              <input type="number" id="partyOpeningBalance" class="form-control" step="0.01" value="0">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelPartyBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Party</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Modal: Add / Edit Inventory Item -->
+  <div class="modal-overlay" id="itemModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 class="modal-title" id="itemModalTitle">Add Item to Inventory</h2>
+        <button class="modal-close-btn" id="closeItemModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="itemForm">
+          <input type="hidden" id="itemId">
+          <div class="form-group">
+            <label for="itemName">Item Name *</label>
+            <input type="text" id="itemName" class="form-control" required placeholder="e.g. Basmati Rice 10kg Bag">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="itemCategory">Category</label>
+              <select id="itemCategory" class="form-control">
+                <option value="Groceries">Groceries & Food</option>
+                <option value="Electronics">Electronics & Hardware</option>
+                <option value="Apparel">Apparel & Textiles</option>
+                <option value="FMCG">FMCG & Consumer Goods</option>
+                <option value="Services">Services / Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="itemHsn">HSN / SAC Code</label>
+              <input type="text" id="itemHsn" class="form-control" placeholder="e.g. 1006">
+            </div>
+          </div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="itemSalePrice">Sale Price (₹) *</label>
+              <input type="number" id="itemSalePrice" class="form-control" step="0.01" required placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="itemPurchasePrice">Purchase Price (₹)</label>
+              <input type="number" id="itemPurchasePrice" class="form-control" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+              <label for="itemGstRate">GST Tax Rate</label>
+              <select id="itemGstRate" class="form-control">
+                <option value="0">0% (Exempt)</option>
+                <option value="5">5% GST</option>
+                <option value="12">12% GST</option>
+                <option value="18" selected>18% GST</option>
+                <option value="28">28% GST</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="itemUnit">Unit</label>
+              <select id="itemUnit" class="form-control">
+                <option value="PCS">Pieces (PCS)</option>
+                <option value="KG">Kilograms (KG)</option>
+                <option value="BOX">Boxes (BOX)</option>
+                <option value="LTR">Liters (LTR)</option>
+                <option value="MTR">Meters (MTR)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="itemStock">Opening Stock Qty *</label>
+              <input type="number" id="itemStock" class="form-control" required value="0">
+            </div>
+            <div class="form-group">
+              <label for="itemMinStock">Min Stock Alert</label>
+              <input type="number" id="itemMinStock" class="form-control" value="5">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelItemBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Modal: Print / View Professional GST Invoice -->
+  <div class="modal-overlay" id="printInvoiceModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header no-print">
+        <h2 class="modal-title">Tax Invoice Preview</h2>
+        <div class="modal-header-actions">
+          <button class="btn btn-outline btn-sm" id="whatsappShareBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Share on WhatsApp</span>
+          </button>
+          <button class="btn btn-primary btn-sm" id="triggerPrintBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>Print Invoice (PDF)</span>
+          </button>
+          <button class="modal-close-btn" id="closePrintModalBtn">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body printable-area" id="printableInvoiceContent">
+        <!-- Injected dynamically via js/modules/invoice_print.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Field Salesman Modal (Global Modal) -->
+  <div class="modal-overlay" id="addSalesmanModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 class="modal-title">Add Field Salesman</h3>
+          <p style="font-size:12px;color:var(--text-muted);margin:0;">Register marketing staff, assign business & generate instant WhatsApp invite</p>
+        </div>
+        <button type="button" class="modal-close-btn" id="closeAddSalesmanModal" onclick="window.UtilitiesModule && window.UtilitiesModule.closeAddSalesmanModal()">&times;</button>
+      </div>
+      <form id="addSalesmanForm" class="modal-body" style="padding: 1.25rem 1.5rem; overflow-y: auto;" onsubmit="event.preventDefault(); window.UtilitiesModule && window.UtilitiesModule.handleCreateSalesman(event); return false;">
+        <div class="form-group mb-3">
+          <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Full Name <span class="required" style="color:var(--danger)">*</span></label>
+          <input type="text" id="salesmanFullName" class="form-input" placeholder="e.g. Narendra Modi" required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Mobile Number <span class="required" style="color:var(--danger)">*</span></label>
+          <div class="input-with-prefix" style="display:flex;align-items:stretch;">
+            <span class="phone-prefix" style="background:#f1f5f9;border:1px solid #cbd5e1;border-right:none;padding:8px 14px;border-radius:6px 0 0 6px;font-size:13.5px;color:#475569;font-weight:600;display:flex;align-items:center;">+91</span>
+            <input type="tel" id="salesmanMobile" class="form-input" style="border-radius:0 6px 6px 0;" placeholder="98765 01234" maxlength="10" required>
+          </div>
+          <span class="form-help-text" style="font-size:11px;color:var(--text-muted);display:block;margin-top:4px;">Used for WhatsApp invite delivery & mobile app OTP login.</span>
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Assigned Business <span class="required" style="color:var(--danger)">*</span></label>
+          <select id="salesmanBusinessSelect" class="form-select">
+            <!-- Dynamically populated from businesses -->
+          </select>
+        </div>
+
+        <div class="form-row" style="display:flex;gap:12px;margin-bottom:12px;">
+          <div class="form-group" style="flex:1;">
+            <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Employee ID (Optional)</label>
+            <input type="text" id="salesmanEmpId" class="form-input" placeholder="e.g. EMP-042">
+          </div>
+          <div class="form-group" style="flex:1;">
+            <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Role / Designation</label>
+            <input type="text" id="salesmanRole" class="form-input" value="Field Salesman" placeholder="Field Salesman">
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Sales Territory / Zone (Optional)</label>
+          <input type="text" id="salesmanTerritory" class="form-input" placeholder="e.g. Central Bengaluru / Rohini Delhi">
+        </div>
+
+        <div class="form-group mb-3">
+          <label style="font-weight:600;font-size:13px;display:block;margin-bottom:5px;">Email Address (Optional)</label>
+          <input type="email" id="salesmanEmail" class="form-input" placeholder="salesman@example.com">
+        </div>
+
+        <div class="modal-footer" style="padding:1rem 0 0 0;border-top:1px solid var(--border-subtle);display:flex;justify-content:flex-end;gap:10px;margin-top:10px;">
+          <button type="button" class="btn btn-secondary" id="cancelAddSalesmanBtn" onclick="window.UtilitiesModule && window.UtilitiesModule.closeAddSalesmanModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitAddSalesmanBtn">Create & Send WhatsApp Invite</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+
+
+  <!-- Core Storage, Utility & i18n Engines -->
+  <script src="js/i18n.js?v=4.0.0"></script>
+  <script src="js/storage/indexed_db.js?v=4.0.0"></script>
+  <script src="js/utils/pagination.js?v=4.0.0"></script>
+  <script src="js/data.js?v=4.0.0"></script>
+
+  <!-- Application Modules -->
+  <script src="js/modules/invoice_print.js?v=4.0.0"></script>
+  <script src="js/modules/barcode.js?v=4.0.0"></script>
+  <script src="js/modules/eway.js?v=4.0.0"></script>
+  <script src="js/modules/users.js?v=4.0.0"></script>
+  <script src="js/utils/gemini_service.js?v=4.3.0"></script>
+  <script src="js/utils/voice_transcription.js?v=4.3.0"></script>
+  <script src="js/modules/ai_copilot.js?v=4.3.0"></script>
+  <script src="js/modules/dashboard.js?v=4.0.1"></script>
+  <script src="js/modules/sales.js?v=4.0.0"></script>
+  <script src="js/modules/pos.js?v=4.0.0"></script>
+  <script src="js/modules/purchases.js?v=4.2.0"></script>
+  <script src="js/modules/parties.js?v=4.0.0"></script>
+  <script src="js/modules/items.js?v=4.0.0"></script>
+  <script src="js/modules/cashbank.js?v=4.0.0"></script>
+  <script src="js/modules/expenses.js?v=4.0.0"></script>
+  <script src="js/modules/reports.js?v=4.0.0"></script>
+  <script src="js/modules/migration.js?v=4.0.0"></script>
+  <script src="js/modules/settings.js?v=4.3.0"></script>
+  <script src="js/modules/app_settings.js?v=4.5.0"></script>
+  <script src="js/modules/subscription.js?v=4.0.0"></script>
+  <script src="js/modules/utilities.js?v=4.0.0"></script>
+  <script src="js/modules/orders.js?v=4.0.0"></script>
+  <script src="js/modules/salesmen_management.js?v=4.0.0"></script>
+  <script src="js/modules/salesman_app.js?v=4.0.0"></script>
+  <script src="js/modules/home.js?v=1.0.0"></script>
+  <script src="js/app.js?v=4.0.0"></script>
+  <script src="js/mobile/mobile_ui.js?v=4.0.0"></script>
+
+  <!-- PWA Offline Service Worker Registration (Production only; dev auto-purges cache) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+          }
+        });
+        if ('caches' in window) {
+          caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)));
+        }
+      } else {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('[PWA] Service Worker active. Checking for updates...');
+              registration.update();
+            })
+            .catch((err) => console.log('[PWA] Service Worker registration:', err));
+
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('[PWA] Latest application version active.');
+          });
+        });
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "parties": [
+    {
+      "id": "PV01",
+      "name": "Verma Loyal Customer",
+      "type": "Customer",
+      "phone": "9988770000",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-054",
+      "createdBy": "U-5089",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T16:27:52.370Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITMV01",
+      "barcode": "890103615302",
+      "name": "Fresh Organic Mustard 500g",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 80,
+      "purchasePrice": 60,
+      "gstRate": 0,
+      "unit": "PCS",
+      "stock": 98,
+      "minStock": 5,
+      "businessId": "BIZ-054",
+      "createdBy": "U-5089",
+      "version": 1,
+      "updatedAt": "2026-10-22T16:27:52.417Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV_VERMA_LEGIT_01",
+      "number": "INV-2026-001",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "PV01",
+      "partyName": "Verma Loyal Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITMV01",
+          "name": "Fresh Organic Mustard 500g",
+          "qty": 2,
+          "rate": 80,
+          "amount": 160
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 160,
+      "paid": 0,
+      "balance": 0,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-054",
+      "createdBy": "U-5089",
+      "version": 1,
+      "updatedAt": "2026-10-22T16:27:52.417Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-054",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

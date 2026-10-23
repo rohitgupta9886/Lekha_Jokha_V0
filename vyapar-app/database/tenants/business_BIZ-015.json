@@ -1,0 +1,315 @@
+{
+  "parties": [
+    {
+      "id": "P_LALU",
+      "name": "Kallu singh",
+      "type": "Customer",
+      "phone": "9876543210",
+      "gstin": "",
+      "address": "B-44, Civil Lines, Kanpur, UP",
+      "state": "Uttar Pradesh",
+      "balance": 1000,
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T10:13:13.111Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103000001",
+      "name": "Python",
+      "category": "FMCG",
+      "hsn": "6547",
+      "salePrice": 5444,
+      "purchasePrice": 3333,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 765,
+      "minStock": 5,
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 2,
+      "updatedAt": "2026-10-23T10:14:02.561Z"
+    },
+    {
+      "id": "ITM001",
+      "barcode": "890103000001",
+      "name": "Java",
+      "category": "Apparel",
+      "hsn": "4654",
+      "salePrice": 56657,
+      "purchasePrice": 5443,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 7777,
+      "minStock": 5,
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T09:34:48.310Z"
+    },
+    {
+      "id": "ITM003",
+      "barcode": "890103000003",
+      "name": "Java",
+      "category": "FMCG",
+      "hsn": "123",
+      "salePrice": 8888,
+      "purchasePrice": 5555,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 54654,
+      "minStock": 58,
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T09:35:20.319Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-001",
+      "number": "INV-2026-001",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P_LALU",
+      "partyName": "Kallu singh",
+      "placeOfSupply": "DELHI (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Java",
+          "hsn": "4654",
+          "qty": 6,
+          "rate": 56657,
+          "gstRate": 18,
+          "amount": 401131.56
+        }
+      ],
+      "subtotal": 339942,
+      "tax": 61189.56,
+      "total": 401132,
+      "paid": 401132,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T10:14:02.559Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [
+    {
+      "id": "SALES-001",
+      "name": "Ramesh Kumar",
+      "phone": "+91 98765 43210",
+      "email": "ramesh@field.lekhajokha.in",
+      "employeeId": "EMP-001",
+      "role": "Field Salesman",
+      "territory": "Central Delhi / Karol Bagh",
+      "businessId": "BIZ-015",
+      "status": "Active",
+      "joiningStatus": "ACTIVE",
+      "inviteStatus": "Accepted",
+      "inviteToken": "INV-RK-2026-01",
+      "inviteExpiresAt": "2026-10-29T15:24:38.589Z",
+      "inviteCreatedAt": "2026-10-22T15:24:38.589Z",
+      "attendanceStatus": "Punched In",
+      "lastPunchIn": "2026-10-22T15:24:38.589Z",
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 28.6507,
+        "lng": 77.1906,
+        "address": "Karol Bagh Market, New Delhi",
+        "timestamp": "2026-10-22T15:24:38.589Z",
+        "accuracy": 8
+      },
+      "locationHistory": [
+        {
+          "lat": 28.6507,
+          "lng": 77.1906,
+          "timestamp": "2026-10-22T15:24:38.589Z",
+          "battery": 92
+        }
+      ],
+      "attendanceSessions": [
+        {
+          "id": "ATT-001",
+          "date": "2026-10-22",
+          "punchIn": "2026-10-22T15:24:38.589Z",
+          "type": "PUNCH_IN",
+          "locationName": "Karol Bagh Market, New Delhi",
+          "timestamp": "2026-10-22T15:24:38.589Z"
+        }
+      ]
+    },
+    {
+      "id": "SALES-002",
+      "name": "Narendra Modi",
+      "phone": "+91 98765 01234",
+      "email": "narendra@sharmatraders.in",
+      "employeeId": "EMP-002",
+      "role": "Field Salesman",
+      "territory": "Central Bengaluru / Gandhinagar",
+      "businessId": "BIZ-015",
+      "status": "Active",
+      "joiningStatus": "JOINING PENDING",
+      "inviteStatus": "Pending",
+      "inviteToken": "INV-NM-2026-99",
+      "inviteExpiresAt": "2026-10-29T15:24:38.589Z",
+      "inviteCreatedAt": "2026-10-22T15:24:38.589Z",
+      "attendanceStatus": "Punched Out",
+      "lastPunchIn": null,
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic / Okalipuram, Bengaluru, Karnataka",
+        "timestamp": "2026-10-22T15:24:38.589Z",
+        "accuracy": 12
+      },
+      "locationHistory": [
+        {
+          "lat": 12.9778,
+          "lng": 77.5726,
+          "timestamp": "2026-10-22T15:24:38.589Z",
+          "battery": 88
+        }
+      ],
+      "attendanceSessions": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-001",
+      "title": "Client Visit - Basmati Rice & Oil Restock",
+      "customerName": "Gupta General Store",
+      "partyId": "P001",
+      "address": "B-12, Sector 15, Rohini, Delhi",
+      "dueDate": "2026-10-21",
+      "dueTime": "11:30 AM",
+      "status": "Pending",
+      "priority": "High",
+      "instructions": "Verify physical stock level and collect balance due",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    },
+    {
+      "id": "TSK-002",
+      "title": "Product Sample Catalog Presentation",
+      "customerName": "Metro Retail Mart",
+      "partyId": "P002",
+      "address": "Shop 4, Karol Bagh, Delhi",
+      "dueDate": "2026-10-22",
+      "dueTime": "02:00 PM",
+      "status": "In Progress",
+      "priority": "Medium",
+      "instructions": "Showcase new Syska LED bulbs line and take advance order",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    }
+  ],
+  "leads": [
+    {
+      "id": "LEAD-001",
+      "name": "Deepak Wholesale Kirana",
+      "contactPerson": "Deepak Agarwal",
+      "phone": "+91 98450 11223",
+      "email": "deepak@kirana.in",
+      "address": "Gandhinagar Main Road, Bengaluru",
+      "status": "Qualified",
+      "potentialValue": 45000,
+      "notes": "Interested in monthly 50 Bags Basmati Rice consignment",
+      "nextFollowUp": "2026-10-23",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-18"
+    },
+    {
+      "id": "LEAD-002",
+      "name": "Shree Krishna Departmental Store",
+      "contactPerson": "Gopal Krishna",
+      "phone": "+91 98451 99887",
+      "email": "gopal@krishnastores.in",
+      "address": "Seshadripuram, Bengaluru",
+      "status": "Contacted",
+      "potentialValue": 28000,
+      "notes": "Requested price quote for edible oils & FMCG",
+      "nextFollowUp": "2026-10-24",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-19"
+    }
+  ],
+  "visits": [
+    {
+      "id": "VIS-001",
+      "salesmanId": "SALES-001",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "startTime": "2026-10-20T10:15:00.000Z",
+      "endTime": "2026-10-20T11:00:00.000Z",
+      "durationMinutes": 45,
+      "location": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic Market, Bengaluru"
+      },
+      "notes": "Customer confirmed requirement of 15 bags Basmati Rice. Payment collected ₹10,000.",
+      "outcome": "Order Taken & Cheque Collected",
+      "followUpDate": "2026-10-28"
+    }
+  ],
+  "accountantAccess": [
+    {
+      "id": "ACC-001",
+      "name": "Priya Singh & Associates",
+      "email": "priya.ca@auditfirm.in",
+      "phone": "+91 98234 56789",
+      "permissions": [
+        "GSTR1_VIEW",
+        "P_AND_L",
+        "LEDGER_AUDIT",
+        "EXPORT_TALLY"
+      ],
+      "status": "Active",
+      "invitedAt": "2026-10-10",
+      "token": "ACC-TOK-998811"
+    }
+  ],
+  "businessProfile": {
+    "businessName": "Gujju Traders INC",
+    "legalName": "Sharma Traders & Distributors Private Limited",
+    "phone": "+91 98765 43210",
+    "email": "info@sharmatraders.in",
+    "address": "Shop 12-14, Commercial Complex, Sector 15, Rohini, Delhi - 110085",
+    "state": "Delhi (07)",
+    "gstin": "07AAAAA0000A1Z5",
+    "pan": "AAAAA0000A",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.\n3. Interest @ 18% p.a. will be charged after 30 days credit.",
+    "bankName": "HDFC Bank",
+    "accountNumber": "50200012345678",
+    "ifscCode": "HDFC0001234",
+    "branchName": "Rohini Sector 15",
+    "logoUrl": ""
+  }
+}

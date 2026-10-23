@@ -1,0 +1,122 @@
+{
+  "parties": [],
+  "items": [],
+  "sales": [],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [
+    {
+      "id": "SALES-001",
+      "name": "Ramesh Kumar",
+      "phone": "+91 98765 43210",
+      "email": "ramesh@field.lekhajokha.in",
+      "employeeId": "EMP-001",
+      "role": "Field Salesman",
+      "territory": "Central Delhi / Karol Bagh",
+      "businessId": "BIZ-016",
+      "status": "Active",
+      "joiningStatus": "ACTIVE",
+      "inviteStatus": "Accepted",
+      "inviteToken": "INV-RK-2026-01",
+      "inviteExpiresAt": "2026-10-29T15:28:51.717Z",
+      "inviteCreatedAt": "2026-10-22T15:28:51.717Z",
+      "attendanceStatus": "Punched In",
+      "lastPunchIn": "2026-10-22T15:28:51.717Z",
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 28.6507,
+        "lng": 77.1906,
+        "address": "Karol Bagh Market, New Delhi",
+        "timestamp": "2026-10-22T15:28:51.717Z",
+        "accuracy": 8
+      },
+      "locationHistory": [
+        {
+          "lat": 28.6507,
+          "lng": 77.1906,
+          "timestamp": "2026-10-22T15:28:51.717Z",
+          "battery": 92
+        }
+      ],
+      "attendanceSessions": [
+        {
+          "id": "ATT-001",
+          "date": "2026-10-22",
+          "punchIn": "2026-10-22T15:28:51.717Z",
+          "type": "PUNCH_IN",
+          "locationName": "Karol Bagh Market, New Delhi",
+          "timestamp": "2026-10-22T15:28:51.717Z"
+        }
+      ]
+    },
+    {
+      "id": "SALES-002",
+      "name": "Narendra Modi",
+      "phone": "+91 98765 01234",
+      "email": "narendra@sharmatraders.in",
+      "employeeId": "EMP-002",
+      "role": "Field Salesman",
+      "territory": "Central Bengaluru / Gandhinagar",
+      "businessId": "BIZ-016",
+      "status": "Active",
+      "joiningStatus": "JOINING PENDING",
+      "inviteStatus": "Pending",
+      "inviteToken": "INV-NM-2026-99",
+      "inviteExpiresAt": "2026-10-29T15:28:51.717Z",
+      "inviteCreatedAt": "2026-10-22T15:28:51.717Z",
+      "attendanceStatus": "Punched Out",
+      "lastPunchIn": null,
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic / Okalipuram, Bengaluru, Karnataka",
+        "timestamp": "2026-10-22T15:28:51.717Z",
+        "accuracy": 12
+      },
+      "locationHistory": [
+        {
+          "lat": 12.9778,
+          "lng": 77.5726,
+          "timestamp": "2026-10-22T15:28:51.717Z",
+          "battery": 88
+        }
+      ],
+      "attendanceSessions": []
+    }
+  ],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-016",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "parties": [],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103000001",
+      "name": "Geography",
+      "category": "Groceries",
+      "hsn": "9999",
+      "salePrice": 555,
+      "purchasePrice": 444,
+      "gstRate": 18,
+      "unit": "PCS",
+      "stock": 77777,
+      "minStock": 5,
+      "businessId": "BIZ-201",
+      "createdBy": "U-3770",
+      "version": 1,
+      "updatedAt": "2026-10-23T10:51:47.058Z"
+    }
+  ],
+  "sales": [],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-201",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

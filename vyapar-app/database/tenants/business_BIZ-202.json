@@ -1,0 +1,197 @@
+{
+  "parties": [
+    {
+      "id": "P001",
+      "name": "Customer of Shopkeeper 1",
+      "type": "Customer",
+      "phone": "9911001100",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-202",
+      "createdBy": "U-2747",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T15:24:30.092Z"
+    },
+    {
+      "id": "P-A1-1792769075974",
+      "name": "Customer Alpha One",
+      "type": "Customer",
+      "phone": "9911001122",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 5000,
+      "businessId": "BIZ-202",
+      "createdBy": "U-5347",
+      "version": 1,
+      "createdAt": "2026-10-23",
+      "updatedAt": "2026-10-23T15:24:35.979Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM-A1-1792769076175",
+      "barcode": "890103189260",
+      "name": "Item Alpha Basmati 10kg",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 1200,
+      "purchasePrice": 1000,
+      "gstRate": 5,
+      "unit": "PCS",
+      "stock": 95,
+      "minStock": 5,
+      "businessId": "BIZ-202",
+      "createdBy": "U-5347",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:36.356Z"
+    },
+    {
+      "id": "ITM001",
+      "barcode": "890103331183",
+      "name": "Multi-Device Test Rice 10kg",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 1250,
+      "purchasePrice": 0,
+      "gstRate": 0,
+      "unit": "BAG",
+      "stock": 42,
+      "minStock": 5,
+      "businessId": "BIZ-202",
+      "createdBy": "U-2747",
+      "version": 2,
+      "updatedAt": "2026-10-23T15:24:31.980Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-003",
+      "number": "INV-A1-1792769076350",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P-A1-1792769075974",
+      "partyName": "Customer Alpha One",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM-A1-1792769076175",
+          "name": "Item Alpha Basmati 10kg",
+          "qty": 5,
+          "rate": 1200,
+          "amount": 6000
+        }
+      ],
+      "subtotal": 5714.28,
+      "tax": 285.72,
+      "total": 6000,
+      "paid": 6000,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-202",
+      "createdBy": "U-5347",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:36.355Z"
+    },
+    {
+      "id": "INV-CONCUR-1792769071976",
+      "number": "INV-CONCUR-1792769071976",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P001",
+      "partyName": "Customer of Shopkeeper 1",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "qty": 1,
+          "rate": 1250,
+          "amount": 1250
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 1250,
+      "paid": 1250,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-202",
+      "createdBy": "U-2747",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:31.980Z"
+    },
+    {
+      "id": "INV-2026-001",
+      "number": "INV-REP-1792769071773",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P001",
+      "partyName": "Cash Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "qty": 2,
+          "rate": 1250,
+          "amount": 2500
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 2500,
+      "paid": 2500,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-202",
+      "createdBy": "U-2747",
+      "version": 1,
+      "updatedAt": "2026-10-23T15:24:31.777Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-202",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

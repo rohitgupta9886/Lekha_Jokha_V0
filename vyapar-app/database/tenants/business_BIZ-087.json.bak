@@ -1,0 +1,106 @@
+{
+  "parties": [
+    {
+      "id": "P001",
+      "name": "Customer of Shopkeeper 1",
+      "type": "Customer",
+      "phone": "9911001100",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-087",
+      "createdBy": "U-1631",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T18:22:52.594Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103240135",
+      "name": "Multi-Device Test Rice 10kg",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 1250,
+      "purchasePrice": 0,
+      "gstRate": 0,
+      "unit": "BAG",
+      "stock": 43,
+      "minStock": 5,
+      "businessId": "BIZ-087",
+      "createdBy": "U-1631",
+      "version": 2,
+      "updatedAt": "2026-10-22T18:22:52.923Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-2026-001",
+      "number": "INV-REP-1792693372918",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P001",
+      "partyName": "Cash Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "qty": 2,
+          "rate": 1250,
+          "amount": 2500
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 2500,
+      "paid": 2500,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-087",
+      "createdBy": "U-1631",
+      "version": 1,
+      "updatedAt": "2026-10-22T18:22:52.923Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-087",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}

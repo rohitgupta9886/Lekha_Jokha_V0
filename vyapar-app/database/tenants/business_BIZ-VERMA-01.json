@@ -1,0 +1,499 @@
+{
+  "parties": [
+    {
+      "id": "PV01",
+      "name": "Lucknow Metro Contractor",
+      "type": "Customer",
+      "balance": 50000,
+      "state": "Uttar Pradesh"
+    },
+    {
+      "id": "PV01",
+      "name": "Verma Loyal Customer",
+      "type": "Customer",
+      "phone": "9988770000",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T14:47:55.658Z"
+    },
+    {
+      "id": "PV01",
+      "name": "Verma Loyal Customer",
+      "type": "Customer",
+      "phone": "9988770000",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T15:03:23.923Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITMV01",
+      "name": "UltraTech Cement 50kg",
+      "salePrice": 380,
+      "stock": 196,
+      "unit": "BAGS",
+      "updatedAt": "2026-10-22T15:03:24.052Z"
+    },
+    {
+      "id": "ITMV01",
+      "barcode": "890103743544",
+      "name": "Fresh Organic Mustard 500g",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 80,
+      "purchasePrice": 60,
+      "gstRate": 0,
+      "unit": "PCS",
+      "stock": 100,
+      "minStock": 5,
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "updatedAt": "2026-10-22T14:47:55.739Z"
+    },
+    {
+      "id": "ITMV01",
+      "barcode": "890103778788",
+      "name": "Fresh Organic Mustard 500g",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 80,
+      "purchasePrice": 60,
+      "gstRate": 0,
+      "unit": "PCS",
+      "stock": 100,
+      "minStock": 5,
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "updatedAt": "2026-10-22T15:03:23.992Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV_VERMA_LEGIT_01",
+      "number": "INV-2026-003",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "PV01",
+      "partyName": "Verma Loyal Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITMV01",
+          "name": "Fresh Organic Mustard 500g",
+          "qty": 2,
+          "rate": 80,
+          "amount": 160
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 160,
+      "paid": 0,
+      "balance": 0,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "updatedAt": "2026-10-22T15:03:24.052Z"
+    },
+    {
+      "id": "INV_VERMA_LEGIT_01",
+      "number": "INV-2026-002",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "PV01",
+      "partyName": "Verma Loyal Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITMV01",
+          "name": "Fresh Organic Mustard 500g",
+          "qty": 2,
+          "rate": 80,
+          "amount": 160
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 160,
+      "paid": 0,
+      "balance": 0,
+      "status": "Unpaid",
+      "notes": "",
+      "businessId": "BIZ-VERMA-01",
+      "createdBy": "U005",
+      "version": 1,
+      "updatedAt": "2026-10-22T14:47:55.809Z"
+    },
+    {
+      "id": "INV-VERMA-001",
+      "number": "INV-VERMA-001",
+      "total": 19000,
+      "status": "Paid",
+      "partyName": "Lucknow Metro Contractor"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 75000,
+    "bankAccounts": []
+  },
+  "ewayBills": [
+    {
+      "id": "EWB-2026-001",
+      "ewbNo": "101928374650",
+      "invoiceNo": "INV-2026-001",
+      "date": "2026-10-15",
+      "partyName": "Gupta General Store",
+      "vehicleNo": "DL-1L-4421",
+      "transporter": "SafeXpress Logistics",
+      "fromState": "Delhi (07)",
+      "toState": "Mumbai (27)",
+      "distanceKm": 1420,
+      "totalValue": 49875,
+      "status": "Active",
+      "validTill": "2026-10-21"
+    },
+    {
+      "id": "EWB-2026-002",
+      "ewbNo": "101928374651",
+      "invoiceNo": "INV-2026-002",
+      "date": "2026-10-17",
+      "partyName": "Metro Retail Mart",
+      "vehicleNo": "HR-55-9082",
+      "transporter": "Delhi Cargo Trans",
+      "fromState": "Delhi (07)",
+      "toState": "Haryana (06)",
+      "distanceKm": 85,
+      "totalValue": 12075,
+      "status": "Active",
+      "validTill": "2026-10-20"
+    }
+  ],
+  "estimates": [
+    {
+      "id": "EST-2026-001",
+      "number": "EST-2026-001",
+      "partyName": "Rajesh Enterprises (Delhi)",
+      "date": "2026-10-18",
+      "total": 16500,
+      "status": "Pending",
+      "validTill": "2026-10-25",
+      "remarks": "Festival stock quote"
+    },
+    {
+      "id": "EST-2026-002",
+      "number": "EST-2026-002",
+      "partyName": "Metro Retail Mart",
+      "date": "2026-10-16",
+      "total": 22400,
+      "status": "Approved",
+      "validTill": "2026-10-23",
+      "remarks": "Bulk order quote"
+    }
+  ],
+  "salesReturns": [
+    {
+      "id": "SR-2026-001",
+      "number": "SR-2026-001",
+      "docType": "SalesReturn",
+      "date": "2026-10-16",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium (10 Kg)",
+          "qty": 2,
+          "rate": 1150,
+          "amount": 2415
+        }
+      ],
+      "total": 2415,
+      "reason": "Damaged packaging in transit",
+      "status": "Restocked"
+    }
+  ],
+  "deliveryChallans": [
+    {
+      "id": "DC-2026-001",
+      "number": "DC-2026-001",
+      "date": "2026-10-18",
+      "partyId": "P002",
+      "partyName": "Metro Retail Mart",
+      "vehicleNo": "DL-1L-4421",
+      "driverName": "Sunil Yadav",
+      "items": [
+        {
+          "itemId": "ITM002",
+          "name": "Fortune Refined Mustard Oil (1 Ltr)",
+          "qty": 20
+        }
+      ],
+      "status": "Dispatched",
+      "notes": "Fragile goods"
+    }
+  ],
+  "purchaseReturns": [
+    {
+      "id": "PR-2026-001",
+      "number": "PR-2026-001",
+      "date": "2026-10-12",
+      "partyId": "P004",
+      "partyName": "Hindustan FMCG Suppliers",
+      "items": [
+        {
+          "itemId": "ITM003",
+          "name": "Tata Tea Gold (500g)",
+          "qty": 5,
+          "rate": 275,
+          "amount": 1443.75
+        }
+      ],
+      "total": 1443.75,
+      "reason": "Expiry date mismatch",
+      "status": "Returned"
+    }
+  ],
+  "paymentsIn": [
+    {
+      "id": "REC-2026-001",
+      "number": "REC-2026-001",
+      "date": "2026-10-17",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "amount": 10000,
+      "paymentMode": "UPI",
+      "txRef": "UPI-8849201",
+      "notes": "Part settlement against old balance"
+    }
+  ],
+  "paymentsOut": [
+    {
+      "id": "PAY-2026-001",
+      "number": "PAY-2026-001",
+      "date": "2026-10-14",
+      "partyId": "P004",
+      "partyName": "Hindustan FMCG Suppliers",
+      "amount": 15000,
+      "paymentMode": "Bank Transfer",
+      "txRef": "NEFT-991200",
+      "notes": "Vendor advance payment"
+    }
+  ],
+  "salesmen": [
+    {
+      "id": "SALES-001",
+      "name": "Ramesh Kumar",
+      "phone": "+91 98765 43210",
+      "email": "ramesh@field.lekhajokha.in",
+      "employeeId": "EMP-001",
+      "role": "Field Salesman",
+      "territory": "Central Delhi / Karol Bagh",
+      "businessId": "BIZ-VERMA-01",
+      "status": "Active",
+      "joiningStatus": "ACTIVE",
+      "inviteStatus": "Accepted",
+      "inviteToken": "INV-RK-2026-01",
+      "inviteExpiresAt": "2026-10-29T14:47:55.565Z",
+      "inviteCreatedAt": "2026-10-22T14:47:55.565Z",
+      "attendanceStatus": "Punched In",
+      "lastPunchIn": "2026-10-22T14:47:55.565Z",
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 28.6507,
+        "lng": 77.1906,
+        "address": "Karol Bagh Market, New Delhi",
+        "timestamp": "2026-10-22T14:47:55.565Z",
+        "accuracy": 8
+      },
+      "locationHistory": [
+        {
+          "lat": 28.6507,
+          "lng": 77.1906,
+          "timestamp": "2026-10-22T14:47:55.565Z",
+          "battery": 92
+        }
+      ],
+      "attendanceSessions": [
+        {
+          "id": "ATT-001",
+          "date": "2026-10-22",
+          "punchIn": "2026-10-22T14:47:55.565Z",
+          "type": "PUNCH_IN",
+          "locationName": "Karol Bagh Market, New Delhi",
+          "timestamp": "2026-10-22T14:47:55.565Z"
+        }
+      ]
+    },
+    {
+      "id": "SALES-002",
+      "name": "Narendra Modi",
+      "phone": "+91 98765 01234",
+      "email": "narendra@sharmatraders.in",
+      "employeeId": "EMP-002",
+      "role": "Field Salesman",
+      "territory": "Central Bengaluru / Gandhinagar",
+      "businessId": "BIZ-VERMA-01",
+      "status": "Active",
+      "joiningStatus": "JOINING PENDING",
+      "inviteStatus": "Pending",
+      "inviteToken": "INV-NM-2026-99",
+      "inviteExpiresAt": "2026-10-29T14:47:55.565Z",
+      "inviteCreatedAt": "2026-10-22T14:47:55.565Z",
+      "attendanceStatus": "Punched Out",
+      "lastPunchIn": null,
+      "lastPunchOut": null,
+      "lastLocation": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic / Okalipuram, Bengaluru, Karnataka",
+        "timestamp": "2026-10-22T14:47:55.565Z",
+        "accuracy": 12
+      },
+      "locationHistory": [
+        {
+          "lat": 12.9778,
+          "lng": 77.5726,
+          "timestamp": "2026-10-22T14:47:55.565Z",
+          "battery": 88
+        }
+      ],
+      "attendanceSessions": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-001",
+      "title": "Client Visit - Basmati Rice & Oil Restock",
+      "customerName": "Gupta General Store",
+      "partyId": "P001",
+      "address": "B-12, Sector 15, Rohini, Delhi",
+      "dueDate": "2026-10-21",
+      "dueTime": "11:30 AM",
+      "status": "Pending",
+      "priority": "High",
+      "instructions": "Verify physical stock level and collect balance due",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    },
+    {
+      "id": "TSK-002",
+      "title": "Product Sample Catalog Presentation",
+      "customerName": "Metro Retail Mart",
+      "partyId": "P002",
+      "address": "Shop 4, Karol Bagh, Delhi",
+      "dueDate": "2026-10-22",
+      "dueTime": "02:00 PM",
+      "status": "In Progress",
+      "priority": "Medium",
+      "instructions": "Showcase new Syska LED bulbs line and take advance order",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-20"
+    }
+  ],
+  "leads": [
+    {
+      "id": "LEAD-001",
+      "name": "Deepak Wholesale Kirana",
+      "contactPerson": "Deepak Agarwal",
+      "phone": "+91 98450 11223",
+      "email": "deepak@kirana.in",
+      "address": "Gandhinagar Main Road, Bengaluru",
+      "status": "Qualified",
+      "potentialValue": 45000,
+      "notes": "Interested in monthly 50 Bags Basmati Rice consignment",
+      "nextFollowUp": "2026-10-23",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-18"
+    },
+    {
+      "id": "LEAD-002",
+      "name": "Shree Krishna Departmental Store",
+      "contactPerson": "Gopal Krishna",
+      "phone": "+91 98451 99887",
+      "email": "gopal@krishnastores.in",
+      "address": "Seshadripuram, Bengaluru",
+      "status": "Contacted",
+      "potentialValue": 28000,
+      "notes": "Requested price quote for edible oils & FMCG",
+      "nextFollowUp": "2026-10-24",
+      "assignedSalesmanId": "SALES-001",
+      "createdAt": "2026-10-19"
+    }
+  ],
+  "visits": [
+    {
+      "id": "VIS-001",
+      "salesmanId": "SALES-001",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "startTime": "2026-10-20T10:15:00.000Z",
+      "endTime": "2026-10-20T11:00:00.000Z",
+      "durationMinutes": 45,
+      "location": {
+        "lat": 12.9778,
+        "lng": 77.5726,
+        "address": "Majestic Market, Bengaluru"
+      },
+      "notes": "Customer confirmed requirement of 15 bags Basmati Rice. Payment collected ₹10,000.",
+      "outcome": "Order Taken & Cheque Collected",
+      "followUpDate": "2026-10-28"
+    }
+  ],
+  "accountantAccess": [
+    {
+      "id": "ACC-001",
+      "name": "Priya Singh & Associates",
+      "email": "priya.ca@auditfirm.in",
+      "phone": "+91 98234 56789",
+      "permissions": [
+        "GSTR1_VIEW",
+        "P_AND_L",
+        "LEDGER_AUDIT",
+        "EXPORT_TALLY"
+      ],
+      "status": "Active",
+      "invitedAt": "2026-10-10",
+      "token": "ACC-TOK-998811"
+    }
+  ],
+  "businessProfile": {
+    "businessName": "Verma Building Supplies",
+    "legalName": "Sharma Traders & Distributors Private Limited",
+    "phone": "+91 98765 43210",
+    "email": "info@sharmatraders.in",
+    "address": "Shop 12-14, Commercial Complex, Sector 15, Rohini, Delhi - 110085",
+    "state": "Delhi (07)",
+    "gstin": "07AAAAA0000A1Z5",
+    "pan": "AAAAA0000A",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.\n3. Interest @ 18% p.a. will be charged after 30 days credit.",
+    "bankName": "HDFC Bank",
+    "accountNumber": "50200012345678",
+    "ifscCode": "HDFC0001234",
+    "branchName": "Rohini Sector 15",
+    "logoUrl": ""
+  }
+}

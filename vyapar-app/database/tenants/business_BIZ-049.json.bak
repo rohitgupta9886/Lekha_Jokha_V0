@@ -1,0 +1,135 @@
+{
+  "parties": [
+    {
+      "id": "P001",
+      "name": "Customer of Shopkeeper 1",
+      "type": "Customer",
+      "phone": "9911001100",
+      "gstin": "",
+      "address": "",
+      "state": "Delhi",
+      "balance": 0,
+      "businessId": "BIZ-049",
+      "createdBy": "U-7763",
+      "version": 1,
+      "createdAt": "2026-10-22",
+      "updatedAt": "2026-10-22T16:27:21.275Z"
+    }
+  ],
+  "items": [
+    {
+      "id": "ITM001",
+      "barcode": "890103612578",
+      "name": "Multi-Device Test Rice 10kg",
+      "category": "General",
+      "hsn": "9999",
+      "salePrice": 1250,
+      "purchasePrice": 0,
+      "gstRate": 0,
+      "unit": "BAG",
+      "stock": 42,
+      "minStock": 5,
+      "businessId": "BIZ-049",
+      "createdBy": "U-7763",
+      "version": 2,
+      "updatedAt": "2026-10-22T16:27:22.170Z"
+    }
+  ],
+  "sales": [
+    {
+      "id": "INV-CONCUR-1792686442156",
+      "number": "INV-CONCUR-1792686442156",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P001",
+      "partyName": "Customer of Shopkeeper 1",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "qty": 1,
+          "rate": 1250,
+          "amount": 1250
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 1250,
+      "paid": 1250,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-049",
+      "createdBy": "U-7763",
+      "version": 1,
+      "updatedAt": "2026-10-22T16:27:22.170Z"
+    },
+    {
+      "id": "INV-2026-001",
+      "number": "INV-REP-1792686442057",
+      "docType": "Invoice",
+      "date": "2026-10-22",
+      "partyId": "P001",
+      "partyName": "Cash Customer",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "Cash",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "qty": 2,
+          "rate": 1250,
+          "amount": 2500
+        }
+      ],
+      "subtotal": 0,
+      "tax": 0,
+      "total": 2500,
+      "paid": 2500,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "",
+      "businessId": "BIZ-049",
+      "createdBy": "U-7763",
+      "version": 1,
+      "updatedAt": "2026-10-22T16:27:22.062Z"
+    }
+  ],
+  "purchases": [],
+  "expenses": [],
+  "orders": [],
+  "cashBank": {
+    "cashInHand": 0,
+    "bankAccounts": []
+  },
+  "ewayBills": [],
+  "estimates": [],
+  "salesReturns": [],
+  "deliveryChallans": [],
+  "purchaseReturns": [],
+  "paymentsIn": [],
+  "paymentsOut": [],
+  "salesmen": [],
+  "tasks": [],
+  "leads": [],
+  "visits": [],
+  "accountantAccess": [],
+  "businessProfile": {
+    "businessName": "Business BIZ-049",
+    "legalName": "",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "state": "Delhi (07)",
+    "gstin": "",
+    "pan": "",
+    "currency": "INR (₹)",
+    "invoicePrefix": "INV-2026-",
+    "termsAndConditions": "1. Goods once sold will be accepted back within 7 days in original condition.\n2. Subject to local jurisdiction only.",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "branchName": "",
+    "logoUrl": ""
+  }
+}
