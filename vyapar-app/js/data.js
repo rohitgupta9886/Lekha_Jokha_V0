@@ -1698,33 +1698,38 @@ class DataStore {
     return biz;
   }
 
-  async setActiveBusiness(bizId) {
-    // 1. Switch active business on backend first to verify authorization
-    const res = await window.apiFetch('/api/v1/businesses/switch', {
-      method: 'POST',
-      body: JSON.stringify({ businessId: bizId })
-    });
-    if (!res || !res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.message || `Failed to switch to business ${bizId}`);
-    }
-    const switchData = await res.json();
-
-    // 2. Set active business context locally
+  setActiveBusiness(bizId) {
+    // 1. Immediately switch active business context locally (0ms instantaneous switch)
     if (!this.data) this.data = {};
     if (!this.data.subscriber) this.data.subscriber = {};
     this.data.subscriber.activeBusinessId = bizId;
-    localStorage.setItem('lekhajokha_active_business_id', bizId);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('lekhajokha_active_business_id', bizId);
+    }
 
-    // 3. Immediately pull and hydrate authoritative business data
-    await this.syncWithServer();
-
-    let biz = this.getBusinesses().find(b => b.id === bizId) || switchData.business;
+    let biz = this.getBusinesses().find(b => b.id === bizId) || this.getBusiness();
     this.logAction("Switched Active Business", `Switched active organization to ${biz.name} (GSTIN: ${biz.gstin || 'Unregistered'})`);
     this.save();
 
-    // 4. Dispatch notification to UI components
+    // 2. Dispatch notification to UI components immediately so views render in 0ms
     window.dispatchEvent(new CustomEvent('businessSwitched', { detail: { business: biz } }));
+
+    // 3. Asynchronously notify backend and sync authoritative tenant data in the background
+    (async () => {
+      try {
+        const res = await window.apiFetch('/api/v1/businesses/switch', {
+          method: 'POST',
+          body: JSON.stringify({ businessId: bizId })
+        });
+        if (res && res.ok) {
+          const switchData = await res.json().catch(() => ({}));
+          this.syncWithServer().catch(err => console.warn('[Store] Background business sync deferred:', err));
+        }
+      } catch (err) {
+        console.warn('[Store] Background business switch sync failed:', err);
+      }
+    })();
+
     return biz;
   }
 

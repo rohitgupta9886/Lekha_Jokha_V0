@@ -1454,7 +1454,7 @@ class LekhaJokhaApp {
     const activeBizCount = businesses.filter(b => b.status === 'Active').length;
 
     const modalHtml = `
-      <div class="modal-overlay active" id="bizSwitcherModalOverlay" style="z-index: 10000;">
+      <div class="modal-overlay active" id="bizSwitcherModalOverlay" style="z-index: 10000; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: rgba(15, 23, 42, 0.45);">
         <div class="modal-dialog" style="max-width: 600px;">
           <div class="modal-header">
             <div>
@@ -1512,6 +1512,14 @@ class LekhaJokhaApp {
 
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 
+    // Close on outside click
+    const modalOverlay = document.getElementById('bizSwitcherModalOverlay');
+    if (modalOverlay) {
+      modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) modalOverlay.remove();
+      });
+    }
+
     // Bind card clicks
     document.querySelectorAll('.switch-to-biz-btn').forEach(btn => {
       btn.onclick = (e) => {
@@ -1534,21 +1542,28 @@ class LekhaJokhaApp {
     };
   }
 
-  async switchActiveBusiness(businessId) {
+  switchActiveBusiness(businessId) {
+    // 1. Immediately remove the modal overlay so screen NEVER becomes or stays blurred
+    const modal = document.getElementById('bizSwitcherModalOverlay');
+    if (modal) modal.remove();
+    document.querySelectorAll('#bizSwitcherModalOverlay').forEach(m => m.remove());
+
     try {
-      const modal = document.getElementById('bizSwitcherModalOverlay');
-      if (modal) {
-        const body = modal.querySelector('.modal-body');
-        if (body) body.style.opacity = '0.5';
-      }
-      const biz = await window.Store.setActiveBusiness(businessId);
-      if (modal) modal.remove();
+      // 2. Perform 0ms instantaneous local switch
+      const biz = window.Store.setActiveBusiness(businessId);
+      const activeBiz = window.Store.getActiveBusiness() || biz;
+
+      // 3. Immediately reflect new company name in topbar & sidebar
+      const topBizName = document.getElementById('topbarBusinessName');
+      if (topBizName && activeBiz && activeBiz.name) topBizName.innerText = activeBiz.name;
+      const compDisplay = document.getElementById('sidebarCompany');
+      if (compDisplay && activeBiz && activeBiz.name) compDisplay.innerText = activeBiz.name;
+
+      // 4. Instant re-render of current view with new tenant's data
       this.updateBadges();
       this.handleRoute();
-      this.showToast(`Switched active business to ${biz.name}!`, 'success');
+      this.showToast(`Switched active business to ${activeBiz.name}!`, 'success');
     } catch (e) {
-      const modal = document.getElementById('bizSwitcherModalOverlay');
-      if (modal) modal.remove();
       this.showToast(e.message, 'error');
     }
   }
