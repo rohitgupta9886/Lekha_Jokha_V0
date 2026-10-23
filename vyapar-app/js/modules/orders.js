@@ -51,7 +51,7 @@ window.OrdersModule = {
             <div style="display:flex;gap:0.75rem;align-items:center;">
               <button class="btn btn-primary" id="openCreateOrderBtn" style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);box-shadow:0 4px 14px rgba(37,99,235,0.4);">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                + New Direct Order
+                New Direct Order
               </button>
             </div>
           </div>

@@ -302,7 +302,7 @@ const salesmenContainer = new MockElement('div');
 window.SalesmenModule.render(salesmenContainer);
 assert(salesmenContainer.innerHTML.includes('Track Your Salesmen'), 'SalesmenModule renders Track Your Salesmen header');
 assert(salesmenContainer.innerHTML.includes('FIELD FORCE COMMAND CENTER'), 'SalesmenModule renders Field Force Command Center');
-assert(salesmenContainer.innerHTML.includes('+ Add New Salesman'), 'SalesmenModule renders Add Salesman button');
+assert(salesmenContainer.innerHTML.includes('Add New Salesman'), 'SalesmenModule renders Add Salesman button');
 assert(salesmenContainer.innerHTML.includes('Live Fleet GPS Radar'), 'SalesmenModule renders GPS Radar subtab');
 
 console.log('\n=== ALL 8 VERIFICATION TESTS PASSED SUCCESSFULLY! ===\n');

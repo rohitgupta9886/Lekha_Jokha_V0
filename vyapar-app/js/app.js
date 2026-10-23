@@ -391,11 +391,11 @@ class VyaparApp {
 
     window.addEventListener('dataSynced', (e) => {
       this.updateBadges();
-      // Guard: Do NOT destroy open modals or active forms during background sync
+      // Guard: Do NOT destroy open modals, active forms, or active AI Copilot chat session during background sync
       const hasOpenModal = document.querySelector(
         '.modal.active, .modal-overlay.active, .modal-overlay[style*="display: flex"], [id*="Modal"][style*="display: flex"], [id*="Modal"][style*="display: block"], #salesman360Modal[style*="display: flex"], #addSalesmanOwnerModal[style*="display: flex"], #editSalesmanModal[style*="display: flex"], .modal[style*="display: block"]'
       );
-      if (hasOpenModal) {
+      if (hasOpenModal || this.currentView === 'ai-copilot') {
         return;
       }
       // If active view is on screen, re-render to reflect new sync data
@@ -1502,7 +1502,7 @@ class VyaparApp {
               </a>
               <button class="btn btn-success" id="modalAddNewBizBtn">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span>+ Add Another Business</span>
+                <span>Add Another Business</span>
               </button>
             </div>
           </div>

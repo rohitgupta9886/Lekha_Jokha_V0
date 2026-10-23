@@ -52,7 +52,7 @@ window.SalesmenModule = {
             <div style="display:flex;gap:0.75rem;align-items:center;">
               <button class="btn btn-primary" id="openAddSalesmanModalBtn" onclick="window.SalesmenModule.openAddSalesmanModal()" style="background:linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);box-shadow:0 4px 14px rgba(79,70,229,0.4);cursor:pointer;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:6px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                + Add New Salesman
+                Add New Salesman
               </button>
             </div>
           </div>

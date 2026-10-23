@@ -13,20 +13,203 @@
 window.AICopilotModule = {
   chatHistory: [],
 
-  init() {
-    // Remove any existing floating trigger from the DOM
-    this.removeFloatingWidget();
-    this.initKeyboardShortcut();
+  loadChatHistory() {
+    try {
+      const stored = localStorage.getItem('lekha_ai_chat_history');
+      if (stored) {
+        this.chatHistory = JSON.parse(stored);
+        if (!Array.isArray(this.chatHistory)) this.chatHistory = [];
+      } else {
+        this.chatHistory = [];
+      }
+    } catch (e) {
+      this.chatHistory = [];
+    }
+    return this.chatHistory;
   },
 
-  // Remove bottom-right floating widget (now prominently highlighted at top of screen)
+  saveChatHistory() {
+    try {
+      localStorage.setItem('lekha_ai_chat_history', JSON.stringify(this.chatHistory || []));
+    } catch (e) {
+      console.warn('[AICopilot] Failed to save chat history:', e);
+    }
+  },
+
+  clearChatHistory() {
+    this.chatHistory = [];
+    localStorage.removeItem('lekha_ai_chat_history');
+    const chatStream = document.getElementById('aiChatStream');
+    if (chatStream) {
+      const welcome = chatStream.querySelector('.ai-welcome-msg');
+      chatStream.innerHTML = '';
+      if (welcome) chatStream.appendChild(welcome);
+    }
+  },
+
+  formatMarkdown(text) {
+    if (!text) return '';
+    let s = String(text);
+
+    // 1. WhatsApp / Code blocks: ```whatsapp ... ```
+    s = s.replace(/```(?:whatsapp|text|markdown)?\s*([\s\S]*?)```/gi, (match, code) => {
+      const clean = code.trim();
+      return `
+        <div style="background:#0f172a;color:#f8fafc;padding:12px;border-radius:8px;margin:8px 0;position:relative;font-family:monospace;font-size:12.5px;line-height:1.45;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:6px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#22c55e;font-weight:700;">💬 Ready-to-Send WhatsApp Reminder</span>
+            <button type="button" class="btn btn-xs copy-reminder-btn" data-text="${clean.replace(/"/g, '&quot;')}" style="background:#22c55e;color:#fff;border:none;padding:3px 8px;border-radius:4px;font-size:11px;cursor:pointer;font-weight:700;">
+              📋 Copy Message
+            </button>
+          </div>
+          <div style="white-space:pre-wrap;">${clean}</div>
+        </div>
+      `;
+    });
+
+    // 2. Markdown Tables
+    const lines = s.split('\n');
+    let inTable = false;
+    let tableRows = [];
+    let newLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line.startsWith('|') && line.endsWith('|')) {
+        inTable = true;
+        tableRows.push(line);
+      } else {
+        if (inTable) {
+          newLines.push(this.renderMarkdownTable(tableRows));
+          tableRows = [];
+          inTable = false;
+        }
+        newLines.push(lines[i]);
+      }
+    }
+    if (inTable && tableRows.length > 0) {
+      newLines.push(this.renderMarkdownTable(tableRows));
+    }
+    s = newLines.join('\n');
+
+    // 3. Blockquotes (> ...)
+    s = s.replace(/^>\s*(.*?)$/gim, `
+      <div style="border-left:4px solid #3b82f6;background:#f0f9ff;padding:8px 12px;border-radius:4px;margin:8px 0;color:#0369a1;font-size:13px;line-height:1.45;">
+        $1
+      </div>
+    `);
+
+    // 4. Headers
+    s = s.replace(/^### (.*$)/gim, '<h4 style="margin:12px 0 6px 0;font-size:14.5px;font-weight:800;color:#0f172a;display:flex;align-items:center;gap:6px;">$1</h4>');
+    s = s.replace(/^## (.*$)/gim, '<h3 style="margin:14px 0 8px 0;font-size:16px;font-weight:800;color:#0f172a;border-bottom:1px solid #e2e8f0;padding-bottom:4px;">$1</h3>');
+    s = s.replace(/^# (.*$)/gim, '<h2 style="margin:16px 0 10px 0;font-size:18px;font-weight:800;color:#0f172a;">$1</h2>');
+
+    // 5. Bold & Italic
+    s = s.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+    s = s.replace(/\*(.*?)\*/g, '<i>$1</i>');
+
+    // 6. Bullet lists
+    s = s.replace(/^\s*[-*]\s+(.*$)/gim, '<li style="margin-left:18px;margin-bottom:3px;">$1</li>');
+    s = s.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<li style="margin-left:18px;margin-bottom:3px;" value="$1">$2</li>');
+
+    // 7. Paragraph linebreaks
+    s = s.replace(/\n\n/g, '<div style="height:6px;"></div>');
+    s = s.replace(/\n/g, '<br>');
+
+    return s;
+  },
+
+  renderMarkdownTable(rows) {
+    if (rows.length < 2) return rows.join('\n');
+    let html = `
+      <div class="table-responsive" style="margin:10px 0;border-radius:8px;overflow:hidden;border:1px solid #cbd5e1;box-shadow:0 1px 4px rgba(0,0,0,0.03);">
+        <table class="table" style="margin:0;width:100%;font-size:12.5px;border-collapse:collapse;background:#ffffff;">
+    `;
+
+    let hasHeader = false;
+    let isHeaderDivider = false;
+
+    for (let r = 0; r < rows.length; r++) {
+      const row = rows[r].trim();
+      if (/^\|[\s\-:|]+\|$/.test(row)) {
+        isHeaderDivider = true;
+        continue;
+      }
+
+      const cells = row.split('|').slice(1, -1).map(c => c.trim());
+      if (r === 0 && !isHeaderDivider) {
+        hasHeader = true;
+        html += `<thead style="background:#f1f5f9;color:#0f172a;font-weight:700;border-bottom:2px solid #cbd5e1;"><tr>`;
+        cells.forEach(c => {
+          html += `<th style="padding:8px 10px;text-align:left;">${c.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</th>`;
+        });
+        html += `</tr></thead><tbody>`;
+      } else {
+        html += `<tr style="border-bottom:1px solid #f1f5f9;">`;
+        cells.forEach(c => {
+          html += `<td style="padding:7px 10px;color:#334155;">${c.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')}</td>`;
+        });
+        html += `</tr>`;
+      }
+    }
+
+    if (hasHeader) html += `</tbody>`;
+    html += `</table></div>`;
+    return html;
+  },
+
+  renderChatHistoryHtml() {
+    const history = this.loadChatHistory();
+    if (!history || history.length === 0) return '';
+
+    return history.map(msg => {
+      if (msg.role === 'user') {
+        return `
+          <div class="ai-msg-bubble ai-user">
+            <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+              <div style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);color:#fff;padding:10px 14px;border-radius:12px;font-size:13.5px;max-width:80%;line-height:1.45;box-shadow:0 2px 6px rgba(37,99,235,0.25);">
+                ${msg.text}
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        return `
+          <div class="ai-msg-bubble ai-assistant">
+            <div style="display:flex;gap:0.75rem;align-items:flex-start;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">
+                ✨
+              </div>
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+                  <div style="font-weight:700;font-size:13px;color:var(--navy-900);">Lekha Jokha AI Advisor</div>
+                  <span class="badge" style="background:#e0e7ff;color:#4338ca;font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;">
+                    ${msg.isAi ? `⚡ ${msg.model || 'Gemini 3.8 Flash'}` : '⚙️ Local ML Core'} | 🛡️ Guardrails Protected
+                  </span>
+                </div>
+                <div style="color:var(--text-main);font-size:13.5px;line-height:1.55;">
+                  ${msg.html}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }).join('');
+  },
+
+  init() {
+    this.removeFloatingWidget();
+    this.initKeyboardShortcut();
+    this.loadChatHistory();
+  },
+
   removeFloatingWidget() {
     const existing = document.getElementById('aiFloatingTrigger');
     if (existing) existing.remove();
   },
 
   createFloatingWidget() {
-    // Deprecated: floating widget replaced by top-of-screen highlighted button
     this.removeFloatingWidget();
   },
 
@@ -126,6 +309,7 @@ window.AICopilotModule = {
       </div>
 
       <!-- Main Interactive Chat & Advisor Workspace -->
+      <!-- Main Interactive Chat & Advisor Workspace -->
       <div class="card" style="padding:0;overflow:hidden;">
         <div class="card-header" style="background:#f8fafc;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
           <div style="display:flex;align-items:center;gap:0.75rem;">
@@ -138,24 +322,25 @@ window.AICopilotModule = {
                 <span style="font-size:11px;font-weight:600;color:#059669;margin-left:6px;">● Gemini 3.8 Flash Active</span>
               </div>
               <div style="font-size:11px;color:var(--text-muted);">
-                Trained on Indian MSME Accounting, GST Rules & Financial Health | Guardrails Active
+                Trained on Indian MSME Accounting, GST Rules & Financial Health | Guardrails Active | Auto-Saved
               </div>
             </div>
           </div>
-          <!-- Quick Suggestion Pills -->
-          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+          <!-- Quick Suggestion Pills & Clear Chat -->
+          <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap;">
             <button class="btn btn-sm btn-outline ai-chip-btn" data-query="Who owes me money and generate a polite WhatsApp collection reminder?">📱 WhatsApp Reminders</button>
             <button class="btn btn-sm btn-outline ai-chip-btn" data-query="What is my stock replenishment advice and estimated cost?">📦 Restock Advice</button>
+            <button class="btn btn-sm btn-outline ai-chip-btn" data-query="Show me all suppliers I need to pay and my payables">👥 Supplier Payables</button>
             <button class="btn btn-sm btn-outline ai-chip-btn" data-query="Analyze my profit margin, top selling items, and overheads">📊 Profit Margins</button>
             <button class="btn btn-sm btn-outline ai-chip-btn" data-query="Predict my sales and cashflow runway for the next 30 days">📈 30-Day Forecast</button>
-            <button class="btn btn-sm btn-outline ai-chip-btn" data-query="What are legal GST tax-saving tips for my retail trading business?">⚖️ GST Guidance</button>
+            <button class="btn btn-sm btn-outline" id="aiClearChatBtn" style="border-color:#fca5a5;color:#dc2626;background:#fff5f5;font-weight:600;" title="Clear conversation history">🧹 Clear Chat</button>
           </div>
         </div>
 
-        <!-- Chat Stream -->
-        <div id="aiChatStream" style="height:420px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;background:#ffffff;">
+        <!-- Chat Stream (Persisted History) -->
+        <div id="aiChatStream" style="height:450px;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;background:#ffffff;">
           <!-- Welcome Message -->
-          <div class="ai-msg-bubble ai-assistant">
+          <div class="ai-msg-bubble ai-assistant ai-welcome-msg">
             <div style="display:flex;gap:0.75rem;align-items:flex-start;">
               <div style="width:32px;height:32px;border-radius:50%;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">
                 ✨
@@ -166,7 +351,7 @@ window.AICopilotModule = {
                   <span class="badge" style="background:#e0e7ff;color:#4338ca;font-size:10px;font-weight:700;">⚡ Gemini 3.8 Flash | 🛡️ Guardrails</span>
                 </div>
                 <div style="color:var(--text-main);font-size:13.5px;line-height:1.5;">
-                  Namaste! I have connected to your active books for <b>${biz.name}</b>.
+                  Namaste! I have connected to your active books and full database for <b>${biz.name}</b>.
                   <br><br>
                   Here is your real-time financial health snapshot:
                   <ul style="margin:6px 0 6px 18px;">
@@ -175,18 +360,20 @@ window.AICopilotModule = {
                     <li><b>Immediate Supplier Payables:</b> ₹${totalPayables.toLocaleString('en-IN')} due to suppliers.</li>
                     <li><b>Inventory Safety Alert:</b> <b>${lowStockItems.length} products</b> are below minimum threshold reorder levels.</li>
                   </ul>
-                  Ask me anything about your cashflow, debtor recovery, inventory forecasting, GST rules, or click one of the quick suggestions above!
+                  Ask me anything about your debtors, creditors, inventory catalog, sales, orders, expenses, GST rules, or click one of the quick suggestions above!
                 </div>
               </div>
             </div>
           </div>
+          <!-- Persistent Chat History -->
+          ${this.renderChatHistoryHtml()}
         </div>
 
         <!-- Input Bar with Live Microphone -->
         <div style="padding:1rem 1.5rem;background:#f8fafc;border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:0.4rem;">
           <div style="display:flex;gap:0.75rem;align-items:center;">
             <div style="position:relative;flex:1;">
-              <input type="text" id="aiQueryInput" class="form-control" placeholder="Ask anything or click 🎤 to speak: 'Who owes me money?', 'How to improve cashflow?'..." style="font-size:14px;padding-right:44px;">
+              <input type="text" id="aiQueryInput" class="form-control" placeholder="Ask anything: 'Show suppliers to pay', 'Who owes money?', 'Stock status', 'Orders'... or click 🎤" style="font-size:14px;padding-right:44px;">
               <button type="button" id="aiMainMicBtn" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:#7c3aed;color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" title="Click to speak through microphone">
                 🎤
               </button>
@@ -200,6 +387,12 @@ window.AICopilotModule = {
         </div>
       </div>
     `;
+
+    // Scroll chat stream to bottom
+    const chatStream = document.getElementById('aiChatStream');
+    if (chatStream) {
+      chatStream.scrollTop = chatStream.scrollHeight;
+    }
 
     // Bind Query events
     const queryInput = document.getElementById('aiQueryInput');
@@ -216,6 +409,25 @@ window.AICopilotModule = {
     queryInput.onkeydown = (e) => {
       if (e.key === 'Enter') handleSend();
     };
+
+    // Clear Chat Button
+    const clearChatBtn = document.getElementById('aiClearChatBtn');
+    if (clearChatBtn) {
+      clearChatBtn.onclick = () => {
+        if (confirm('Are you sure you want to clear your AI chat history?')) {
+          this.clearChatHistory();
+        }
+      };
+    }
+
+    // Copy reminder buttons for initially rendered chat history
+    container.querySelectorAll('.copy-reminder-btn').forEach(b => {
+      b.onclick = () => {
+        const text = b.getAttribute('data-text');
+        navigator.clipboard.writeText(text);
+        if (window.app && window.app.showToast) window.app.showToast("WhatsApp message copied to clipboard!", "success");
+      };
+    });
 
     // Attach Voice Transcription to Main Query Input
     const mainMicBtn = document.getElementById('aiMainMicBtn');
@@ -265,12 +477,21 @@ window.AICopilotModule = {
     const chatStream = document.getElementById('aiChatStream');
     if (!chatStream) return;
 
-    // Append User message
+    // 1. Record User Message in Persistent History
+    const userMsg = {
+      role: 'user',
+      text: query,
+      timestamp: new Date().toISOString()
+    };
+    this.chatHistory.push(userMsg);
+    this.saveChatHistory();
+
+    // Append User message to DOM
     const userBubble = document.createElement('div');
     userBubble.className = 'ai-msg-bubble ai-user';
     userBubble.innerHTML = `
       <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
-        <div style="background:#ed1a3b;color:#fff;padding:10px 14px;border-radius:12px;font-size:13.5px;max-width:80%;line-height:1.4;">
+        <div style="background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);color:#fff;padding:10px 14px;border-radius:12px;font-size:13.5px;max-width:80%;line-height:1.45;box-shadow:0 2px 6px rgba(37,99,235,0.25);">
           ${query}
         </div>
       </div>
@@ -288,13 +509,14 @@ window.AICopilotModule = {
         </div>
         <div style="font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:8px;">
           <span style="display:inline-block;width:14px;height:14px;border:2px solid #7c3aed;border-right-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
-          <span>Analyzing your accounts with <b>Gemini 3.8 Flash</b> (Guardrails Active)...</span>
+          <span>Analyzing full business database with <b>Gemini 3.8 Flash</b> (Guardrails Active)...</span>
         </div>
       </div>
     `;
     chatStream.appendChild(thinkingBubble);
     chatStream.scrollTop = chatStream.scrollHeight;
 
+    let rawReply = '';
     let responseHtml = '';
     let isAiPowered = false;
     let modelName = 'gemini-3.8-flash';
@@ -304,16 +526,8 @@ window.AICopilotModule = {
         const result = await window.GeminiService.askFinancialAdvisor(query);
         if (result && result.text) {
           modelName = result.model || 'gemini-3.8-flash';
-          let formatted = result.text
-            .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
-            .replace(/^### (.*$)/gim, '<h4 style="margin:8px 0 4px 0;font-size:14px;font-weight:700;">$1</h4>')
-            .replace(/^## (.*$)/gim, '<h3 style="margin:10px 0 6px 0;font-size:15px;font-weight:800;">$1</h3>')
-            .replace(/^\* (.*$)/gim, '<li>$1</li>')
-            .replace(/^- (.*$)/gim, '<li>$1</li>')
-            .replace(/\n\n/g, '<br><br>')
-            .replace(/\n/g, '<br>');
-
-          responseHtml = formatted;
+          rawReply = result.text;
+          responseHtml = this.formatMarkdown(result.text);
           isAiPowered = true;
         }
       }
@@ -323,8 +537,22 @@ window.AICopilotModule = {
 
     // Fail-safe graceful fallback if Gemini is offline
     if (!responseHtml) {
-      responseHtml = this.generateAIResponse(query);
+      const fallbackResult = this.generateAIResponse(query);
+      rawReply = fallbackResult;
+      responseHtml = this.formatMarkdown(fallbackResult);
     }
+
+    // 2. Record Assistant Message in Persistent History
+    const assistantMsg = {
+      role: 'assistant',
+      text: rawReply,
+      html: responseHtml,
+      isAi: isAiPowered,
+      model: modelName,
+      timestamp: new Date().toISOString()
+    };
+    this.chatHistory.push(assistantMsg);
+    this.saveChatHistory();
 
     thinkingBubble.innerHTML = `
       <div style="display:flex;gap:0.75rem;align-items:flex-start;">
@@ -338,7 +566,7 @@ window.AICopilotModule = {
               ${isAiPowered ? `⚡ ${modelName}` : '⚙️ Local ML Core'} | 🛡️ Guardrails Protected
             </span>
           </div>
-          <div style="color:var(--text-main);font-size:13.5px;line-height:1.5;">
+          <div style="color:var(--text-main);font-size:13.5px;line-height:1.55;">
             ${responseHtml}
           </div>
         </div>
@@ -346,7 +574,7 @@ window.AICopilotModule = {
     `;
     chatStream.scrollTop = chatStream.scrollHeight;
 
-    // Bind reminder actions if present in HTML
+    // Bind reminder copy actions
     thinkingBubble.querySelectorAll('.copy-reminder-btn').forEach(b => {
       b.onclick = () => {
         const text = b.getAttribute('data-text');
@@ -356,117 +584,169 @@ window.AICopilotModule = {
     });
   },
 
-  // Deterministic local reasoning engine (used as failsafe offline fallback)
+  // Deterministic local reasoning engine with full database access (failsafe offline fallback)
   generateAIResponse(query) {
     const q = query.toLowerCase();
-    const parties = window.Store.getParties();
-    const items = window.Store.getItems();
-    const sales = window.Store.getSales();
-    const expenses = window.Store.getExpenses();
-    const cashBank = window.Store.getCashBank();
-    const biz = window.Store.getBusiness();
+    const parties = window.Store.getParties ? window.Store.getParties() : [];
+    const items = window.Store.getItems ? window.Store.getItems() : [];
+    const sales = window.Store.getSales ? window.Store.getSales() : [];
+    const purchases = window.Store.getPurchases ? window.Store.getPurchases() : [];
+    const orders = window.Store.getOrders ? window.Store.getOrders() : [];
+    const expenses = window.Store.getExpenses ? window.Store.getExpenses() : [];
+    const cashBank = window.Store.getCashBank ? window.Store.getCashBank() : {};
+    const biz = window.Store.getBusiness ? window.Store.getBusiness() : {};
+    const categories = window.Store.getItemCategories ? window.Store.getItemCategories() : [];
 
-    if (q.includes('owe') || q.includes('debt') || q.includes('whatsapp') || q.includes('remind') || q.includes('collect')) {
+    // 1. Debtors / Customers / Receivables / WhatsApp Reminders
+    if (q.includes('owe') || q.includes('debt') || q.includes('whatsapp') || q.includes('remind') || q.includes('collect') || q.includes('receivable')) {
       const debtors = parties.filter(p => Number(p.balance) > 0).sort((a, b) => Number(b.balance) - Number(a.balance));
       if (debtors.length === 0) {
-        return `Great news! You currently have zero pending receivables. All customer invoices are paid up to date.`;
+        return `### ✅ No Pending Customer Receivables\n\nGreat news! You currently have **zero pending receivables**. All customer invoices are paid up to date.`;
       }
 
+      const totalReceivable = debtors.reduce((acc, d) => acc + Number(d.balance), 0);
       const topDebtor = debtors[0];
-      const reminderMsg = `Dear ${topDebtor.name}, gentle reminder from ${biz.name}. Your pending balance is Rs. ${Number(topDebtor.balance).toLocaleString('en-IN')}. Please clear via UPI: ${biz.upiId || 'our registered UPI'} or bank transfer. Thank you!`;
+      const reminderMsg = `Dear ${topDebtor.name}, gentle reminder from ${biz.name || 'Lekha Jokha'}. Your pending balance is Rs. ${Number(topDebtor.balance).toLocaleString('en-IN')}. Please clear via UPI: ${biz.upiId || 'our registered UPI'} or bank transfer. Thank you!`;
 
-      return `
-        <b>Customer Receivables Breakdown:</b>
-        <div style="margin:8px 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;">
-          ${debtors.map(d => `
-            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #e2e8f0;font-size:13px;">
-              <span>👤 <b>${d.name}</b> (${d.phone})</span>
-              <span style="font-weight:700;color:#ed1a3b;">₹${Number(d.balance).toLocaleString('en-IN')} pending</span>
-            </div>
-          `).join('')}
-        </div>
-        <b>Recommended Action:</b> Send a polite WhatsApp collection notice to your top debtor, <b>${topDebtor.name}</b>:
-        <div style="background:#ecfdf5;border:1px solid #6ee7b7;padding:10px;border-radius:6px;font-family:monospace;font-size:12px;margin:8px 0;color:#065f46;">
-          "${reminderMsg}"
-        </div>
-        <button class="btn btn-sm btn-success copy-reminder-btn" data-text="${reminderMsg}">
-          Copy WhatsApp Message
-        </button>
-      `;
+      let md = `### 📋 Outstanding Customer Receivables (Total: ₹${totalReceivable.toLocaleString('en-IN')})\n\n`;
+      md += `| Customer Name | Phone | Pending Dues (₹) | Status |\n`;
+      md += `| :--- | :--- | :--- | :--- |\n`;
+      debtors.forEach(d => {
+        md += `| **${d.name}** | ${d.phone || 'N/A'} | ₹${Number(d.balance).toLocaleString('en-IN')} | 🔴 Overdue |\n`;
+      });
+
+      md += `\n**Recommended Action:** Send this personalized WhatsApp payment reminder to **${topDebtor.name}**:\n\n`;
+      md += `\`\`\`whatsapp\n${reminderMsg}\n\`\`\`\n`;
+      return md;
     }
 
-    if (q.includes('stock') || q.includes('replenish') || q.includes('item') || q.includes('reorder')) {
+    // 2. Creditors / Suppliers / Payables
+    if (q.includes('supplier') || q.includes('creditor') || q.includes('payable') || q.includes('pay') || q.includes('vendor')) {
+      const creditors = parties.filter(p => Number(p.balance) < 0).sort((a, b) => Number(a.balance) - Number(b.balance));
+      if (creditors.length === 0) {
+        return `### ✅ No Pending Supplier Payables\n\nAll supplier accounts are completely settled. You have **zero outstanding payables**.`;
+      }
+
+      const totalPayable = creditors.reduce((acc, c) => acc + Math.abs(Number(c.balance)), 0);
+      let md = `### 👥 Immediate Supplier Payables (Total: ₹${totalPayable.toLocaleString('en-IN')})\n\n`;
+      md += `| Supplier Name | Phone | Amount Due to Pay (₹) | Priority |\n`;
+      md += `| :--- | :--- | :--- | :--- |\n`;
+      creditors.forEach(c => {
+        md += `| **${c.name}** | ${c.phone || 'N/A'} | ₹${Math.abs(Number(c.balance)).toLocaleString('en-IN')} | ⚠️ Immediate Pay |\n`;
+      });
+      md += `\n> **Cashflow Tip:** Ensure your liquid cash (₹${((Number(cashBank.cashInHand)||0) + (Number(cashBank.hdfcBank)||0) + (Number(cashBank.sbiBank)||0)).toLocaleString('en-IN')}) covers these payments before placing new supplier orders.`;
+      return md;
+    }
+
+    // 3. Stock / Inventory / Restock / Categories / Items
+    if (q.includes('stock') || q.includes('inventory') || q.includes('replenish') || q.includes('item') || q.includes('reorder') || q.includes('product') || q.includes('catalog')) {
       const lowItems = items.filter(i => Number(i.stock) <= Number(i.minStock));
       if (lowItems.length === 0) {
-        return `All ${items.length} items in your catalog have sufficient buffer stock above their minimum threshold. No immediate stockouts predicted!`;
+        let md = `### 📦 Inventory Catalog Status (Healthy)\n\n`;
+        md += `All **${items.length} items** in your catalog have sufficient buffer stock above their reorder thresholds.\n\n`;
+        md += `| Item Name | Category | Stock | Sale Price (₹) |\n`;
+        md += `| :--- | :--- | :--- | :--- |\n`;
+        items.slice(0, 8).forEach(it => {
+          md += `| **${it.name}** | ${it.category || 'General'} | ${it.stock} ${it.unit || 'Units'} | ₹${Number(it.salePrice || 0).toLocaleString('en-IN')} |\n`;
+        });
+        return md;
       }
 
-      const totalEstCost = lowItems.reduce((acc, it) => acc + ((it.minStock * 2 - it.stock) * it.purchasePrice), 0);
+      const totalEstCost = lowItems.reduce((acc, it) => acc + Math.max(0, (it.minStock * 2 - it.stock) * (it.purchasePrice || 0)), 0);
 
-      return `
-        <b style="color:#b91c1c;">🚨 Urgent Stockout Advisory (${lowItems.length} Items Below Safe Level):</b>
-        <table style="width:100%;margin:8px 0;font-size:12.5px;border-collapse:collapse;">
-          <tr style="background:#f1f5f9;text-align:left;">
-            <th style="padding:5px;">Item</th>
-            <th style="padding:5px;">In Stock</th>
-            <th style="padding:5px;">Min Alert</th>
-            <th style="padding:5px;">Suggested Reorder</th>
-            <th style="padding:5px;">Est. Cost</th>
-          </tr>
-          ${lowItems.map(it => {
-            const reorderQty = (it.minStock * 2) - it.stock;
-            const cost = reorderQty * it.purchasePrice;
-            return `
-              <tr style="border-bottom:1px solid #e2e8f0;">
-                <td style="padding:5px;font-weight:600;">${it.name}</td>
-                <td style="padding:5px;color:#dc2626;font-weight:700;">${it.stock} ${it.unit}</td>
-                <td style="padding:5px;">${it.minStock}</td>
-                <td style="padding:5px;font-weight:700;">+${reorderQty} ${it.unit}</td>
-                <td style="padding:5px;">₹${cost.toLocaleString('en-IN')}</td>
-              </tr>
-            `;
-          }).join('')}
-        </table>
-        💡 <b>AI Capital Forecast:</b> You need approximately <b>₹${totalEstCost.toLocaleString('en-IN')}</b> working capital to replenish these inventory items to safe operational levels.
-      `;
+      let md = `### 🚨 Urgent Stockout Advisory (${lowItems.length} Items Below Safe Threshold)\n\n`;
+      md += `| Product Name | Category | In Stock | Min Alert | Reorder Qty | Est. Cost (₹) |\n`;
+      md += `| :--- | :--- | :--- | :--- | :--- | :--- |\n`;
+      lowItems.forEach(it => {
+        const reorderQty = Math.max(1, (it.minStock * 2) - it.stock);
+        const cost = reorderQty * (it.purchasePrice || 0);
+        md += `| **${it.name}** | ${it.category || 'General'} | **${it.stock}** ${it.unit||'pcs'} | ${it.minStock} | +${reorderQty} ${it.unit||'pcs'} | ₹${cost.toLocaleString('en-IN')} |\n`;
+      });
+      md += `\n💡 **AI Capital Forecast:** You need approximately **₹${totalEstCost.toLocaleString('en-IN')}** in working capital to restock these critical inventory items.`;
+      return md;
     }
 
-    if (q.includes('profit') || q.includes('margin') || q.includes('expense') || q.includes('leakage')) {
+    // 4. Categories & Subcategories
+    if (q.includes('category') || q.includes('categories') || q.includes('sub-category') || q.includes('subcategory')) {
+      if (!categories || categories.length === 0) {
+        return `You have not configured custom item categories yet. You can add them in **Application Settings > Items / Stock > Manage Categories & Subcategories**.`;
+      }
+      let md = `### 🗂️ Configured Item Categories & Subcategories\n\n`;
+      md += `| Category Name | Subcategories | Items Count |\n`;
+      md += `| :--- | :--- | :--- |\n`;
+      categories.forEach(c => {
+        const subList = (c.subcategories && c.subcategories.length > 0) ? c.subcategories.join(', ') : 'None';
+        const itemCount = items.filter(i => (i.category || '').toLowerCase() === c.name.toLowerCase()).length;
+        md += `| **${c.name}** | ${subList} | ${itemCount} items |\n`;
+      });
+      return md;
+    }
+
+    // 5. Orders / Omni-channel
+    if (q.includes('order') || q.includes('zomato') || q.includes('swiggy') || q.includes('delivery')) {
+      if (!orders || orders.length === 0) {
+        return `No omni-channel or direct orders recorded yet. You can create direct orders in the **Orders** tab.`;
+      }
+      let md = `### 🛍️ Recent Orders Breakdown (${orders.length} Total Orders)\n\n`;
+      md += `| Order ID | Customer | Channel | Total (₹) | Status |\n`;
+      md += `| :--- | :--- | :--- | :--- | :--- |\n`;
+      orders.slice(0, 8).forEach(o => {
+        md += `| **${o.orderNo || o.id}** | ${o.customerName || 'Walk-in'} | ${o.channel || 'Direct'} | ₹${Number(o.total || 0).toLocaleString('en-IN')} | **${o.status || 'Active'}** |\n`;
+      });
+      return md;
+    }
+
+    // 6. Expenses & Overheads
+    if (q.includes('expense') || q.includes('overhead') || q.includes('spending') || q.includes('cost')) {
+      const totalExp = expenses.reduce((a, e) => a + Number(e.amount || 0), 0);
+      let md = `### 💸 Operating Expenses Breakdown (Total: ₹${totalExp.toLocaleString('en-IN')})\n\n`;
+      md += `| Category | Description | Amount (₹) | Date |\n`;
+      md += `| :--- | :--- | :--- | :--- |\n`;
+      expenses.slice(0, 8).forEach(e => {
+        md += `| **${e.category || 'General'}** | ${e.note || e.title || '-'} | ₹${Number(e.amount || 0).toLocaleString('en-IN')} | ${e.date || 'Recent'} |\n`;
+      });
+      return md;
+    }
+
+    // 7. Profit & Margin Analysis
+    if (q.includes('profit') || q.includes('margin') || q.includes('revenue') || q.includes('sales') || q.includes('runway')) {
       const totalSales = sales.reduce((a, s) => a + Number(s.total || 0), 0);
       const totalExp = expenses.reduce((a, e) => a + Number(e.amount || 0), 0);
       const profit = totalSales - totalExp;
       const margin = totalSales > 0 ? ((profit / totalSales) * 100).toFixed(1) : 0;
+      const liquidFunds = (Number(cashBank.cashInHand) || 0) + (Number(cashBank.hdfcBank) || 0) + (Number(cashBank.sbiBank) || 0);
 
-      return `
-        <b>Financial Performance & Margin Analysis:</b>
-        <div style="margin:8px 0;display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:13px;">
-          <div style="background:#f8fafc;padding:8px;border-radius:6px;border:1px solid #e2e8f0;">
-            Gross Invoiced: <b>₹${totalSales.toLocaleString('en-IN')}</b>
-          </div>
-          <div style="background:#f8fafc;padding:8px;border-radius:6px;border:1px solid #e2e8f0;">
-            Operating Expenses: <b>₹${totalExp.toLocaleString('en-IN')}</b>
-          </div>
-          <div style="background:#ecfdf5;padding:8px;border-radius:6px;border:1px solid #6ee7b7;color:#065f46;">
-            Net Operating Profit: <b>₹${profit.toLocaleString('en-IN')}</b>
-          </div>
-          <div style="background:#f0f9ff;padding:8px;border-radius:6px;border:1px solid #bae6fd;color:#0369a1;">
-            Operating Net Margin: <b>${margin}%</b>
-          </div>
-        </div>
-      `;
+      let md = `### 📊 Financial Performance & Profitability Analysis\n\n`;
+      md += `| Metric | Current Value | Assessment |\n`;
+      md += `| :--- | :--- | :--- |\n`;
+      md += `| **Gross Invoiced Revenue** | ₹${totalSales.toLocaleString('en-IN')} | Recorded across ${sales.length} invoices |\n`;
+      md += `| **Total Operating Expenses** | ₹${totalExp.toLocaleString('en-IN')} | Overheads & bills |\n`;
+      md += `| **Net Operating Profit** | **₹${profit.toLocaleString('en-IN')}** | ${profit >= 0 ? '🟢 Profitable' : '🔴 Operating Deficit'} |\n`;
+      md += `| **Net Profit Margin** | **${margin}%** | Industry benchmark: 12-18% |\n`;
+      md += `| **Total Liquid Reserves** | ₹${liquidFunds.toLocaleString('en-IN')} | Cash in hand & bank accounts |\n`;
+      return md;
     }
 
-    return `
-      I have analyzed your request regarding <i>"${query}"</i>.
-      <br><br>
-      As your AI Business Advisor, I can automatically execute:
-      <ul style="margin:6px 0 6px 18px;">
-        <li><b>Voice & Natural Language Billing:</b> Click the button above to speak or type an invoice description.</li>
-        <li><b>Customer Collection Intelligence:</b> Track overdue debts and generate personalized WhatsApp messages.</li>
-        <li><b>Restock Predictions:</b> Calculate exact safety buffer quantities for each SKU.</li>
-      </ul>
-      Click one of the quick suggestions above to run an instant diagnostic!
-    `;
+    // 8. Default Comprehensive Database Diagnostic
+    const totalLiquid = (Number(cashBank.cashInHand) || 0) + (Number(cashBank.hdfcBank) || 0) + (Number(cashBank.sbiBank) || 0);
+    const totalDebtors = parties.filter(p => Number(p.balance) > 0).reduce((a, b) => a + Number(b.balance), 0);
+    const totalCreditors = parties.filter(p => Number(p.balance) < 0).reduce((a, b) => a + Math.abs(Number(b.balance)), 0);
+    const lowCount = items.filter(i => Number(i.stock) <= Number(i.minStock)).length;
+
+    let md = `### 🏢 Full Business Health Summary (${biz.name || 'Lekha Jokha'})\n\n`;
+    md += `I have searched the entire database for your query: *"${query}"*.\n\n`;
+    md += `| Key Metric | Amount / Count | Status |\n`;
+    md += `| :--- | :--- | :--- |\n`;
+    md += `| **Liquid Cash & Bank Reserves** | ₹${totalLiquid.toLocaleString('en-IN')} | 🟢 Active Runway |\n`;
+    md += `| **Pending Customer Receivables** | ₹${totalDebtors.toLocaleString('en-IN')} | 🔴 Overdue Collection |\n`;
+    md += `| **Immediate Supplier Payables** | ₹${totalCreditors.toLocaleString('en-IN')} | ⚠️ Due to Vendors |\n`;
+    md += `| **Total Catalog Inventory** | ${items.length} Products | ${lowCount} low stock alerts |\n`;
+    md += `| **Recorded Sales Invoices** | ${sales.length} Invoices | Active GST tracking |\n`;
+    md += `\n**What would you like to explore next?**\n`;
+    md += `- Ask *"Who owes me money and generate a WhatsApp reminder?"*\n`;
+    md += `- Ask *"Show me supplier payables"* or *"Which items need restocking?"*\n`;
+    md += `- Ask *"Break down my orders"* or *"Analyze my profit margins"*`;
+    return md;
   },
 
   // ==============================================================================

@@ -278,15 +278,19 @@ MANDATORY GUARDRAILS & INSTRUCTIONS:
 
   // ==============================================================================
   // FEATURE 1: Context-Aware Financial Advisor Chat
-  // Ingests live balances, debtors, payables, stock, and sales
+  // Ingests full database (all parties, items, sales, purchases, expenses, orders, bank)
   // ==============================================================================
   async askFinancialAdvisor(query) {
-    const biz = (window.Store && window.Store.getBusiness && window.Store.getBusiness()) || {};
+    const biz = (window.Store && window.Store.getActiveBusiness && window.Store.getActiveBusiness()) || {};
     const parties = (window.Store && window.Store.getParties && window.Store.getParties()) || [];
     const items = (window.Store && window.Store.getItems && window.Store.getItems()) || [];
+    const categories = (window.Store && window.Store.getItemCategories && window.Store.getItemCategories()) || [];
     const sales = (window.Store && window.Store.getSales && window.Store.getSales()) || [];
+    const purchases = (window.Store && window.Store.getPurchases && window.Store.getPurchases()) || [];
     const expenses = (window.Store && window.Store.getExpenses && window.Store.getExpenses()) || [];
     const cashBank = (window.Store && window.Store.getCashBank && window.Store.getCashBank()) || {};
+    const orders = (window.Store && window.Store.getOrders && window.Store.getOrders()) || (biz.orders || []);
+    const salesmen = (window.Store && window.Store.getSalesmen && window.Store.getSalesmen()) || (biz.salesmen || []);
 
     const debtors = parties.filter(p => (Number(p.balance) || 0) > 0);
     const creditors = parties.filter(p => (Number(p.balance) || 0) < 0);
@@ -295,27 +299,121 @@ MANDATORY GUARDRAILS & INSTRUCTIONS:
     const totalLiquid = (Number(cashBank.cashInHand) || 0) + (Number(cashBank.hdfcBank) || 0) + (Number(cashBank.sbiBank) || 0);
     const lowStock = items.filter(i => (Number(i.stock) || 0) <= (Number(i.minStock) || 0));
     const totalSalesAmt = sales.reduce((a, s) => a + (Number(s.total) || 0), 0);
+    const totalPurchasesAmt = purchases.reduce((a, p) => a + (Number(p.total) || 0), 0);
     const totalExpAmt = expenses.reduce((a, e) => a + (Number(e.amount) || 0), 0);
+    const totalStockVal = items.reduce((a, i) => a + ((Number(i.stock) || 0) * (Number(i.purchasePrice) || Number(i.salePrice) * 0.8)), 0);
+
+    // Full database serialized snapshot
+    const dbSnapshot = {
+      business: {
+        name: biz.name || 'My Business',
+        gstin: biz.gstin || 'Unregistered',
+        phone: biz.phone || '',
+        address: biz.address || '',
+        upiId: biz.upiId || 'our registered UPI ID',
+        fiscalYear: '2026-2027',
+        liquidReserves: {
+          total: totalLiquid,
+          cashInHand: cashBank.cashInHand || 0,
+          hdfcBank: cashBank.hdfcBank || 0,
+          sbiBank: cashBank.sbiBank || 0
+        }
+      },
+      summaryMetrics: {
+        totalReceivables,
+        totalPayables,
+        totalStockValuation: totalStockVal,
+        totalSalesRevenue: totalSalesAmt,
+        totalPurchasesCost: totalPurchasesAmt,
+        totalOperatingExpenses: totalExpAmt,
+        netCashFlowEstimate: totalSalesAmt - totalPurchasesAmt - totalExpAmt
+      },
+      customersAndSuppliers: parties.map(p => ({
+        id: p.id,
+        name: p.name,
+        type: p.type,
+        phone: p.phone,
+        balance: Number(p.balance) || 0,
+        dueStatus: (Number(p.balance) || 0) > 0 ? 'Receivable (Owes You)' : (Number(p.balance) || 0) < 0 ? 'Payable (You Owe)' : 'Settled',
+        city: p.city || p.state || ''
+      })),
+      inventoryCatalog: items.map(i => ({
+        id: i.id,
+        name: i.name,
+        category: i.category || 'General',
+        subCategory: i.subCategory || '',
+        stock: Number(i.stock) || 0,
+        minStock: Number(i.minStock) || 0,
+        stockStatus: (Number(i.stock) || 0) <= (Number(i.minStock) || 0) ? 'LOW_STOCK' : 'OK',
+        salePrice: Number(i.salePrice) || 0,
+        purchasePrice: Number(i.purchasePrice) || 0,
+        gstRate: Number(i.gstRate) || 0,
+        unit: i.unit || 'PCS'
+      })),
+      itemCategoriesHierarchy: categories.map(c => ({
+        category: c.name,
+        subcategories: c.subcategories || []
+      })),
+      recentSalesInvoices: sales.slice(-25).map(s => ({
+        invoiceNo: s.number || s.id,
+        date: s.date,
+        customerName: s.partyName,
+        total: Number(s.total) || 0,
+        paymentMode: s.paymentMode || 'Cash',
+        status: s.status || 'Paid'
+      })),
+      recentPurchases: purchases.slice(-20).map(p => ({
+        billNo: p.number || p.id,
+        date: p.date,
+        supplierName: p.partyName,
+        total: Number(p.total) || 0,
+        status: p.status || 'Paid'
+      })),
+      omniChannelOrders: orders.slice(-20).map(o => ({
+        orderId: o.id,
+        date: o.date,
+        customer: o.partyName,
+        salesman: o.salesmanName || 'Direct Counter',
+        total: Number(o.total) || 0,
+        status: o.status || 'Booked'
+      })),
+      expensesBreakdown: expenses.slice(-25).map(e => ({
+        date: e.date,
+        category: e.category,
+        amount: Number(e.amount) || 0,
+        description: e.description || ''
+      })),
+      fieldStaff: salesmen.map(s => ({
+        id: s.id,
+        name: s.name,
+        phone: s.phone,
+        status: s.attendanceStatus || 'Active',
+        territory: s.territory || ''
+      }))
+    };
 
     const promptContext = `
-ACTIVE REAL-TIME BUSINESS DATA:
-- Business Name: ${biz.name || 'My Business'} (GSTIN: ${biz.gstin || 'Unregistered'}, UPI: ${biz.upiId || 'Not set'})
-- Liquid Cash & Bank: ₹${totalLiquid.toLocaleString('en-IN')} (Cash: ₹${cashBank.cashInHand || 0}, HDFC: ₹${cashBank.hdfcBank || 0}, SBI: ₹${cashBank.sbiBank || 0})
-- Pending Customer Receivables: ₹${totalReceivables.toLocaleString('en-IN')} across ${debtors.length} customers.
-  Top Debtors: ${debtors.slice(0, 4).map(d => `${d.name} owes ₹${d.balance} (Ph: ${d.phone})`).join(', ') || 'None'}
-- Immediate Supplier Payables: ₹${totalPayables.toLocaleString('en-IN')} across ${creditors.length} suppliers.
-- Total Sales Logged: ₹${totalSalesAmt.toLocaleString('en-IN')} (${sales.length} invoices).
-- Total Expenses Logged: ₹${totalExpAmt.toLocaleString('en-IN')} (${expenses.length} expense vouchers).
-- Critical Low Stock Items (${lowStock.length}): ${lowStock.slice(0, 5).map(i => `${i.name} (${i.stock} left, min threshold ${i.minStock})`).join(', ') || 'All stock sufficient'}
+COMPLETE AUTHORITATIVE BUSINESS DATABASE:
+${JSON.stringify(dbSnapshot, null, 2)}
 
 USER INQUIRY:
 "${query}"
 
-INSTRUCTIONS:
-1. Provide a direct, highly practical, and actionable answer tailored to these specific business numbers.
-2. If relevant, format key metrics using clean HTML bold tags (<b>...</b>) and bullet lists (<ul><li>...</li></ul>).
-3. If the user asks for payment reminders, include a ready-to-copy WhatsApp reminder draft with debtor name, amount, UPI ID, and a polite but firm tone.
-4. If the user asks for profit margins or restocking, provide concrete calculations.
+ROLE & OBJECTIVES:
+You are Lekha Jokha AI — Enterprise Financial Advisor, Chief Operating Officer, and Accounting Specialist for ${biz.name || 'this business'}.
+You have FULL ACCESS to the entire database above (all customers, suppliers, inventory items, categories, subcategories, sales invoices, purchases, orders, expenses, and bank balances).
+
+STRICT FORMATTING REQUIREMENTS:
+1. Deliver a well-structured, clean, executive-ready response.
+2. Structure the answer into clear sections with clean headings (e.g. ### 📊 Financial Overview, ### ⚠️ Critical Action Items).
+3. Whenever listing multiple parties, items, sales, categories, or numbers, ALWAYS format them in clean Markdown tables:
+   | Customer / Item | Details / Phone | Amount / Stock | Status / Action |
+   |:---|:---|:---|:---|
+4. Use bullet points (- **Item Name:** Details) for scannable summaries.
+5. If the user asks for payment reminders or WhatsApp notices:
+   - Provide the complete, polite, and persuasive message inside a code block ready to send on WhatsApp, including customer name, exact balance amount, business UPI ID, and thanks.
+6. Provide exact figures and calculations based on the provided database facts. Never hallucinate fake parties or fake numbers.
+7. Support English, Hindi, and Hinglish queries seamlessly with appropriate business warmth.
 `;
 
     return await this.generateContent(promptContext, { temperature: 0.3 });
