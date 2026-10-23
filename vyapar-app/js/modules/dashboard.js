@@ -97,35 +97,32 @@ window.DashboardModule = {
       </div>
 
       <!-- Quick Action Buttons Row -->
-      <div class="card" style="margin-bottom: 1.5rem; background: #ffffff;">
-        <div class="card-body" style="padding: 1rem 1.25rem;">
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-            <div style="font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.5rem;">
-              <span>⚡ Fast Business Actions:</span>
-            </div>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <button class="btn btn-primary btn-sm" id="dashCreateSaleBtn">+ Add Sale Invoice</button>
-              <button class="btn btn-outline btn-sm" id="dashCreatePurchaseBtn">+ Record Purchase</button>
-              <button class="btn btn-outline btn-sm" id="dashAddPartyBtn">+ Add Customer / Vendor</button>
-              <button class="btn btn-outline btn-sm" id="dashAddItemBtn">+ Add Inventory Item</button>
-            </div>
-          </div>
+      <div class="quick-actions-bar">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="quick-actions-badge">⚡ FAST ACTIONS</span>
+          <span style="font-size: 0.82rem; color: #64748b; font-weight: 500;">Direct 1-Click Operations</span>
+        </div>
+        <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+          <button class="btn-fast-action btn-fast-sale" id="dashCreateSaleBtn">+ Add Sale Invoice</button>
+          <button class="btn-fast-action btn-fast-purchase" id="dashCreatePurchaseBtn">+ Record Purchase</button>
+          <button class="btn-fast-action btn-fast-party" id="dashAddPartyBtn">+ Add Customer / Vendor</button>
+          <button class="btn-fast-action btn-fast-item" id="dashAddItemBtn">+ Add Inventory Item</button>
         </div>
       </div>
 
       <!-- Low Stock Alert Banner (if any) -->
       ${lowStockItems.length > 0 ? `
-        <div class="card" style="border-left: 4px solid var(--warning); margin-bottom: 1.5rem; background-color: #fffbeb;">
-          <div class="card-body" style="padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-              <div>
-                <strong style="color: #92400e;">Low Stock Warning:</strong>
-                <span style="color: #78350f; font-size: 0.85rem;">${lowStockItems.map(i => `${i.name} (Qty: ${i.stock} ${i.unit})`).join(', ')}</span>
-              </div>
+        <div class="low-stock-alert-card">
+          <div style="display: flex; align-items: center; gap: 0.85rem;">
+            <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(245, 158, 11, 0.2); display: flex; align-items: center; justify-content: center; color: #d97706; flex-shrink: 0;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
-            <a href="#items" class="btn btn-sm btn-outline" style="border-color: #d97706; color: #b45309;">Manage Stock</a>
+            <div>
+              <div style="color: #92400e; font-weight: 800; font-size: 0.9rem;">Low Stock Inventory Warning</div>
+              <div style="color: #78350f; font-size: 0.82rem; font-weight: 500;">${lowStockItems.map(i => `<strong>${i.name}</strong> (${i.stock} ${i.unit} left)`).join(' • ')}</div>
+            </div>
           </div>
+          <a href="#items" class="btn btn-sm btn-outline" style="border-color: #d97706; color: #b45309; background: #ffffff; font-weight: 700; border-radius: 8px;">Restock Inventory &rarr;</a>
         </div>
       ` : ''}
 
@@ -135,10 +132,10 @@ window.DashboardModule = {
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
               <span>Recent Invoices</span>
             </h2>
-            <a href="#sales" class="btn btn-sm btn-outline">View All Sales &rarr;</a>
+            <a href="#sales" class="view-all-sales-link">View All Sales &rarr;</a>
           </div>
           <div class="card-body" style="padding: 0;">
             <div class="table-responsive">
@@ -182,33 +179,46 @@ window.DashboardModule = {
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
               <span>Account Summary</span>
             </h2>
+            <span class="badge badge-info" style="font-size: 10px;">FY 2026-27</span>
           </div>
           <div class="card-body">
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
-                <span class="text-muted">Total Sales Invoiced:</span>
-                <span class="table-mono" style="font-weight: 700;">₹${totalSaleVolume.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+            <div style="display: flex; flex-direction: column; gap: 1.1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14px;">📈</span>
+                  <span style="color: #64748b; font-weight: 500; font-size: 13px;">Total Sales Invoiced</span>
+                </div>
+                <span class="table-mono" style="font-weight: 800; font-size: 14px; color: #0f172a;">₹${totalSaleVolume.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
-                <span class="text-muted">Purchases Recorded:</span>
-                <span class="table-mono" style="font-weight: 600;">₹${purchases.reduce((a, p) => a + (Number(p.total) || 0), 0).toLocaleString()}</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14px;">📦</span>
+                  <span style="color: #64748b; font-weight: 500; font-size: 13px;">Purchases Recorded</span>
+                </div>
+                <span class="table-mono" style="font-weight: 700; font-size: 14px; color: #0f172a;">₹${purchases.reduce((a, p) => a + (Number(p.total) || 0), 0).toLocaleString()}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
-                <span class="text-muted">Total Active Customers:</span>
-                <span class="table-mono" style="font-weight: 600;">${parties.filter(p => p.type === 'Customer').length}</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14px;">👥</span>
+                  <span style="color: #64748b; font-weight: 500; font-size: 13px;">Active Customers</span>
+                </div>
+                <span class="table-mono" style="font-weight: 800; font-size: 14px; color: #0284c7;">${parties.filter(p => p.type === 'Customer').length}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0;">
-                <span class="text-muted">Registered Vendors:</span>
-                <span class="table-mono" style="font-weight: 600;">${parties.filter(p => p.type === 'Supplier').length}</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid #f1f5f9;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 14px;">🏭</span>
+                  <span style="color: #64748b; font-weight: 500; font-size: 13px;">Registered Vendors</span>
+                </div>
+                <span class="table-mono" style="font-weight: 800; font-size: 14px; color: #64748b;">${parties.filter(p => p.type === 'Supplier').length}</span>
               </div>
-              <div style="background-color: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 0.5rem;">
-                <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">GST Filing Status</div>
-                <div style="display: flex; justify-content: space-between; margin-top: 0.35rem;">
-                  <span style="font-size: 0.85rem; font-weight: 600;">GSTR-1 (Oct 2026):</span>
-                  <span class="badge badge-success">Ready to Export</span>
+              <div style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 1rem; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 0.25rem;">
+                <div style="font-size: 0.72rem; color: #64748b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">GST Compliance Health</div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-size: 0.85rem; font-weight: 600; color: #1e293b;">GSTR-1 (Oct 2026)</span>
+                  <span class="badge badge-success" style="font-weight: 800;">✓ Ready to Export</span>
                 </div>
               </div>
             </div>
