@@ -6,6 +6,16 @@
 window.PartiesModule = {
   selectedPartyId: null,
 
+  escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  },
+
   ensureSamplePartyAndTransaction() {
     if (!window.Store) return;
     const parties = window.Store.getParties() || [];
@@ -158,8 +168,8 @@ window.PartiesModule = {
             <!-- Party Header Bar -->
             <div class="party-detail-topbar">
               <div class="party-title-wrap">
-                <span class="party-title-text" id="activePartyName">${selectedParty.name}</span>
-                <button class="party-edit-pencil-btn" id="editActivePartyBtn" title="Edit ${selectedParty.name}">
+                <span class="party-title-text" id="activePartyName">${this.escapeHtml(selectedParty.name)}</span>
+                <button class="party-edit-pencil-btn" id="editActivePartyBtn" title="Edit ${this.escapeHtml(selectedParty.name)}">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -170,14 +180,14 @@ window.PartiesModule = {
               <!-- Top Right Action Icons -->
               <div class="party-detail-actions">
                 <!-- SMS / Chat -->
-                <button class="party-action-circle-btn btn-circle-sms" id="partySmsBtn" title="Send SMS message to ${selectedParty.phone || ''}">
+                <button class="party-action-circle-btn btn-circle-sms" id="partySmsBtn" title="Send SMS message to ${this.escapeHtml(selectedParty.phone || '')}">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
                   </svg>
                 </button>
 
                 <!-- WhatsApp -->
-                <button class="party-action-circle-btn btn-circle-whatsapp" id="partyWhatsappBtn" title="Send WhatsApp to ${selectedParty.phone || ''}">
+                <button class="party-action-circle-btn btn-circle-whatsapp" id="partyWhatsappBtn" title="Send WhatsApp to ${this.escapeHtml(selectedParty.phone || '')}">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
                   </svg>
@@ -292,8 +302,8 @@ window.PartiesModule = {
       const isActive = p.id === activeId ? 'active' : '';
 
       return `
-        <div class="party-row-card ${isActive}" data-party-id="${p.id}" data-name="${(p.name || '').toLowerCase()}">
-          <span class="party-row-name-text">${p.name}</span>
+        <div class="party-row-card ${isActive}" data-party-id="${p.id}" data-name="${this.escapeHtml((p.name || '').toLowerCase())}">
+          <span class="party-row-name-text">${this.escapeHtml(p.name)}</span>
           <span class="party-row-amount-text">${formattedAmount}</span>
         </div>
       `;
@@ -362,9 +372,9 @@ window.PartiesModule = {
 
       return `
         <tr>
-          <td><span style="font-weight: 500;">${t.type}</span></td>
-          <td>${t.number}</td>
-          <td>${t.date}</td>
+          <td><span style="font-weight: 500;">${this.escapeHtml(t.type)}</span></td>
+          <td>${this.escapeHtml(t.number)}</td>
+          <td>${this.escapeHtml(t.date)}</td>
           <td class="trans-mono-amount">₹ ${formattedTotal}</td>
           <td class="trans-mono-amount">₹ ${formattedBalance}</td>
           <td style="text-align: center;">

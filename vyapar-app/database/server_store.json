@@ -7,7 +7,7 @@
     "plan": "Pro",
     "planActivatedAt": "2026-10-22",
     "planExpiresAt": "2027-10-22",
-    "activeBusinessId": "BIZ-002",
+    "activeBusinessId": "BIZ-001",
     "passwordHash": "bf0fc1c6eedcf1509141687e7b5d044338bb2a7011d5db23daabaee6f1245e45cbe10d0db12685da76e5f0819af54706a50af498ba986803b2a0b8f07518af06",
     "salt": "8a49c0e7b23145d8",
     "pinHash": "5bb93a78720ce8c034222d979542d466cc2fde0e9a9e3fea387c28b20b165ffa8dfede70181ba5bc58fdaef4cd945ab026bb96cd3c641b4bec3435ced8952517",
@@ -2651,9 +2651,155 @@
       "state": "Delhi (07)",
       "status": "Active",
       "createdAt": "2026-10-23"
+    },
+    {
+      "id": "BIZ-271",
+      "subscriberId": "SUB-66956",
+      "name": "Sharma General Store",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9892526394",
+      "email": "user_9892526394@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-271.json",
+      "createdAt": "2026-10-23"
+    },
+    {
+      "id": "BIZ-272",
+      "subscriberId": "SUB-90988",
+      "name": "Verma Textiles",
+      "gstin": "",
+      "state": "Maharashtra (27)",
+      "phone": "+91 9792526395",
+      "email": "user_9792526395@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-272.json",
+      "createdAt": "2026-10-23"
+    },
+    {
+      "id": "BIZ-273",
+      "subscriberId": "SUB-64381",
+      "name": "Stranger Biz",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9692526396",
+      "email": "user_9692526396@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-273.json",
+      "createdAt": "2026-10-23"
+    },
+    {
+      "id": "BIZ-274",
+      "subscriberId": "SUB-66956",
+      "name": "Sharma Branch 2",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "status": "Active",
+      "createdAt": "2026-10-23"
+    },
+    {
+      "id": "BIZ-275",
+      "subscriberId": "SUB-71091",
+      "name": "Sharma General Store",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9839764186",
+      "email": "user_9839764186@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-275.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-276",
+      "subscriberId": "SUB-84799",
+      "name": "Verma Textiles",
+      "gstin": "",
+      "state": "Maharashtra (27)",
+      "phone": "+91 9739764187",
+      "email": "user_9739764187@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-276.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-277",
+      "subscriberId": "SUB-32295",
+      "name": "Stranger Biz",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9639764188",
+      "email": "user_9639764188@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-277.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-278",
+      "subscriberId": "SUB-63077",
+      "name": "Sharma General Store",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9839885671",
+      "email": "user_9839885671@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-278.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-279",
+      "subscriberId": "SUB-82826",
+      "name": "Verma Textiles",
+      "gstin": "",
+      "state": "Maharashtra (27)",
+      "phone": "+91 9739885672",
+      "email": "user_9739885672@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-279.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-280",
+      "subscriberId": "SUB-39074",
+      "name": "Stranger Biz",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "phone": "+91 9639885673",
+      "email": "user_9639885673@lekhajokha.in",
+      "status": "Active",
+      "databasePath": "tenants/business_BIZ-280.json",
+      "createdAt": "2026-10-24"
+    },
+    {
+      "id": "BIZ-281",
+      "subscriberId": "SUB-63077",
+      "name": "Sharma Branch 2",
+      "gstin": "",
+      "state": "Delhi (07)",
+      "status": "Active",
+      "createdAt": "2026-10-24"
     }
   ],
   "subscriptions": [
+    {
+      "id": "SUB-PAY-1792839889269",
+      "subscriberId": "SUB-63077",
+      "date": "2026-10-24",
+      "plan": "Pro",
+      "amount": 299,
+      "status": "Active",
+      "paymentMethod": "UPI",
+      "txRef": "TXN-CC5F213E6564"
+    },
+    {
+      "id": "SUB-PAY-1792792527298",
+      "subscriberId": "SUB-66956",
+      "date": "2026-10-23",
+      "plan": "Pro",
+      "amount": 299,
+      "status": "Active",
+      "paymentMethod": "UPI",
+      "txRef": "TXN-C90BCD289F79"
+    },
     {
       "id": "SUB-PAY-1792772523298",
       "subscriberId": "SUB-31135",
@@ -5070,6 +5216,150 @@
       "pin": "1234",
       "status": "Active",
       "createdAt": "2026-10-23T16:21:58.509Z"
+    },
+    {
+      "id": "U-8814",
+      "subscriberId": "SUB-66956",
+      "name": "Rohan Sharma",
+      "email": "user_9892526394@lekhajokha.in",
+      "phone": "+91 9592526397",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "67efb0cb5f81836aaa63ba4c296e80b7efbee8bdb007c2adbbf17051031033159145f8df6f04cfb78dea6ce9b8d781f7200e00a936088b12affa6e1a4bbbcb62",
+      "salt": "cde502b33f41c47e6bd1ddeef65eb35e",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.504Z"
+    },
+    {
+      "id": "U-2504",
+      "subscriberId": "SUB-90988",
+      "name": "Pooja Verma",
+      "email": "user_9792526395@lekhajokha.in",
+      "phone": "+91 9792526395",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "d19fce32cabbc75e565b44b606e0b0ec4414651d8b496c4d888d4508b93abf2e0d2b7384010ae17fb9f0120f39db0aaea508de9d9bab735605273686c7286a5f",
+      "salt": "1a4a325fc17da5b6605870154de50a99",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.653Z"
+    },
+    {
+      "id": "U-9258",
+      "subscriberId": "SUB-64381",
+      "name": "Stranger User",
+      "email": "user_9692526396@lekhajokha.in",
+      "phone": "+91 9692526396",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "741db68710663cb7c1e0fb55643a5f891bcc97da0c433ad72ca2f4a64948cbf793166119a8e50dac1b4d41b30a824e88c370719eda0b78ef70a558b83092c08d",
+      "salt": "a1849fa432961fa565b7d0e9060d9cdc",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.803Z"
+    },
+    {
+      "id": "U-6204",
+      "subscriberId": "SUB-71091",
+      "name": "Rohan Sharma",
+      "email": "user_9839764186@lekhajokha.in",
+      "phone": "+91 9539764189",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "be0a090cfa69f305e5b07b810152da81cd69b0fef6656cabb39f2cac9dab4c3b828be694cab92b24849938a36df66b90429c0f66b13d58ee374e176ad1d43a1f",
+      "salt": "a2148df0da214ba1446c0cd9150087ec",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:44.528Z"
+    },
+    {
+      "id": "U-4625",
+      "subscriberId": "SUB-84799",
+      "name": "Pooja Verma",
+      "email": "user_9739764187@lekhajokha.in",
+      "phone": "+91 9739764187",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "6089bcccab5f85ed1ab37eb41d3ec27339c8ac1098d8dfffbff15c44c17ab54563fe7a4d6366202c23f8540586edc43b4c27903b925caa8fd070935fd6e58beb",
+      "salt": "3ffe68988f585f01ea74c882d81ff846",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:45.212Z"
+    },
+    {
+      "id": "U-9269",
+      "subscriberId": "SUB-32295",
+      "name": "Stranger User",
+      "email": "user_9639764188@lekhajokha.in",
+      "phone": "+91 9639764188",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "5f830eac075e26408c64afb74652201d10cbfd8789948fbcf6c9cf854035d0f358796237c21ebc040dcb2a59c78b46d68dd3d9d6c744f7de371b020a7247a604",
+      "salt": "f8a688b6f0021244d818a99bf5f51a18",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:45.912Z"
+    },
+    {
+      "id": "U-4454",
+      "subscriberId": "SUB-63077",
+      "name": "Rohan Sharma",
+      "email": "user_9839885671@lekhajokha.in",
+      "phone": "+91 9539885674",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "5a009f262dd84d5b5f447d6715adba0c7c18c3531dbbe8e361dd724c3f72cd1d3db95cd9a9b7bad2632974ddbc1d3507f1bcab7a3e86789990f712db6b90d9b2",
+      "salt": "4f443406a7a9020717e677e71058ed10",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.040Z"
+    },
+    {
+      "id": "U-3292",
+      "subscriberId": "SUB-82826",
+      "name": "Pooja Verma",
+      "email": "user_9739885672@lekhajokha.in",
+      "phone": "+91 9739885672",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "f2b3a3e9dd25a8ed6561482133e94b16f7e632f12713f6178ef247ad46b93ab20b64e6deaeb6d3dc3ae050a2bbac176af5a1584fa64f5c6f23b566799a752ceb",
+      "salt": "492d87af169229c20ab6fd25ad463884",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.536Z"
+    },
+    {
+      "id": "U-9929",
+      "subscriberId": "SUB-39074",
+      "name": "Stranger User",
+      "email": "user_9639885673@lekhajokha.in",
+      "phone": "+91 9639885673",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "passwordHash": "3a45f4baef6a7119813cde4e93c76546e857e74b7c003085d1fd0caf60347ae51ad49861f9109a1fef39c3ff844c7e84ffd3ab367302d1acd5b0dccf6e9d0c25",
+      "salt": "e2457944f558402206cdfbdcbb6c7abf",
+      "pin": "1234",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.990Z"
     }
   ],
   "subscribers": [
@@ -5081,7 +5371,7 @@
       "plan": "Pro",
       "planActivatedAt": "2026-10-22",
       "planExpiresAt": "2027-10-22",
-      "activeBusinessId": "BIZ-002",
+      "activeBusinessId": "BIZ-001",
       "passwordHash": "bf0fc1c6eedcf1509141687e7b5d044338bb2a7011d5db23daabaee6f1245e45cbe10d0db12685da76e5f0819af54706a50af498ba986803b2a0b8f07518af06",
       "salt": "8a49c0e7b23145d8",
       "pinHash": "5bb93a78720ce8c034222d979542d466cc2fde0e9a9e3fea387c28b20b165ffa8dfede70181ba5bc58fdaef4cd945ab026bb96cd3c641b4bec3435ced8952517",
@@ -6377,6 +6667,114 @@
       "activeBusinessId": "BIZ-266",
       "status": "Active",
       "createdAt": "2026-10-23T16:21:58.509Z"
+    },
+    {
+      "id": "SUB-66956",
+      "name": "Rohan Sharma",
+      "email": "user_9892526394@lekhajokha.in",
+      "phone": "+91 9592526397",
+      "plan": "Pro",
+      "planActivatedAt": "2026-10-23",
+      "planExpiresAt": "2027-10-23",
+      "activeBusinessId": "BIZ-274",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.504Z"
+    },
+    {
+      "id": "SUB-90988",
+      "name": "Pooja Verma",
+      "email": "user_9792526395@lekhajokha.in",
+      "phone": "+91 9792526395",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-23",
+      "planExpiresAt": "2027-10-23",
+      "activeBusinessId": "BIZ-272",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.653Z"
+    },
+    {
+      "id": "SUB-64381",
+      "name": "Stranger User",
+      "email": "user_9692526396@lekhajokha.in",
+      "phone": "+91 9692526396",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-23",
+      "planExpiresAt": "2027-10-23",
+      "activeBusinessId": "BIZ-273",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.803Z"
+    },
+    {
+      "id": "SUB-71091",
+      "name": "Rohan Sharma",
+      "email": "user_9839764186@lekhajokha.in",
+      "phone": "+91 9539764189",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-275",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:44.528Z"
+    },
+    {
+      "id": "SUB-84799",
+      "name": "Pooja Verma",
+      "email": "user_9739764187@lekhajokha.in",
+      "phone": "+91 9739764187",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-276",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:45.212Z"
+    },
+    {
+      "id": "SUB-32295",
+      "name": "Stranger User",
+      "email": "user_9639764188@lekhajokha.in",
+      "phone": "+91 9639764188",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-277",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:45.912Z"
+    },
+    {
+      "id": "SUB-63077",
+      "name": "Rohan Sharma",
+      "email": "user_9839885671@lekhajokha.in",
+      "phone": "+91 9539885674",
+      "plan": "Pro",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-281",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.040Z"
+    },
+    {
+      "id": "SUB-82826",
+      "name": "Pooja Verma",
+      "email": "user_9739885672@lekhajokha.in",
+      "phone": "+91 9739885672",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-279",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.536Z"
+    },
+    {
+      "id": "SUB-39074",
+      "name": "Stranger User",
+      "email": "user_9639885673@lekhajokha.in",
+      "phone": "+91 9639885673",
+      "plan": "Free",
+      "planActivatedAt": "2026-10-24",
+      "planExpiresAt": "2027-10-24",
+      "activeBusinessId": "BIZ-280",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.990Z"
     }
   ],
   "businessMemberships": [
@@ -8744,6 +9142,161 @@
       "userId": "U-6922",
       "role": "Owner",
       "status": "Active"
+    },
+    {
+      "id": "MBR-1792792526504",
+      "businessId": "BIZ-271",
+      "userId": "U-8814",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-23T21:55:26.504Z"
+    },
+    {
+      "id": "MBR-1792792526653",
+      "businessId": "BIZ-272",
+      "userId": "U-2504",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-23T21:55:26.653Z"
+    },
+    {
+      "id": "MBR-1792792526803",
+      "businessId": "BIZ-273",
+      "userId": "U-9258",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-23T21:55:26.803Z"
+    },
+    {
+      "id": "MBR-1792792527067",
+      "businessId": "BIZ-271",
+      "userId": "U-9258",
+      "userName": "Stranger User",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "status": "Revoked",
+      "joinedAt": "2026-10-23T21:55:27.067Z",
+      "revokedAt": "2026-10-23T21:55:27.142Z"
+    },
+    {
+      "id": "MBR-1792792527370-625",
+      "businessId": "BIZ-274",
+      "userId": "U-8814",
+      "role": "Owner",
+      "status": "Active"
+    },
+    {
+      "id": "MBR-1792839764528",
+      "businessId": "BIZ-275",
+      "userId": "U-6204",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:02:44.528Z"
+    },
+    {
+      "id": "MBR-1792839765212",
+      "businessId": "BIZ-276",
+      "userId": "U-4625",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:02:45.212Z"
+    },
+    {
+      "id": "MBR-1792839765912",
+      "businessId": "BIZ-277",
+      "userId": "U-9269",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:02:45.912Z"
+    },
+    {
+      "id": "MBR-1792839767099",
+      "businessId": "BIZ-275",
+      "userId": "U-9269",
+      "userName": "Stranger User",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "status": "Revoked",
+      "joinedAt": "2026-10-24T11:02:47.099Z",
+      "revokedAt": "2026-10-24T11:02:47.316Z"
+    },
+    {
+      "id": "MBR-1792839886041",
+      "businessId": "BIZ-278",
+      "userId": "U-4454",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:04:46.041Z"
+    },
+    {
+      "id": "MBR-1792839886536",
+      "businessId": "BIZ-279",
+      "userId": "U-3292",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:04:46.536Z"
+    },
+    {
+      "id": "MBR-1792839886990",
+      "businessId": "BIZ-280",
+      "userId": "U-9929",
+      "role": "Owner",
+      "permissions": [
+        "*"
+      ],
+      "status": "Active",
+      "joinedAt": "2026-10-24T11:04:46.990Z"
+    },
+    {
+      "id": "MBR-1792839888357",
+      "businessId": "BIZ-278",
+      "userId": "U-9929",
+      "userName": "Stranger User",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "status": "Revoked",
+      "joinedAt": "2026-10-24T11:04:48.357Z",
+      "revokedAt": "2026-10-24T11:04:48.726Z"
+    },
+    {
+      "id": "MBR-1792839889596-774",
+      "businessId": "BIZ-281",
+      "userId": "U-4454",
+      "role": "Owner",
+      "status": "Active"
     }
   ],
   "sessions": {
@@ -10776,7 +11329,7 @@
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
       "status": "Active",
       "createdAt": "2026-10-22T22:56:59.071Z",
-      "lastActiveAt": "2026-10-22T22:56:59.071Z",
+      "lastActiveAt": "2026-10-24T15:08:18.460Z",
       "expiresAt": "2026-10-29T22:56:59.071Z"
     },
     "7eb09dd0b664040bc05823785e63b649e66e122a92cd350cd84d3de63c22ed1c": {
@@ -10792,7 +11345,7 @@
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
       "status": "Active",
       "createdAt": "2026-10-23T09:37:45.054Z",
-      "lastActiveAt": "2026-10-23T19:46:05.219Z",
+      "lastActiveAt": "2026-10-24T15:09:25.305Z",
       "expiresAt": "2026-10-30T09:37:45.054Z"
     },
     "05817732cd6fcc5114fef04a8d3930dd39a8eb4aa3708aa074e22a432107b9f1": {
@@ -10800,7 +11353,7 @@
       "token": "05817732cd6fcc5114fef04a8d3930dd39a8eb4aa3708aa074e22a432107b9f1",
       "userId": "U001",
       "subscriberId": "SUB-88990",
-      "activeBusinessId": "BIZ-002",
+      "activeBusinessId": "BIZ-001",
       "platform": "Web",
       "deviceId": "DEV-c9e8c408a5ab8053",
       "deviceName": "Web Desktop Client",
@@ -10808,7 +11361,7 @@
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
       "status": "Active",
       "createdAt": "2026-10-23T14:48:58.994Z",
-      "lastActiveAt": "2026-10-23T19:46:04.901Z",
+      "lastActiveAt": "2026-10-23T21:04:37.440Z",
       "expiresAt": "2026-10-30T14:48:58.994Z"
     },
     "6a601d5c36faf4666b0fb005b9ea3ed2cdc4591d97ba10bc56db1db3bec2d09e": {
@@ -11146,6 +11699,166 @@
       "createdAt": "2026-10-23T16:22:23.852Z",
       "lastActiveAt": "2026-10-23T16:22:27.882Z",
       "expiresAt": "2026-10-30T16:22:23.852Z"
+    },
+    "4d67fe85957fe538c53e283a646d5dc228cd38ca715bbb4cc11931ef128004fc": {
+      "id": "SESS-1792792526516-639a969a",
+      "token": "4d67fe85957fe538c53e283a646d5dc228cd38ca715bbb4cc11931ef128004fc",
+      "userId": "U-8814",
+      "subscriberId": "SUB-66956",
+      "activeBusinessId": "BIZ-274",
+      "platform": "Web",
+      "deviceId": "DEV-bf8c6ccc13a10ae7",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:26.516Z",
+      "lastActiveAt": "2026-10-23T21:55:28.071Z",
+      "expiresAt": "2026-10-30T21:55:26.516Z"
+    },
+    "01538a9a60eec02db00a7fd0e4d4ee45bdc462e4b655c06b262acb9df5099cf9": {
+      "id": "SESS-1792792527231-9809957b",
+      "token": "01538a9a60eec02db00a7fd0e4d4ee45bdc462e4b655c06b262acb9df5099cf9",
+      "userId": "U-9258",
+      "subscriberId": "SUB-64381",
+      "activeBusinessId": "BIZ-273",
+      "platform": "Web",
+      "deviceId": "DEV-f38afd4b7b90aab4",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:27.231Z",
+      "lastActiveAt": "2026-10-23T21:55:27.292Z",
+      "expiresAt": "2026-10-30T21:55:27.231Z"
+    },
+    "e2549ae951f6caff408721edec6476856dd66102f9e817879362c17c22164d73": {
+      "id": "SESS-1792792528116-b1a85b4e",
+      "token": "e2549ae951f6caff408721edec6476856dd66102f9e817879362c17c22164d73",
+      "userId": "U001",
+      "subscriberId": "SUB-88990",
+      "activeBusinessId": "BIZ-001",
+      "platform": "Web",
+      "deviceId": "DEV-5fefe5aa238e4e01",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-23T21:55:28.116Z",
+      "lastActiveAt": "2026-10-23T21:55:28.116Z",
+      "expiresAt": "2026-10-30T21:55:28.116Z"
+    },
+    "0ee6544ede2c28ae4c7927162fb4374faac2834c7a7e8d0b365a07b7ee73df77": {
+      "id": "SESS-1792839521716-89aec23c",
+      "token": "0ee6544ede2c28ae4c7927162fb4374faac2834c7a7e8d0b365a07b7ee73df77",
+      "userId": "U001",
+      "subscriberId": "SUB-88990",
+      "activeBusinessId": "BIZ-001",
+      "platform": "Web",
+      "deviceId": "DEV-02fa581e51d9b421",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "status": "Active",
+      "createdAt": "2026-10-24T10:58:41.716Z",
+      "lastActiveAt": "2026-10-24T10:58:41.716Z",
+      "expiresAt": "2026-10-31T10:58:41.716Z"
+    },
+    "0cfebe5f8de8a97ccf7bcd4648892e2302c22643dab62a84ce1799d2f8357224": {
+      "id": "SESS-1792839620475-8e946b45",
+      "token": "0cfebe5f8de8a97ccf7bcd4648892e2302c22643dab62a84ce1799d2f8357224",
+      "userId": "U001",
+      "subscriberId": "SUB-88990",
+      "activeBusinessId": "BIZ-001",
+      "platform": "Web",
+      "deviceId": "DEV-42949681d1d40e88",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "Unknown Client",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:00:20.476Z",
+      "lastActiveAt": "2026-10-24T11:00:20.893Z",
+      "expiresAt": "2026-10-31T11:00:20.476Z"
+    },
+    "62989c392dc829e3cf58c51f88e4006f9c4d4053ede8c48e1489a18ba1f36389": {
+      "id": "SESS-1792839764570-6e00f5f7",
+      "token": "62989c392dc829e3cf58c51f88e4006f9c4d4053ede8c48e1489a18ba1f36389",
+      "userId": "U-6204",
+      "subscriberId": "SUB-71091",
+      "activeBusinessId": "BIZ-275",
+      "platform": "Web",
+      "deviceId": "DEV-3a0e3798d15c497f",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:44.570Z",
+      "lastActiveAt": "2026-10-24T11:02:47.315Z",
+      "expiresAt": "2026-10-31T11:02:44.570Z"
+    },
+    "2e94b0f0cee58af40e8bf292a8dcaa5c0dfad07dee52cb136955f244942bfa06": {
+      "id": "SESS-1792839765251-de21200c",
+      "token": "2e94b0f0cee58af40e8bf292a8dcaa5c0dfad07dee52cb136955f244942bfa06",
+      "userId": "U-4625",
+      "subscriberId": "SUB-84799",
+      "activeBusinessId": "BIZ-276",
+      "platform": "Web",
+      "deviceId": "DEV-3d5d67f97f441174",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:02:45.251Z",
+      "lastActiveAt": "2026-10-24T11:02:45.458Z",
+      "expiresAt": "2026-10-31T11:02:45.251Z"
+    },
+    "2c4dfff63f051a9cb8ee5970c074e2769933616c5b7c289912c2c982cbef5a98": {
+      "id": "SESS-1792839886085-ad67bf6a",
+      "token": "2c4dfff63f051a9cb8ee5970c074e2769933616c5b7c289912c2c982cbef5a98",
+      "userId": "U-4454",
+      "subscriberId": "SUB-63077",
+      "activeBusinessId": "BIZ-281",
+      "platform": "Web",
+      "deviceId": "DEV-0d8f756254e08cb5",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:46.085Z",
+      "lastActiveAt": "2026-10-24T11:04:51.440Z",
+      "expiresAt": "2026-10-31T11:04:46.085Z"
+    },
+    "6fd76eb764d55e6067bfe197e2d834ca2b6a3515abd5748e96d4a8e2dd95d07b": {
+      "id": "SESS-1792839889065-58b5d55a",
+      "token": "6fd76eb764d55e6067bfe197e2d834ca2b6a3515abd5748e96d4a8e2dd95d07b",
+      "userId": "U-9929",
+      "subscriberId": "SUB-39074",
+      "activeBusinessId": "BIZ-280",
+      "platform": "Web",
+      "deviceId": "DEV-f58f58456446a6d1",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:49.065Z",
+      "lastActiveAt": "2026-10-24T11:04:49.215Z",
+      "expiresAt": "2026-10-31T11:04:49.065Z"
+    },
+    "16f73fd6da34b2cdc1e211b3837a4d210e1878427862546e61972a63e63c712f": {
+      "id": "SESS-1792839891510-92a9076f",
+      "token": "16f73fd6da34b2cdc1e211b3837a4d210e1878427862546e61972a63e63c712f",
+      "userId": "U001",
+      "subscriberId": "SUB-88990",
+      "activeBusinessId": "BIZ-001",
+      "platform": "Web",
+      "deviceId": "DEV-09246c24aab2a194",
+      "deviceName": "Web Device (127.0.0.1)",
+      "ip": "127.0.0.1",
+      "userAgent": "node",
+      "status": "Active",
+      "createdAt": "2026-10-24T11:04:51.510Z",
+      "lastActiveAt": "2026-10-24T11:04:51.510Z",
+      "expiresAt": "2026-10-31T11:04:51.510Z"
     }
   },
   "passwordResets": {
@@ -11183,6 +11896,16 @@
       "attemptsRemaining": 2,
       "lastSentAt": 1792693028969,
       "hourStartTime": 1792693028969,
+      "hourCount": 1
+    },
+    "9839675292": {
+      "hash": "bfd7fb7c3f3af0c52dcf5c6819d844411fdcebdd7bcc03afb473c4c06d38c7f3",
+      "salt": "b64f2cadd44c8c34a773495de552ad6a",
+      "purpose": "register",
+      "expiresAt": 1792839975562,
+      "attemptsRemaining": 3,
+      "lastSentAt": 1792839675562,
+      "hourStartTime": 1792839675562,
       "hourCount": 1
     }
   },
@@ -11461,6 +12184,72 @@
       "status": "Pending",
       "createdAt": "2026-10-22T22:50:11.488Z",
       "expiresAt": "2026-10-29T22:50:11.488Z"
+    },
+    {
+      "id": "INV-1792792527003",
+      "businessId": "BIZ-271",
+      "businessName": "Sharma General Store",
+      "inviterUserId": "U-8814",
+      "inviterName": "Rohan Sharma",
+      "recipientPhone": "9692526396",
+      "recipientEmail": "",
+      "inviteePhone": "9692526396",
+      "inviteeEmail": "",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "inviteToken": "INV-50467244e362a0f003e0f8d8aaa105aea93ac1305c08ad3b",
+      "status": "Accepted",
+      "createdAt": "2026-10-23T21:55:27.003Z",
+      "expiresAt": "2026-10-30T21:55:27.003Z",
+      "acceptedByUserId": "U-9258",
+      "acceptedAt": "2026-10-23T21:55:27.067Z"
+    },
+    {
+      "id": "INV-1792839766869",
+      "businessId": "BIZ-275",
+      "businessName": "Sharma General Store",
+      "inviterUserId": "U-6204",
+      "inviterName": "Rohan Sharma",
+      "recipientPhone": "9639764188",
+      "recipientEmail": "",
+      "inviteePhone": "9639764188",
+      "inviteeEmail": "",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "inviteToken": "INV-f1dbbd16be8595722ceaf423b46caef85a0a062f5cddc517",
+      "status": "Accepted",
+      "createdAt": "2026-10-24T11:02:46.869Z",
+      "expiresAt": "2026-10-31T11:02:46.869Z",
+      "acceptedByUserId": "U-9269",
+      "acceptedAt": "2026-10-24T11:02:47.099Z"
+    },
+    {
+      "id": "INV-1792839888123",
+      "businessId": "BIZ-278",
+      "businessName": "Sharma General Store",
+      "inviterUserId": "U-4454",
+      "inviterName": "Rohan Sharma",
+      "recipientPhone": "9639885673",
+      "recipientEmail": "",
+      "inviteePhone": "9639885673",
+      "inviteeEmail": "",
+      "role": "Accountant",
+      "permissions": [
+        "view_reports",
+        "view_sales"
+      ],
+      "inviteToken": "INV-ec5a10360bbc0c7ee7b44e43b3611738c5a2d6a510dbfdd3",
+      "status": "Accepted",
+      "createdAt": "2026-10-24T11:04:48.123Z",
+      "expiresAt": "2026-10-31T11:04:48.123Z",
+      "acceptedByUserId": "U-9929",
+      "acceptedAt": "2026-10-24T11:04:48.357Z"
     }
   ]
 }

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">लेखा जोखा</string>
+    <string name="nav_dashboard">होम</string>
+    <string name="nav_sales">बिक्री</string>
+    <string name="nav_purchases">खरीद</string>
+    <string name="nav_inventory">स्टॉक</string>
+    <string name="nav_parties">पार्टियां</string>
+    <string name="nav_more">मेन्यू</string>
+    <string name="nav_menu">मुख्य मेन्यू</string>
+    <string name="today_sales">आज की बिक्री</string>
+    <string name="today_purchases">आज की खरीद</string>
+    <string name="receivables">लेने योग्य राशि</string>
+    <string name="payables">देने योग्य राशि</string>
+    <string name="cash_bank">रोकड़ और बैंक</string>
+    <string name="stock_valuation">स्टॉक मूल्यांकन</string>
+    <string name="quick_actions">त्वरित कार्य</string>
+    <string name="btn_new_sale">+ बिक्री</string>
+    <string name="btn_new_purchase">+ खरीद</string>
+    <string name="btn_new_item">+ सामान</string>
+    <string name="btn_new_party">+ पार्टी</string>
+    <string name="recent_transactions">हाल के लेनदेन</string>
+    <string name="switch_business">व्यापार बदलें</string>
+    <string name="lang_toggle">English</string>
+    <string name="nav_mkt_home">होम</string>
+    <string name="nav_mkt_items">सामान</string>
+    <string name="nav_mkt_menu">मेन्यू</string>
+    <string name="nav_mkt_desktop">डेस्कटॉप</string>
+</resources>

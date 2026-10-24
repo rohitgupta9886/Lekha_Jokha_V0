@@ -310,6 +310,44 @@
   "expenses": [],
   "orders": [
     {
+      "id": "ORD-2026-003",
+      "number": "ORD-2026-003",
+      "date": "2026-10-23",
+      "timestamp": "2026-10-23T20:27:38.569Z",
+      "source": "WhatsApp / Phone",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "partyId": "P002",
+      "partyName": "foofoofof",
+      "phone": "9876543217",
+      "items": [
+        {
+          "itemId": "ITM003",
+          "name": "Java",
+          "qty": 4,
+          "rate": 8888,
+          "gstRate": 18
+        }
+      ],
+      "subtotal": 35552,
+      "tax": 1777.6000000000001,
+      "total": 37329.6,
+      "paymentStatus": "Pending",
+      "paymentMode": "Pending",
+      "paidAmount": 0,
+      "balanceDue": 37329.6,
+      "orderStatus": "New",
+      "invoiceId": null,
+      "invoiceNumber": null,
+      "paymentMention": "Payment Pending",
+      "notes": "",
+      "businessId": "BIZ-015",
+      "createdBy": "U-3770",
+      "version": 1,
+      "createdAt": "2026-10-23T20:27:38.702Z",
+      "updatedAt": "2026-10-23T20:27:38.702Z"
+    },
+    {
       "id": "ORD-2026-002",
       "number": "ORD-2026-002",
       "date": "2026-10-23",
@@ -419,7 +457,85 @@
     "cashInHand": 0,
     "bankAccounts": []
   },
-  "ewayBills": [],
+  "ewayBills": [
+    {
+      "id": "ewb_1792854565360_97b58",
+      "businessId": "BIZ-015",
+      "docType": "INV",
+      "docNo": "INV-2026-552",
+      "docDate": "2026-10-24",
+      "status": "GENERATED",
+      "idempotencyKey": "gen_1792854565253_INV-2026-552",
+      "supplyType": "O",
+      "subSupplyType": "1",
+      "fromGstin": "07AAAAA0000A1Z5",
+      "fromTrdName": "Deepmind Tech",
+      "fromAddr1": "Commercial Market",
+      "fromPlace": "Delhi",
+      "fromPincode": 110006,
+      "fromStateCode": 7,
+      "toGstin": "URP",
+      "toTrdName": "aaaaaaaaaaa",
+      "toAddr1": "Delhi",
+      "toPlace": "Delhi",
+      "toPincode": 110001,
+      "toStateCode": 7,
+      "totalInvoiceValue": 50000,
+      "cgstValue": 4500,
+      "sgstValue": 4500,
+      "igstValue": 0,
+      "cessValue": 0,
+      "transporterId": "07AAACT1234M1Z2",
+      "transporterName": "Delhi Roadlines Logistics",
+      "transDistance": 120,
+      "transMode": "1",
+      "transDocNo": "LR-98421",
+      "transDocDate": "2026-10-24",
+      "vehicleNo": "DL01AB1234",
+      "vehicleType": "R",
+      "itemList": [
+        {
+          "itemNo": 1,
+          "productName": "Commercial Goods Cargo",
+          "productDesc": "Hardware / Electrical Items",
+          "hsnCode": 8539,
+          "quantity": 10,
+          "qtyUnit": "PCS",
+          "cgstRate": 9,
+          "sgstRate": 9,
+          "igstRate": 0,
+          "cessRate": 0,
+          "taxableAmount": 41000
+        }
+      ],
+      "auditHistory": [
+        {
+          "action": "SUBMITTED",
+          "timestamp": "2026-10-24T15:09:25.361Z",
+          "provider": "NIC_SANDBOX"
+        },
+        {
+          "action": "GENERATED",
+          "timestamp": "2026-10-24T15:09:25.793Z",
+          "ewayBillNo": "072610231958",
+          "validUpto": "2026-10-25T18:29:59.999Z"
+        }
+      ],
+      "createdAt": "2026-10-24T15:09:25.361Z",
+      "updatedAt": "2026-10-24T15:09:25.793Z",
+      "ewayBillNo": "072610231958",
+      "ewayBillDate": "2026-10-24T15:09:25.791Z",
+      "validUpto": "2026-10-25T18:29:59.999Z",
+      "rawGovResponse": {
+        "status": 1,
+        "data": {
+          "ewayBillNo": 72610231958,
+          "ewayBillDate": "2026-10-24T15:09:25.791Z",
+          "validUpto": "2026-10-25T18:29:59.999Z"
+        }
+      }
+    }
+  ],
   "estimates": [],
   "salesReturns": [],
   "deliveryChallans": [],
@@ -620,5 +736,76 @@
     "ifscCode": "HDFC0001234",
     "branchName": "Rohini Sector 15",
     "logoUrl": ""
+  },
+  "itemCategories": [
+    {
+      "id": "cat_electronics",
+      "name": "Electronics & Hardware",
+      "subcategories": [
+        "Lighting & Bulbs",
+        "Wires & Cables",
+        "Switches & Sockets",
+        "Appliances",
+        "Accessories"
+      ]
+    },
+    {
+      "id": "cat_fmcg",
+      "name": "FMCG & Consumer Goods",
+      "subcategories": [
+        "Soaps & Shampoos",
+        "Oral Care",
+        "Cleaning & Detergents",
+        "Personal Care"
+      ]
+    },
+    {
+      "id": "cat_apparel",
+      "name": "Apparel & Textiles",
+      "subcategories": [
+        "Men's Wear",
+        "Women's Wear",
+        "Kids Wear",
+        "Fabrics & Suits"
+      ]
+    },
+    {
+      "id": "cat_services",
+      "name": "Services & Other",
+      "subcategories": [
+        "Repair & Maintenance",
+        "Consulting & Setup",
+        "Installation",
+        "General Services"
+      ]
+    },
+    {
+      "id": "cat_1792840284382",
+      "name": "Doors",
+      "subcategories": [
+        "PVC",
+        "Amber",
+        "Ivory"
+      ]
+    },
+    {
+      "id": "cat_1792841741135",
+      "name": "Utensils",
+      "subcategories": [
+        "Glass",
+        "spoon"
+      ]
+    }
+  ],
+  "appliedMutations": {
+    "MUT_1792840284386_kj261o": 1792840284523,
+    "MUT_1792840343389_0ldova": 1792840343460,
+    "MUT_1792840367708_b6z71l": 1792840367787,
+    "MUT_1792841131001_klktji": 1792841139535,
+    "MUT_1792841643457_jz06is": 1792841643562,
+    "MUT_1792841741139_bbev1o": 1792841741240,
+    "MUT_1792841753187_cs1mon": 1792841753254,
+    "MUT_1792841769962_hjgmvo": 1792841770029,
+    "MUT_1792842018128_0hlg84": 1792842018448
   }
 }

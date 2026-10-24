@@ -267,12 +267,41 @@ export class TenantDatabaseManager {
       'parties', 'items', 'sales', 'purchases', 'expenses', 'orders',
       'ewayBills', 'estimates', 'salesReturns', 'deliveryChallans',
       'purchaseReturns', 'paymentsIn', 'paymentsOut', 'salesmen',
-      'tasks', 'leads', 'visits', 'accountantAccess'
+      'tasks', 'leads', 'visits', 'accountantAccess', 'itemCategories'
     ];
     for (const arr of arrays) {
       if (!Array.isArray(data[arr])) {
         data[arr] = [];
       }
+    }
+    if (!Array.isArray(data.itemCategories) || data.itemCategories.length === 0) {
+      data.itemCategories = [
+        {
+          id: 'cat_groceries',
+          name: 'Groceries & Food',
+          subcategories: ['Flour & Grains', 'Edible Oils', 'Spices & Masalas', 'Dairy Products', 'Beverages & Snacks']
+        },
+        {
+          id: 'cat_electronics',
+          name: 'Electronics & Hardware',
+          subcategories: ['Lighting & Bulbs', 'Wires & Cables', 'Switches & Sockets', 'Appliances', 'Accessories']
+        },
+        {
+          id: 'cat_fmcg',
+          name: 'FMCG & Consumer Goods',
+          subcategories: ['Soaps & Shampoos', 'Oral Care', 'Cleaning & Detergents', 'Personal Care']
+        },
+        {
+          id: 'cat_apparel',
+          name: 'Apparel & Textiles',
+          subcategories: ["Men's Wear", "Women's Wear", "Kids Wear", "Fabrics & Suits"]
+        },
+        {
+          id: 'cat_services',
+          name: 'Services & Other',
+          subcategories: ['Repair & Maintenance', 'Consulting & Setup', 'Installation', 'General Services']
+        }
+      ];
     }
     if (!data.cashBank || typeof data.cashBank !== 'object') {
       data.cashBank = { cashInHand: 0, bankAccounts: [] };

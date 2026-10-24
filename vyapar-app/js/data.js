@@ -1039,66 +1039,6 @@ class DataStore {
     }
   }
 
-  async syncWithServer() {
-    if (typeof localStorage === 'undefined') return;
-    const token = localStorage.getItem('lekhajokha_auth_token');
-    if (!token) return;
-    const activeBizId = this.getActiveBusinessId();
-
-    // 1. Flush queued offline mutations if any
-    try {
-      const rawQueue = localStorage.getItem('lekhajokha_pending_mutations');
-      if (rawQueue) {
-        const queue = JSON.parse(rawQueue);
-        if (Array.isArray(queue) && queue.length > 0) {
-          const flushRes = await window.apiFetch('/api/v1/sync', {
-            method: 'POST',
-            body: JSON.stringify({ mutations: queue })
-          });
-          if (flushRes && flushRes.ok) {
-            localStorage.removeItem('lekhajokha_pending_mutations');
-          }
-        }
-      }
-    } catch (qErr) {
-      console.warn('Flushing offline mutations deferred:', qErr);
-    }
-
-    // 2. Pull latest server-authoritative delta for the active business
-    try {
-      const lastSync = this.lastSyncTime || 0;
-      const pullRes = await window.apiFetch(`/api/v1/sync/pull?businessId=${encodeURIComponent(activeBizId)}&lastSyncTime=${lastSync}`);
-      if (pullRes && pullRes.ok) {
-        const pullData = await pullRes.json();
-        if (pullData && pullData.success && pullData.businessData) {
-          this.lastSyncTime = pullData.serverTime || Date.now();
-          const activeBiz = this.getActiveBusiness();
-          if (activeBiz) {
-            ['sales', 'items', 'parties', 'purchases', 'expenses', 'orders', 'ewayBills'].forEach(key => {
-              if (pullData.businessData[key] && Array.isArray(pullData.businessData[key])) {
-                if (!activeBiz[key]) activeBiz[key] = [];
-                pullData.businessData[key].forEach(remoteItem => {
-                  const existingIdx = activeBiz[key].findIndex(l => l.id === remoteItem.id || (l.number && l.number === remoteItem.number));
-                  if (existingIdx !== -1) {
-                    activeBiz[key][existingIdx] = remoteItem;
-                  } else {
-                    activeBiz[key].unshift(remoteItem);
-                  }
-                });
-              }
-            });
-            this.save();
-            if (typeof window !== 'undefined') {
-              window.dispatchEvent(new CustomEvent('lekhajokha:data-synced'));
-            }
-          }
-        }
-      }
-    } catch (pullErr) {
-      console.warn('Server delta pull deferred:', pullErr);
-    }
-  }
-
   load() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -1518,12 +1458,45 @@ class DataStore {
 
   async syncWithServer() {
     try {
-      // 1. Fetch accessible businesses list for active session
+      // 0. Flush queued offline mutations if any
+      const rawQueue = typeof localStorage !== 'undefined' ? localStorage.getItem('lekhajokha_pending_mutations') : null;
+      if (rawQueue) {
+        try {
+          const queue = JSON.parse(rawQueue);
+          if (Array.isArray(queue) && queue.length > 0) {
+            const flushRes = await window.apiFetch('/api/v1/sync', {
+              method: 'POST',
+              body: JSON.stringify({ mutations: queue })
+            });
+            if (flushRes && flushRes.ok) {
+              localStorage.removeItem('lekhajokha_pending_mutations');
+            }
+          }
+        } catch (qErr) {
+          console.warn('Flushing offline mutations deferred:', qErr);
+        }
+      }
+
+      // 1. Fetch accessible businesses list for active session (Non-destructive update)
       const bListRes = await window.apiFetch('/api/v1/businesses');
       if (bListRes && bListRes.ok) {
         const bListData = await bListRes.json();
         if (bListData && Array.isArray(bListData.businesses)) {
-          this.data.businesses = bListData.businesses;
+          if (!Array.isArray(this.data.businesses)) this.data.businesses = [];
+          for (const sBiz of bListData.businesses) {
+            let lBiz = this.data.businesses.find(b => b.id === sBiz.id);
+            if (!lBiz) {
+              lBiz = { ...sBiz };
+              this.data.businesses.push(lBiz);
+            } else {
+              // Update metadata properties without wiping out client business collections
+              lBiz.name = sBiz.name || lBiz.name;
+              lBiz.gstin = sBiz.gstin || lBiz.gstin;
+              lBiz.state = sBiz.state || lBiz.state;
+              lBiz.status = sBiz.status || lBiz.status;
+              if (sBiz.role) lBiz.role = sBiz.role;
+            }
+          }
         }
       }
 
@@ -1542,7 +1515,13 @@ class DataStore {
             localBiz = { ...serverBiz };
             this.data.businesses.push(localBiz);
           }
-          Object.assign(localBiz, serverBiz);
+          localBiz.name = serverBiz.name || localBiz.name;
+          localBiz.gstin = serverBiz.gstin || localBiz.gstin;
+          localBiz.state = serverBiz.state || localBiz.state;
+          localBiz.status = serverBiz.status || localBiz.status;
+          if (serverBiz.businessProfile) {
+            localBiz.businessProfile = { ...localBiz.businessProfile, ...serverBiz.businessProfile };
+          }
 
           // Non-destructive reconciliation merge: ensures local additions/edits are never lost
           const mergeCollections = (localArr = [], serverArr = []) => {
@@ -1579,6 +1558,49 @@ class DataStore {
           localBiz.tasks = mergeCollections(localBiz.tasks, serverData.tasks);
           localBiz.leads = mergeCollections(localBiz.leads, serverData.leads);
           localBiz.salesmen = mergeCollections(localBiz.salesmen, serverData.salesmen);
+
+          // Non-destructive reconciliation for Item Categories
+          const mergeCategories = (localCats = [], serverCats = []) => {
+            if (!Array.isArray(serverCats) || serverCats.length === 0) {
+              return Array.isArray(localCats) ? localCats : [];
+            }
+            if (!Array.isArray(localCats) || localCats.length === 0) {
+              return serverCats;
+            }
+            const map = new Map();
+            for (const cat of serverCats) {
+              if (cat && (cat.id || cat.name)) {
+                const key = (cat.id || cat.name).toLowerCase();
+                map.set(key, { ...cat, subcategories: Array.from(new Set(cat.subcategories || [])) });
+              }
+            }
+            for (const localCat of localCats) {
+              if (localCat && (localCat.id || localCat.name)) {
+                const key = (localCat.id || localCat.name).toLowerCase();
+                if (!map.has(key)) {
+                  const existsByName = Array.from(map.values()).some(c => c.name && localCat.name && c.name.toLowerCase() === localCat.name.toLowerCase());
+                  if (!existsByName) {
+                    map.set(key, localCat);
+                  }
+                } else {
+                  const existing = map.get(key);
+                  const combinedSubs = Array.from(new Set([...(existing.subcategories || []), ...(localCat.subcategories || [])]));
+                  map.set(key, { ...existing, subcategories: combinedSubs });
+                }
+              }
+            }
+            return Array.from(map.values());
+          };
+
+          if (Array.isArray(serverData.itemCategories) && serverData.itemCategories.length > 0) {
+            localBiz.itemCategories = mergeCategories(localBiz.itemCategories, serverData.itemCategories);
+          } else if (Array.isArray(localBiz.itemCategories) && localBiz.itemCategories.length > 0) {
+            // Push local categories to server so server receives them
+            window.apiFetch('/api/v1/business/item-categories', {
+              method: 'POST',
+              body: JSON.stringify({ itemCategories: localBiz.itemCategories })
+            }).catch(e => console.warn('Sync categories to server deferred:', e));
+          }
           
           if (serverData.cashBank && typeof serverData.cashBank === 'object') {
             localBiz.cashBank = { ...localBiz.cashBank, ...serverData.cashBank };
@@ -1586,6 +1608,7 @@ class DataStore {
 
           this.save();
           window.dispatchEvent(new CustomEvent('dataSynced', { detail: { businessId: serverBiz.id } }));
+          window.dispatchEvent(new CustomEvent('lekhajokha:data-synced'));
         }
       }
     } catch (err) {
@@ -2004,7 +2027,8 @@ class DataStore {
   // --- Item Categories & Sub-Categories Hierarchy ---
   getItemCategories() {
     const activeBiz = this.getActiveBusiness();
-    if (!activeBiz.itemCategories || !Array.isArray(activeBiz.itemCategories) || activeBiz.itemCategories.length === 0) {
+    if (!activeBiz) return [];
+    if (!activeBiz.itemCategories || !Array.isArray(activeBiz.itemCategories)) {
       activeBiz.itemCategories = [
         {
           id: 'cat_groceries',
@@ -2039,9 +2063,22 @@ class DataStore {
 
   saveItemCategories(categories) {
     const activeBiz = this.getActiveBusiness();
-    activeBiz.itemCategories = categories;
-    this.save();
-    return activeBiz.itemCategories;
+    if (activeBiz) {
+      activeBiz.itemCategories = categories;
+      this.save();
+    }
+    // Asynchronously push to central server
+    if (typeof window !== 'undefined' && window.apiFetch && this.getAuthToken()) {
+      window.apiFetch('/api/v1/business/item-categories', {
+        method: 'POST',
+        body: JSON.stringify({ itemCategories: categories })
+      }).catch(e => console.warn('Sync categories to server deferred:', e));
+
+      if (this.pushMutation) {
+        this.pushMutation('itemCategories', 'update', { itemCategories: categories }).catch(() => {});
+      }
+    }
+    return activeBiz ? activeBiz.itemCategories : categories;
   }
 
   addItemCategory(categoryName) {
@@ -2348,6 +2385,15 @@ class DataStore {
     const order = this.getOrder(orderId);
     if (!order) throw new Error("Order not found");
 
+    // If order was not yet billed, automatically convert it to a formal Sale invoice (Move to Sale)
+    if (order.orderStatus !== 'Billed') {
+      const convRes = this.convertOrderToInvoice(orderId, {
+        ...paymentData,
+        isPaid: true
+      });
+      return { order: convRes.order, invoice: convRes.invoice, success: true };
+    }
+
     const mode = paymentData.paymentMode || 'Cash';
     const amount = Number(paymentData.paidAmount) || (order.balanceDue || order.total);
     const prevBalance = order.balanceDue !== undefined ? order.balanceDue : order.total;
@@ -2403,7 +2449,8 @@ class DataStore {
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('ordersUpdated', { detail: { order } }));
     }
-    return { order, success: true };
+    const linkedInv = order.invoiceId ? this.getSale(order.invoiceId) : null;
+    return { order, invoice: linkedInv, success: true };
   }
 
   // --- Field Salesmen Management & Telemetry ---
@@ -2911,49 +2958,79 @@ class DataStore {
     return { sale, changeDue };
   }
 
-  // --- e-Way Bills (Scoped to Active Business) ---
+  // --- e-Way Bills (Scoped to Active Business & Synchronized with Backend API) ---
   getEwayBills() {
     return this.getActiveBusiness().ewayBills || [];
   }
 
   getEwayBill(id) {
-    return this.getEwayBills().find(e => e.id === id || e.ewayNumber === id);
+    return this.getEwayBills().find(e => e.id === id || e.ewayNumber === id || e.ewayBillNo === id);
+  }
+
+  async fetchEwayBillsFromBackend() {
+    try {
+      const fetcher = window.apiFetch || fetch;
+      const res = await fetcher('/api/v1/eway', { credentials: 'include' });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.ewayBills)) {
+          const activeBiz = this.getActiveBusiness();
+          activeBiz.ewayBills = json.ewayBills.map(b => ({
+            id: b.id,
+            ewayNumber: b.ewayBillNo || b.ewayNumber || '',
+            ewayDate: b.ewayBillDate || b.ewayDate || '',
+            validUntil: b.validUpto || b.validUntil || '',
+            status: b.status === 'GENERATED' || b.status === 'ACT' ? 'Active' : (b.status === 'CANCELLED' || b.status === 'CAN' ? 'Cancelled' : b.status),
+            partyName: b.toTrdName || b.partyName || 'Customer',
+            partyGstin: b.toGstin || b.partyGstin || 'URP',
+            placeOfDelivery: b.toPlace || b.placeOfDelivery || '',
+            vehicleNumber: b.vehicleNo || b.vehicleNumber || '',
+            transporterName: b.transporterName || '',
+            transporterId: b.transporterId || '',
+            totalValue: b.totalInvoiceValue || b.totalValue || 0,
+            invoiceNumber: b.docNo || b.invoiceNumber || '',
+            auditHistory: b.auditHistory || []
+          }));
+          this.save();
+          return activeBiz.ewayBills;
+        }
+      }
+    } catch (e) {
+      console.warn('[EwayStore] Failed to fetch e-way bills from backend:', e.message);
+    }
+    return this.getEwayBills();
   }
 
   addEwayBill(ewayData) {
     const activeBiz = this.getActiveBusiness();
     if (!activeBiz.ewayBills) activeBiz.ewayBills = [];
-    const count = activeBiz.ewayBills.length + 1;
-    const randomSuffix = Math.floor(100000 + Math.random() * 900000);
-    const ewayNumber = "24" + String(Math.floor(10 + Math.random() * 90)) + String(randomSuffix);
-
-    const now = new Date();
-    const ewayDate = now.toISOString().replace('T', ' ').substring(0, 16);
-    const distance = Number(ewayData.distanceKm) || 30;
-    const validityDays = Math.max(1, Math.ceil(distance / 200));
-    const validUntilDate = new Date(now.getTime() + validityDays * 24 * 60 * 60 * 1000);
-    const validUntil = validUntilDate.toISOString().split('T')[0] + " 23:59";
-
+    
+    // Normalize properties
     const newEway = {
-      id: "EWB-2026-" + String(count).padStart(3, '0'),
-      ewayNumber,
-      ewayDate,
-      validUntil,
-      status: "Active",
+      id: ewayData.id || ("EWB-2026-" + String(activeBiz.ewayBills.length + 1).padStart(3, '0')),
+      ewayNumber: ewayData.ewayNumber || ewayData.ewayBillNo || '',
+      ewayDate: ewayData.ewayDate || ewayData.ewayBillDate || new Date().toISOString(),
+      validUntil: ewayData.validUntil || ewayData.validUpto || '',
+      status: ewayData.status === 'GENERATED' || ewayData.status === 'ACT' ? 'Active' : (ewayData.status || 'Active'),
       fromGstin: activeBiz.gstin,
       ...ewayData
     };
 
-    activeBiz.ewayBills.unshift(newEway);
+    const existingIdx = activeBiz.ewayBills.findIndex(e => e.id === newEway.id || (newEway.ewayNumber && e.ewayNumber === newEway.ewayNumber));
+    if (existingIdx >= 0) {
+      activeBiz.ewayBills[existingIdx] = newEway;
+    } else {
+      activeBiz.ewayBills.unshift(newEway);
+    }
 
     if (newEway.invoiceNumber) {
       const sale = this.getSale(newEway.invoiceNumber);
       if (sale) {
-        sale.ewayBillNumber = ewayNumber;
+        sale.ewayBillNumber = newEway.ewayNumber;
       }
     }
 
-    this.logAction("Generated e-Way Bill", `Created EWB #${ewayNumber} for ${newEway.partyName} (Vehicle: ${newEway.vehicleNumber})`);
+    this.logAction("Generated e-Way Bill", `Recorded EWB #${newEway.ewayNumber} for ${newEway.partyName} (Vehicle: ${newEway.vehicleNumber})`);
     this.save();
     return newEway;
   }

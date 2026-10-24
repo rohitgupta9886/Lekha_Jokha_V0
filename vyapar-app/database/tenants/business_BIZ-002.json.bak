@@ -67,8 +67,10 @@
       "purchasePrice": 950,
       "gstRate": 5,
       "unit": "BAG",
-      "stock": 45,
-      "minStock": 10
+      "stock": 39,
+      "minStock": 10,
+      "version": 3,
+      "updatedAt": "2026-10-23T21:04:01.832Z"
     },
     {
       "id": "ITM002",
@@ -124,6 +126,86 @@
     }
   ],
   "sales": [
+    {
+      "id": "INV-2026-004",
+      "number": "INV-2026-004",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "placeOfSupply": "Delhi (07)",
+      "paymentMode": "UPI / QR",
+      "paymentMention": "PAID (via UPI / QR)",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        }
+      ],
+      "subtotal": 2300,
+      "tax": 115,
+      "total": 2415,
+      "paid": 2415,
+      "balance": 0,
+      "status": "Paid",
+      "orderId": "ORD-2026-001",
+      "orderNumber": "ORD-2026-001",
+      "source": "Direct Counter",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "notes": "Generated from Order #ORD-2026-001 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-002",
+      "createdBy": "U001",
+      "version": 1,
+      "updatedAt": "2026-10-23T21:04:01.817Z"
+    },
+    {
+      "id": "INV-2026-003",
+      "number": "INV-2026-003",
+      "docType": "Invoice",
+      "date": "2026-10-23",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "placeOfSupply": "DELHI (07)",
+      "paymentMode": "UPI / QR",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        }
+      ],
+      "subtotal": 2300,
+      "tax": 115,
+      "total": 2415,
+      "paid": 2415,
+      "balance": 0,
+      "status": "Paid",
+      "notes": "Generated from Order #ORD-2026-001 [PAID (via UPI / QR)]",
+      "businessId": "BIZ-002",
+      "createdBy": "U001",
+      "version": 1,
+      "updatedAt": "2026-10-23T21:03:25.274Z"
+    },
     {
       "id": "INV-2026-001",
       "number": "INV-2026-001",
@@ -253,7 +335,7 @@
         "name": "HDFC Current A/c",
         "accountNo": "50200012345678",
         "ifsc": "HDFC0001234",
-        "balance": 342600
+        "balance": 345015
       }
     ]
   },
@@ -601,5 +683,51 @@
     "branchName": "Rohini Sector 15",
     "logoUrl": ""
   },
-  "orders": []
+  "orders": [
+    {
+      "id": "ORD-2026-001",
+      "number": "ORD-2026-001",
+      "date": "2026-10-23",
+      "timestamp": "2026-10-23T21:01:49.712Z",
+      "source": "Direct Counter",
+      "salesmanId": null,
+      "salesmanName": "Direct Counter / Owner",
+      "partyId": "P001",
+      "partyName": "Gupta General Store",
+      "phone": "9810123456",
+      "items": [
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        },
+        {
+          "itemId": "ITM001",
+          "name": "Basmati Rice Royal Premium",
+          "qty": 1,
+          "rate": 1150,
+          "gstRate": 5
+        }
+      ],
+      "subtotal": 2300,
+      "tax": 115,
+      "total": 2415,
+      "paymentStatus": "Paid",
+      "paymentMode": "UPI / QR",
+      "paidAmount": 2415,
+      "balanceDue": 0,
+      "orderStatus": "Billed",
+      "invoiceId": "INV-2026-004",
+      "invoiceNumber": "INV-2026-004",
+      "paymentMention": "PAID (via UPI / QR)",
+      "notes": "",
+      "businessId": "BIZ-002",
+      "createdBy": "U001",
+      "version": 1,
+      "createdAt": "2026-10-23T21:01:49.821Z",
+      "updatedAt": "2026-10-23T21:04:01.832Z"
+    }
+  ]
 }

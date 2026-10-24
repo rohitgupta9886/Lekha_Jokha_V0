@@ -38,5 +38,79 @@
     "ifscCode": "",
     "branchName": "",
     "logoUrl": ""
+  },
+  "itemCategories": [
+    {
+      "id": "cat_groceries",
+      "name": "Groceries & Food",
+      "subcategories": [
+        "Flour & Grains",
+        "Edible Oils",
+        "Spices & Masalas",
+        "Beverages & Snacks"
+      ]
+    },
+    {
+      "id": "cat_electronics",
+      "name": "Electronics & Hardware",
+      "subcategories": [
+        "Lighting & Bulbs",
+        "Wires & Cables",
+        "Switches & Sockets",
+        "Appliances",
+        "Accessories"
+      ]
+    },
+    {
+      "id": "cat_fmcg",
+      "name": "FMCG & Consumer Goods",
+      "subcategories": [
+        "Soaps & Shampoos",
+        "Oral Care",
+        "Cleaning & Detergents",
+        "Personal Care"
+      ]
+    },
+    {
+      "id": "cat_apparel",
+      "name": "Apparel & Textiles",
+      "subcategories": [
+        "Men's Wear",
+        "Women's Wear",
+        "Kids Wear",
+        "Fabrics & Suits"
+      ]
+    },
+    {
+      "id": "cat_services",
+      "name": "Services & Other",
+      "subcategories": [
+        "Repair & Maintenance",
+        "Consulting & Setup",
+        "Installation",
+        "General Services"
+      ]
+    },
+    {
+      "id": "cat_1792843821847",
+      "name": "Legal Service",
+      "subcategories": [
+        "fight for democracy"
+      ]
+    },
+    {
+      "id": "cat_1792843838142",
+      "name": "Illegal Service",
+      "subcategories": [
+        "Theft"
+      ]
+    }
+  ],
+  "appliedMutations": {
+    "MUT_1792843787738_2q15q5": 1792843787849,
+    "MUT_1792843821848_mdhbvf": 1792843821935,
+    "MUT_1792843838144_mu980r": 1792843838212,
+    "MUT_1792843854463_udxwbt": 1792843854524,
+    "MUT_1792843879080_qsy1bz": 1792843879145
   }
 }

@@ -217,6 +217,32 @@ const settledCustomerBalance = store.getParty('P002').balance;
 assert(settledCustomerBalance === initialCustomerBalance, `Customer ledger balance settled back to original balance (${initialCustomerBalance})`);
 
 // -----------------------------------------------------------------------------
+// TEST 5B: Mark as Paid & Move to Sale on Unbilled Order Immediately Moves to Sale
+// -----------------------------------------------------------------------------
+console.log('\n[TEST 5B] Mark as Paid & Move to Sale on Unbilled Order:');
+const directOrder = store.addOrder({
+  source: 'Direct Counter',
+  partyId: 'P001',
+  partyName: 'Sharma General Store',
+  items: [{ itemId: 'ITM001', name: 'Basmati Rice', qty: 2, rate: 100, taxRate: 5, amount: 210 }],
+  subtotal: 200,
+  tax: 10,
+  total: 210
+});
+assert(directOrder.orderStatus !== 'Billed', 'Direct order is initially unbilled');
+const moveRes = store.markOrderPaymentPaid(directOrder.id, {
+  paymentMode: 'UPI / QR',
+  reference: 'UPI-MOVE-TO-SALE',
+  paidAmount: 210
+});
+assert(moveRes.order.orderStatus === 'Billed', 'Order status moved immediately to Billed upon payment');
+assert(moveRes.order.paymentStatus === 'Paid', 'Order payment status updated to Paid');
+assert(moveRes.invoice && moveRes.invoice.id, 'Formal Sale invoice generated immediately');
+assert(moveRes.invoice.status === 'Paid', 'Sale invoice status is Paid');
+assert(store.getSale(moveRes.invoice.id), 'Sale invoice exists in Store.sales list');
+console.log('  ✓ PASS: Order immediately converted to formal Sale invoice in sales list upon payment');
+
+// -----------------------------------------------------------------------------
 // TEST 6: Track Your Salesmen Tab - Directory & Owner CRUD Rights
 // -----------------------------------------------------------------------------
 console.log('\n[TEST 6] Track Your Salesmen - Directory & Full Owner CRUD:');

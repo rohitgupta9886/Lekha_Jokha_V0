@@ -259,7 +259,9 @@ window.ItemsModule = {
 
   renderUnitsTab() {
     const units = ['PCS (Pieces)', 'BAG (Bags)', 'BOX (Boxes)', 'KG (Kilograms)', 'LTR (Litres)', 'MTR (Metres)', 'CARTON', 'DOZEN'];
-    const categories = ['Groceries & Provisions', 'FMCG & Packaged Foods', 'Consumer Electronics', 'Apparel & Fabrics', 'Home & Kitchen'];
+    const categories = (window.Store && window.Store.getItemCategories)
+      ? window.Store.getItemCategories().map(c => c.name)
+      : ['Groceries & Provisions', 'FMCG & Packaged Foods', 'Consumer Electronics', 'Apparel & Fabrics', 'Home & Kitchen'];
 
     return `
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">

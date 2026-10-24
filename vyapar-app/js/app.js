@@ -312,6 +312,33 @@ class LekhaJokhaApp {
       }
     });
 
+    // Global Universal Enter-Key Action Handler:
+    // After typing in any text box across the entire project, pressing Enter automatically executes the associated action button
+    window.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' || e.isComposing) return;
+      if (!e.target || e.target.tagName !== 'INPUT') return;
+
+      const input = e.target;
+      const inputType = (input.type || 'text').toLowerCase();
+      const nonTextTypes = ['button', 'submit', 'reset', 'checkbox', 'radio', 'range', 'file', 'image', 'color'];
+      if (nonTextTypes.includes(inputType)) return;
+
+      const actionBtn = this.findAssociatedActionButton ? this.findAssociatedActionButton(input) : null;
+      if (actionBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Visual click feedback
+        actionBtn.classList.add('active');
+        setTimeout(() => actionBtn.classList.remove('active'), 120);
+
+        // Perform the associated action
+        actionBtn.click();
+      } else if (input.type === 'search' || (input.id && input.id.toLowerCase().includes('search'))) {
+        input.blur();
+      }
+    });
+
     // Topbar Language Switcher Toggle
     const langToggleBtn = document.getElementById('topbarLangToggle');
     if (langToggleBtn) {
@@ -395,7 +422,9 @@ class LekhaJokhaApp {
       const hasOpenModal = document.querySelector(
         '.modal.active, .modal-overlay.active, .modal-overlay[style*="display: flex"], [id*="Modal"][style*="display: flex"], [id*="Modal"][style*="display: block"], #salesman360Modal[style*="display: flex"], #addSalesmanOwnerModal[style*="display: flex"], #editSalesmanModal[style*="display: flex"], .modal[style*="display: block"]'
       );
-      if (hasOpenModal || this.currentView === 'ai-copilot') {
+      const isInteracting = document.activeElement && ['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName);
+      const anyDirtyInput = Array.from(document.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), textarea')).some(el => el.value && el.value.trim().length > 0 && el.id !== 'globalSearchInput');
+      if (hasOpenModal || this.currentView === 'ai-copilot' || this.currentView === 'settings' || this.currentView === 'app-settings' || isInteracting || anyDirtyInput) {
         return;
       }
       // If active view is on screen, re-render to reflect new sync data
@@ -1851,6 +1880,149 @@ class LekhaJokhaApp {
       setTimeout(() => toast.remove(), 300);
     }, 4500);
   }
+
+  // --- Universal Associated Action Button Resolver ---
+  findAssociatedActionButton(input) {
+    if (!input || input.disabled) return null;
+
+    const isVisibleAndUsable = (btn) => {
+      if (!btn || btn.disabled) return false;
+      if (btn.getAttribute('aria-hidden') === 'true') return false;
+      const rect = btn.getBoundingClientRect();
+      const style = window.getComputedStyle(btn);
+      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+      return (rect.width > 0 || rect.height > 0 || btn.offsetWidth > 0 || btn.offsetHeight > 0);
+    };
+
+    const isActionButton = (btn, isSearchInput = false) => {
+      if (!isVisibleAndUsable(btn)) return false;
+      const text = (btn.textContent || '').trim().toLowerCase();
+      const cls = (btn.className || '').toLowerCase();
+      const id = (btn.id || '').toLowerCase();
+
+      // Negative rules: Disqualify buttons that are clearly not the primary action
+      if (cls.includes('close') || cls.includes('cancel') || cls.includes('btn-secondary') || cls.includes('btn-outline-secondary')) return false;
+      if (cls.includes('delete') || cls.includes('btn-danger') || id.includes('delete')) return false;
+      if (cls.includes('tab-btn') || cls.includes('subtab-btn') || btn.hasAttribute('data-tab')) return false;
+      if (btn.hasAttribute('data-dismiss') || btn.getAttribute('aria-label') === 'Close') return false;
+      if (['cancel', 'close', 'back', 'reset', 'clear', 'no', 'discard', '×', 'x'].includes(text)) return false;
+
+      // If the input is a search box, only match search buttons
+      if (isSearchInput) {
+        return id.includes('search') || cls.includes('search') || text.includes('search') || btn.querySelector('svg, i');
+      }
+
+      // Positive rules
+      if (btn.type === 'submit') return true;
+      if (cls.includes('btn-primary') || cls.includes('btn-success')) return true;
+      if (id.includes('save') || id.includes('submit') || id.includes('add') || id.includes('create') || 
+          id.includes('confirm') || id.includes('apply') || id.includes('verify') || id.includes('send') || 
+          id.includes('pay') || id.includes('import') || id.includes('export') || id.includes('login') || id.includes('search')) return true;
+      if (/^(save|submit|add|create|confirm|apply|verify|send|pay|search|go|update|continue|next|ok|done|proceed|\+)/i.test(text)) return true;
+
+      // Inside a tight group (e.g. flex row with input and button), treat as associated action
+      return true;
+    };
+
+    const isSearch = (input.type === 'search') || (input.id && input.id.toLowerCase().includes('search'));
+
+    // 1. Explicit data attribute if present on input
+    if (input.dataset && input.dataset.actionBtn) {
+      const explicitBtn = document.querySelector(input.dataset.actionBtn);
+      if (explicitBtn && isVisibleAndUsable(explicitBtn)) return explicitBtn;
+    }
+
+    // 2. Direct ID-based exact match for key known inputs
+    const inputId = input.id || '';
+    if (inputId === 'newCategoryInput') {
+      const b = document.getElementById('addNewCategoryBtn');
+      if (b && isVisibleAndUsable(b)) return b;
+    }
+    if (inputId === 'newSubCategoryInput') {
+      const b = document.getElementById('addNewSubCategoryBtn');
+      if (b && isVisibleAndUsable(b)) return b;
+    }
+    if (inputId === 'authPhoneInput') {
+      const b = document.getElementById('sendOtpSubmitBtn');
+      if (b && isVisibleAndUsable(b)) return b;
+    }
+    if (inputId === 'authOtpInput') {
+      const b = document.getElementById('verifyOtpSubmitBtn');
+      if (b && isVisibleAndUsable(b)) return b;
+    }
+    if (inputId === 'authPasswordInput' || inputId === 'authPinInput') {
+      const b = document.getElementById('submitPassAuthBtn');
+      if (b && isVisibleAndUsable(b)) return b;
+    }
+
+    // Special invoice item table handling: tab to next input or add row
+    if (input.closest('.invoice-item-table')) {
+      const row = input.closest('tr');
+      if (row) {
+        const inputsInRow = Array.from(row.querySelectorAll('input:not([type="hidden"]), select'));
+        const currentIndex = inputsInRow.indexOf(input);
+        if (currentIndex >= 0 && currentIndex < inputsInRow.length - 1) {
+          inputsInRow[currentIndex + 1].focus();
+          return null;
+        } else {
+          const addRowBtn = document.getElementById('addInvoiceRowBtn');
+          if (addRowBtn && isVisibleAndUsable(addRowBtn)) return addRowBtn;
+        }
+      }
+    }
+
+    // 3. Search immediate parent containers up to 3 levels (tight groups like flex row, input-group)
+    let container = input.parentElement;
+    for (let depth = 0; depth < 3 && container && container !== document.body; depth++) {
+      const candidateBtns = Array.from(container.querySelectorAll('button, .btn, input[type="submit"]'));
+      const matchingBtns = candidateBtns.filter(b => b !== input && isActionButton(b, isSearch));
+      if (matchingBtns.length > 0) {
+        return matchingBtns[0];
+      }
+      if (container.matches('form, .modal, .modal-content, .modal-dialog, .card, [role="dialog"], fieldset')) {
+        break;
+      }
+      container = container.parentElement;
+    }
+
+    if (isSearch) {
+      return null;
+    }
+
+    // 4. Form context
+    const form = input.closest('form');
+    if (form) {
+      const submitBtn = form.querySelector('button[type="submit"]:not([disabled]), input[type="submit"]:not([disabled])');
+      if (submitBtn && isVisibleAndUsable(submitBtn)) return submitBtn;
+
+      const primaryBtn = form.querySelector('.btn-primary:not([disabled]), .btn-success:not([disabled])');
+      if (primaryBtn && isVisibleAndUsable(primaryBtn)) return primaryBtn;
+
+      const anyAction = Array.from(form.querySelectorAll('button:not([disabled]), .btn:not([disabled])')).find(b => isActionButton(b, false));
+      if (anyAction) return anyAction;
+    }
+
+    // 5. Modal / Dialog context
+    const modal = input.closest('.modal, .modal-content, .modal-dialog, [role="dialog"], .offcanvas, .drawer, [id*="Modal"]');
+    if (modal) {
+      const footer = modal.querySelector('.modal-footer, .card-footer, [class*="footer"]');
+      if (footer) {
+        const footerBtn = footer.querySelector('button[type="submit"], .btn-primary, .btn-success, [id*="save"], [id*="Save"], [id*="Submit"], [id*="submit"]');
+        if (footerBtn && isVisibleAndUsable(footerBtn)) return footerBtn;
+      }
+      const modalBtn = modal.querySelector('button[type="submit"], .btn-primary, .btn-success, [id*="save"], [id*="Save"], [id*="Submit"], [id*="submit"], [id*="Add"], [id*="add"]');
+      if (modalBtn && isVisibleAndUsable(modalBtn)) return modalBtn;
+    }
+
+    // 6. Card / Section context
+    const card = input.closest('.card, .card-body, .panel, .settings-section');
+    if (card) {
+      const cardBtn = card.querySelector('button[type="submit"], .btn-primary, .btn-success, [id*="save"], [id*="Save"], [id*="Add"], [id*="add"]');
+      if (cardBtn && isVisibleAndUsable(cardBtn)) return cardBtn;
+    }
+
+    return null;
+  }
 }
 
 window.LekhaJokhaApp = LekhaJokhaApp;
@@ -1867,3 +2039,6 @@ if (document.readyState === 'loading') {
   window.App = new LekhaJokhaApp();
   window.app = window.App;
 }
+
+window.findAssociatedActionButton = (input) => (window.App && window.App.findAssociatedActionButton) ? window.App.findAssociatedActionButton(input) : null;
+

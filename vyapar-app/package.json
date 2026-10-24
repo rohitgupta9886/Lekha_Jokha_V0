@@ -1,0 +1,26 @@
+{
+  "name": "lekhajokha-vyapar-enterprise",
+  "version": "4.5.0",
+  "description": "Lekha Jokha - Production-Grade GST Billing, Inventory & Multi-Tenant ERP",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "build": "node -e \"console.log('Lekha Jokha Build Completed Successfully for Render Deployment')\"",
+    "db:migrate": "node database/migration_runner.mjs",
+    "db:import-json": "node database/migrate_json_to_pg.mjs",
+    "test": "node tests/test_vyapar_flows.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "pg-mem": "^3.0.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Lekha Jokha Engineering",
+  "license": "PROPRIETARY"
+}

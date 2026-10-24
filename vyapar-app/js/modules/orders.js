@@ -259,8 +259,8 @@ window.OrdersModule = {
               <span class="badge" style="background:#fee2e2;color:#b91c1c;font-weight:700;font-size:11px;padding:3px 8px;border-radius:12px;">
                 ⏳ Payment Pending
               </span>
-              <button class="btn btn-xs btn-outline btn-mark-paid" data-id="${order.id}" style="font-size:10.5px;padding:2px 8px;margin-top:4px;border-color:#10b981;color:#059669;font-weight:700;" title="Update payment status to Paid">
-                Mark as Paid ➔
+              <button class="btn btn-xs btn-outline btn-mark-paid" data-id="${order.id}" style="font-size:10.5px;padding:2px 8px;margin-top:4px;border-color:#10b981;color:#059669;font-weight:700;" title="Mark as Paid & Move to Sale">
+                Mark as Paid & Move to Sale ➔
               </button>
             </div>
           `}
@@ -414,8 +414,8 @@ window.OrdersModule = {
           
           <div style="background:linear-gradient(135deg, #059669 0%, #047857 100%);color:#fff;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:11px;font-weight:800;color:#a7f3d0;text-transform:uppercase;">Collect Outstanding Payment</div>
-              <h3 style="margin:2px 0 0 0;font-size:1.2rem;font-weight:800;">Mark Order #<span id="markPaidOrderNumber"></span> as PAID</h3>
+              <div style="font-size:11px;font-weight:800;color:#a7f3d0;text-transform:uppercase;">Collect Outstanding Payment & Move to Sale</div>
+              <h3 style="margin:2px 0 0 0;font-size:1.2rem;font-weight:800;">Mark Order #<span id="markPaidOrderNumber"></span> as Paid & Move to Sale</h3>
             </div>
             <button type="button" id="closeMarkPaidModalBtn" style="background:none;border:none;color:#d1fae5;font-size:24px;cursor:pointer;">&times;</button>
           </div>
@@ -464,7 +464,7 @@ window.OrdersModule = {
             <div style="display:flex;justify-content:flex-end;gap:10px;">
               <button type="button" class="btn btn-secondary" id="cancelMarkPaidBtn">Cancel</button>
               <button type="submit" class="btn btn-primary" style="background:#059669;border-color:#047857;font-weight:700;">
-                ✓ Save & Mark as Paid
+                ✓ Mark as Paid & Move to Sale
               </button>
             </div>
           </form>
@@ -724,6 +724,11 @@ window.OrdersModule = {
 
           // Update badges
           if (window.app && window.app.updateBadges) window.app.updateBadges();
+
+          // When payment is made, immediately move to sale
+          if (isPaid) {
+            window.location.hash = '#sales';
+          }
         } catch (err) {
           alert('Error generating bill: ' + err.message);
         }
@@ -768,17 +773,22 @@ window.OrdersModule = {
         const ref = document.getElementById('markPaidReferenceInput').value;
 
         try {
-          window.Store.markOrderPaymentPaid(orderId, {
+          const res = window.Store.markOrderPaymentPaid(orderId, {
             paymentMode: mode,
             paidAmount: amount,
             reference: ref
           });
 
           modal.style.display = 'none';
-          window.app.showToast(`Order #${orderId} marked as Paid (₹${amount.toFixed(2)} via ${mode})!`, 'success');
+          const invNum = res.invoice ? (res.invoice.number || res.invoice.id) : (res.order?.invoiceNumber || res.order?.invoiceId || '');
+          const invNotice = invNum ? ` (Sale Invoice #${invNum})` : '';
+          window.app.showToast(`Order #${res.order?.number || orderId} marked as Paid & moved to Sale${invNotice}!`, 'success');
           this.render(this.container);
 
           if (window.app && window.app.updateBadges) window.app.updateBadges();
+
+          // Immediately move to sale
+          window.location.hash = '#sales';
         } catch (err) {
           alert('Error recording payment: ' + err.message);
         }
@@ -1033,7 +1043,7 @@ window.OrdersModule = {
           `}
           ${order.paymentStatus === 'Pending' ? `
             <button class="btn btn-outline btn-block" style="border-color:#059669;color:#059669;" onclick="document.getElementById('orderDetailsDrawer').style.display='none';window.OrdersModule.openMarkPaidModal('${order.id}');">
-              Mark as Paid
+              Mark as Paid & Move to Sale
             </button>
           ` : ''}
         </div>

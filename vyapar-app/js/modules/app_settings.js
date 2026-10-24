@@ -15,6 +15,9 @@
 
 window.AppSettingsModule = {
   currentTab: 'general',
+  selectedParentCategory: null,
+  pendingCategoryText: '',
+  pendingSubCategoryText: '',
 
   getDefaultSettings() {
     return {
@@ -712,6 +715,7 @@ window.AppSettingsModule = {
   // 9. ITEM TAB
   renderItemTab(cfg) {
     const categories = (window.Store && window.Store.getItemCategories) ? window.Store.getItemCategories() : [];
+    const selectedCat = this.selectedParentCategory || (categories[0] ? categories[0].name : '');
 
     return `
       <div style="display:flex;flex-direction:column;gap:1.5rem;">
@@ -784,7 +788,7 @@ window.AppSettingsModule = {
                 <span>➕</span> Add New Item Category
               </h4>
               <div style="display:flex;gap:8px;">
-                <input type="text" id="newCategoryInput" class="form-control" placeholder="e.g. Footwear & Shoes" style="height:38px;font-size:13px;">
+                <input type="text" id="newCategoryInput" class="form-control" value="${this.pendingCategoryText || ''}" placeholder="e.g. Footwear & Shoes" style="height:38px;font-size:13px;">
                 <button type="button" id="addNewCategoryBtn" class="btn btn-primary" style="white-space:nowrap;background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);font-size:12.5px;font-weight:700;">
                   + Add Category
                 </button>
@@ -799,10 +803,10 @@ window.AppSettingsModule = {
               </h4>
               <div style="display:flex;flex-direction:column;gap:8px;">
                 <select id="parentCategorySelect" class="form-control" style="height:36px;font-size:13px;">
-                  ${categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+                  ${categories.map(c => `<option value="${c.name}" ${c.name === selectedCat ? 'selected' : ''}>${c.name}</option>`).join('')}
                 </select>
                 <div style="display:flex;gap:8px;">
-                  <input type="text" id="newSubCategoryInput" class="form-control" placeholder="e.g. Sports Shoes / Formal" style="height:38px;font-size:13px;">
+                  <input type="text" id="newSubCategoryInput" class="form-control" value="${this.pendingSubCategoryText || ''}" placeholder="e.g. Sports Shoes / Formal" style="height:38px;font-size:13px;">
                   <button type="button" id="addNewSubCategoryBtn" class="btn btn-primary" style="white-space:nowrap;background:linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);font-size:12.5px;font-weight:700;">
                     + Add Sub-Category
                   </button>
@@ -1034,6 +1038,41 @@ window.AppSettingsModule = {
     if (bottomSaveBtn) bottomSaveBtn.onclick = handleSave;
 
     // 3. Item Category & Sub-Category Events
+    const catSelect = container.querySelector('#parentCategorySelect');
+    if (catSelect) {
+      catSelect.onchange = () => {
+        this.selectedParentCategory = catSelect.value;
+      };
+    }
+
+    const catInput = container.querySelector('#newCategoryInput');
+    if (catInput) {
+      catInput.oninput = () => {
+        this.pendingCategoryText = catInput.value;
+      };
+      catInput.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const btn = container.querySelector('#addNewCategoryBtn');
+          if (btn) btn.click();
+        }
+      };
+    }
+
+    const subInput = container.querySelector('#newSubCategoryInput');
+    if (subInput) {
+      subInput.oninput = () => {
+        this.pendingSubCategoryText = subInput.value;
+      };
+      subInput.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const btn = container.querySelector('#addNewSubCategoryBtn');
+          if (btn) btn.click();
+        }
+      };
+    }
+
     const addCatBtn = container.querySelector('#addNewCategoryBtn');
     if (addCatBtn) {
       addCatBtn.onclick = () => {
@@ -1045,6 +1084,8 @@ window.AppSettingsModule = {
         }
         if (window.Store && window.Store.addItemCategory) {
           window.Store.addItemCategory(val);
+          this.selectedParentCategory = val;
+          this.pendingCategoryText = '';
           if (window.app && window.app.showToast) window.app.showToast(`Category "${val}" added successfully!`, 'success');
           this.render(container);
         }
@@ -1054,15 +1095,17 @@ window.AppSettingsModule = {
     const addSubCatBtn = container.querySelector('#addNewSubCategoryBtn');
     if (addSubCatBtn) {
       addSubCatBtn.onclick = () => {
-        const catSelect = container.querySelector('#parentCategorySelect');
-        const subInput = container.querySelector('#newSubCategoryInput');
-        const parentCat = catSelect ? catSelect.value : '';
-        const subVal = subInput ? subInput.value.trim() : '';
+        const catSelectEl = container.querySelector('#parentCategorySelect');
+        const subInputEl = container.querySelector('#newSubCategoryInput');
+        const parentCat = catSelectEl ? catSelectEl.value : (this.selectedParentCategory || '');
+        const subVal = subInputEl ? subInputEl.value.trim() : '';
         if (!parentCat || !subVal) {
           if (window.app && window.app.showToast) window.app.showToast('Select a parent category and enter a sub-category name.', 'warning');
           return;
         }
         if (window.Store && window.Store.addItemSubCategory) {
+          this.selectedParentCategory = parentCat;
+          this.pendingSubCategoryText = '';
           window.Store.addItemSubCategory(parentCat, subVal);
           if (window.app && window.app.showToast) window.app.showToast(`Sub-category "${subVal}" added under "${parentCat}"!`, 'success');
           this.render(container);

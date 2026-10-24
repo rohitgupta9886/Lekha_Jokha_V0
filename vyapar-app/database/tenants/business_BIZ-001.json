@@ -1446,6 +1446,83 @@
   },
   "ewayBills": [
     {
+      "id": "ewb_1792854023872_q5nml",
+      "businessId": "BIZ-001",
+      "docType": "INV",
+      "docNo": "INV-FIX-1792854023611",
+      "docDate": "2026-10-24",
+      "status": "GENERATED",
+      "idempotencyKey": "5cbf8ad71aeda71a3d789b353cb45d0a7b02e4faa308c3841dec5f375f3592db",
+      "supplyType": "O",
+      "subSupplyType": "1",
+      "fromGstin": "07AAAAA0000A1Z5",
+      "fromTrdName": "Sharma Traders",
+      "fromAddr1": "Commercial Market",
+      "fromPlace": "Delhi",
+      "fromPincode": 110006,
+      "fromStateCode": 7,
+      "toGstin": "07BBBBA1111B1Z2",
+      "toTrdName": "Gupta Hardware Store",
+      "toAddr1": "Connaught Place",
+      "toPlace": "Delhi",
+      "toPincode": 110001,
+      "toStateCode": 7,
+      "totalInvoiceValue": 50000,
+      "cgstValue": 4500,
+      "sgstValue": 4500,
+      "igstValue": 0,
+      "cessValue": 0,
+      "transporterId": null,
+      "transporterName": null,
+      "transDistance": 25,
+      "transMode": "1",
+      "transDocNo": null,
+      "transDocDate": null,
+      "vehicleNo": "DL01AB1234",
+      "vehicleType": "R",
+      "itemList": [
+        {
+          "itemNo": 1,
+          "productName": "Commercial Goods Cargo",
+          "productDesc": "Hardware / Electrical Items",
+          "hsnCode": 8539,
+          "quantity": 10,
+          "qtyUnit": "PCS",
+          "cgstRate": 9,
+          "sgstRate": 9,
+          "igstRate": 0,
+          "cessRate": 0,
+          "taxableAmount": 41000
+        }
+      ],
+      "auditHistory": [
+        {
+          "action": "SUBMITTED",
+          "timestamp": "2026-10-24T15:00:23.873Z",
+          "provider": "NIC_SANDBOX"
+        },
+        {
+          "action": "GENERATED",
+          "timestamp": "2026-10-24T15:00:23.940Z",
+          "ewayBillNo": "072610301408",
+          "validUpto": "2026-10-25T18:29:59.999Z"
+        }
+      ],
+      "createdAt": "2026-10-24T15:00:23.873Z",
+      "updatedAt": "2026-10-24T15:00:23.940Z",
+      "ewayBillNo": "072610301408",
+      "ewayBillDate": "2026-10-24T15:00:23.939Z",
+      "validUpto": "2026-10-25T18:29:59.999Z",
+      "rawGovResponse": {
+        "status": 1,
+        "data": {
+          "ewayBillNo": 72610301408,
+          "ewayBillDate": "2026-10-24T15:00:23.939Z",
+          "validUpto": "2026-10-25T18:29:59.999Z"
+        }
+      }
+    },
+    {
       "id": "EWB-2026-003",
       "ewbNo": "777045181279",
       "invoiceNo": "INV-2026-003",
@@ -3679,6 +3756,78 @@
     "MUT_TEST_1792680475215": 1792680475225,
     "MUT_TEST_1792681403406": 1792681403421,
     "MUT_TEST_1792681501870": 1792681501876,
-    "MUT_TEST_1792681644628": 1792681644637
-  }
+    "MUT_TEST_1792681644628": 1792681644637,
+    "MUT_CAT_1792839620888": 1792839620900
+  },
+  "itemCategories": [
+    {
+      "id": "cat_groceries",
+      "name": "Groceries & Food",
+      "subcategories": [
+        "Flour & Grains",
+        "Edible Oils",
+        "Spices & Masalas",
+        "Dairy Products",
+        "Beverages & Snacks"
+      ]
+    },
+    {
+      "id": "cat_electronics",
+      "name": "Electronics & Hardware",
+      "subcategories": [
+        "Lighting & Bulbs",
+        "Wires & Cables",
+        "Switches & Sockets",
+        "Appliances",
+        "Accessories"
+      ]
+    },
+    {
+      "id": "cat_fmcg",
+      "name": "FMCG & Consumer Goods",
+      "subcategories": [
+        "Soaps & Shampoos",
+        "Oral Care",
+        "Cleaning & Detergents",
+        "Personal Care"
+      ]
+    },
+    {
+      "id": "cat_apparel",
+      "name": "Apparel & Textiles",
+      "subcategories": [
+        "Men's Wear",
+        "Women's Wear",
+        "Kids Wear",
+        "Fabrics & Suits"
+      ]
+    },
+    {
+      "id": "cat_services",
+      "name": "Services & Other",
+      "subcategories": [
+        "Repair & Maintenance",
+        "Consulting & Setup",
+        "Installation",
+        "General Services"
+      ]
+    },
+    {
+      "id": "cat_1792839620592",
+      "name": "Footwear & Sports Goods",
+      "subcategories": [
+        "Running Shoes",
+        "Cricket Gear",
+        "Sports Apparel"
+      ]
+    },
+    {
+      "id": "cat_sync_1792839620888",
+      "name": "Agricultural Tools & Seeds",
+      "subcategories": [
+        "Seeds",
+        "Fertilizers"
+      ]
+    }
+  ]
 }

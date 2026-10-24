@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Lekha Jokha</string>
+    <string name="nav_dashboard">Home</string>
+    <string name="nav_sales">Sales</string>
+    <string name="nav_purchases">Purchases</string>
+    <string name="nav_inventory">Inventory</string>
+    <string name="nav_parties">Parties</string>
+    <string name="nav_more">Main Menu</string>
+    <string name="nav_menu">Main Menu</string>
+    <string name="today_sales">Today\'s Sales</string>
+    <string name="today_purchases">Today\'s Purchases</string>
+    <string name="receivables">Receivable (Get)</string>
+    <string name="payables">Payable (Pay)</string>
+    <string name="cash_bank">Cash &amp; Bank</string>
+    <string name="stock_valuation">Stock Valuation</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="btn_new_sale">+ Sale</string>
+    <string name="btn_new_purchase">+ Buy</string>
+    <string name="btn_new_item">+ Item</string>
+    <string name="btn_new_party">+ Party</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="switch_business">Switch Business</string>
+    <string name="lang_toggle">हिंदी</string>
+    <string name="nav_mkt_home">HOME</string>
+    <string name="nav_mkt_items">ITEMS</string>
+    <string name="nav_mkt_menu">MENU</string>
+    <string name="nav_mkt_desktop">GET DESKTOP</string>
+</resources>

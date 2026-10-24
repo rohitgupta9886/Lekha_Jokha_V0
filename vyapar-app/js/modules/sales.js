@@ -449,7 +449,7 @@ window.SalesModule = {
         if (sale && sale.ewayBillNumber) {
           window.location.hash = '#eway';
         } else if (window.EwayModule) {
-          window.EwayModule.openGenerateModal(id);
+          window.EwayModule.openCreateModal(id);
         }
       };
     });

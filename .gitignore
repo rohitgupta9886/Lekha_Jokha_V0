@@ -82,3 +82,13 @@ website/.i18n-*/
 *.log
 dist-release/
 scratch/
+
+*.bak
+vyapar-app/database/migration_report_*.json
+vyapar-app/database/backups/
+vyapar-app/database/tenants/business_BIZ-2*.json
+hs_err_pid*.log
+replay_pid*.log
+build_gradle.log
+deploy.log
+*.tmp.*
