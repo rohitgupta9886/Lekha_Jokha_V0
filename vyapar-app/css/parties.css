@@ -301,6 +301,24 @@
   background: #eff6ff;
 }
 
+.party-delete-trash-btn {
+  background: transparent;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.party-delete-trash-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
 .party-detail-actions {
   display: flex;
   align-items: center;

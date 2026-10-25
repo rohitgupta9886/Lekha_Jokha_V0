@@ -795,9 +795,14 @@
               <input type="number" id="partyOpeningBalance" class="form-control" step="0.01" value="0">
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="cancelPartyBtn">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Party</button>
+          <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" class="btn btn-outline-danger" id="deletePartyFromModalBtn" style="display: none; color: #dc2626; border: 1px solid #fca5a5; background: #fef2f2; font-weight: 600; padding: 7px 14px; border-radius: 6px; cursor: pointer;">
+              🗑️ Delete Party
+            </button>
+            <div style="display: flex; gap: 8px; margin-left: auto;">
+              <button type="button" class="btn btn-secondary" id="cancelPartyBtn">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save Party</button>
+            </div>
           </div>
         </form>
       </div>

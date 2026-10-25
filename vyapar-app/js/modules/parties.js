@@ -7,30 +7,32 @@ window.PartiesModule = {
   selectedPartyId: null,
 
   escapeHtml(str) {
-    if (str === undefined || str === null) return '';
+    if (str === undefined || str === null) return "";
     return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   },
 
   ensureSamplePartyAndTransaction() {
     if (!window.Store) return;
     const parties = window.Store.getParties() || [];
-    let lalu = parties.find(p => p.name && p.name.toLowerCase() === 'lalu singh');
+    let lalu = parties.find(
+      (p) => p.name && p.name.toLowerCase() === "lalu singh",
+    );
 
     if (!lalu) {
       lalu = {
-        id: 'P_LALU',
-        name: 'lalu singh',
-        type: 'Customer',
-        phone: '9876543210',
+        id: "P_LALU",
+        name: "lalu singh",
+        type: "Customer",
+        phone: "9876543210",
         balance: 1000,
-        createdAt: '2026-10-18',
-        address: 'B-44, Civil Lines, Kanpur, UP',
-        state: 'Uttar Pradesh'
+        createdAt: "2026-10-18",
+        address: "B-44, Civil Lines, Kanpur, UP",
+        state: "Uttar Pradesh",
       };
       const activeBiz = window.Store.getActiveBusiness();
       if (!activeBiz.parties) activeBiz.parties = [];
@@ -39,25 +41,34 @@ window.PartiesModule = {
     }
 
     const sales = window.Store.getSales() || [];
-    const hasSaleForLalu = sales.some(s => (s.partyId === lalu.id || s.partyName === lalu.name) && String(s.number) === '1');
+    const hasSaleForLalu = sales.some(
+      (s) =>
+        (s.partyId === lalu.id || s.partyName === lalu.name) &&
+        String(s.number) === "1",
+    );
     if (!hasSaleForLalu) {
       const activeBiz = window.Store.getActiveBusiness();
       if (!activeBiz.sales) activeBiz.sales = [];
       const laluSale = {
-        id: 'INV-LALU-001',
-        number: '1',
+        id: "INV-LALU-001",
+        number: "1",
         partyId: lalu.id,
         partyName: lalu.name,
-        docType: 'Sale',
-        date: '18/10/2026',
-        createdAt: '2026-10-18T10:30:00Z',
+        docType: "Sale",
+        date: "18/10/2026",
+        createdAt: "2026-10-18T10:30:00Z",
         total: 1000,
         balance: 1000,
         paid: 0,
-        paymentMode: 'Credit',
+        paymentMode: "Credit",
         items: [
-          { name: 'Standard Goods & Services', qty: 1, rate: 1000, amount: 1000 }
-        ]
+          {
+            name: "Standard Goods & Services",
+            qty: 1,
+            rate: 1000,
+            amount: 1000,
+          },
+        ],
       };
       activeBiz.sales.unshift(laluSale);
       window.Store.save();
@@ -67,19 +78,25 @@ window.PartiesModule = {
   render(container) {
     this.ensureSamplePartyAndTransaction();
     const parties = window.Store.getParties();
-    
+
     // Default select lalu singh if not yet selected
-    if (!this.selectedPartyId || !parties.some(p => p.id === this.selectedPartyId)) {
-      const lalu = parties.find(p => p.name && p.name.toLowerCase() === 'lalu singh');
-      this.selectedPartyId = lalu ? lalu.id : (parties[0] ? parties[0].id : null);
+    if (
+      !this.selectedPartyId ||
+      !parties.some((p) => p.id === this.selectedPartyId)
+    ) {
+      const lalu = parties.find(
+        (p) => p.name && p.name.toLowerCase() === "lalu singh",
+      );
+      this.selectedPartyId = lalu ? lalu.id : parties[0] ? parties[0].id : null;
     }
 
-    const selectedParty = parties.find(p => p.id === this.selectedPartyId) || parties[0] || {
-      id: 'P_LALU',
-      name: 'lalu singh',
-      phone: '9876543210',
-      balance: 1000
-    };
+    const selectedParty = parties.find((p) => p.id === this.selectedPartyId) ||
+      parties[0] || {
+        id: "P_LALU",
+        name: "lalu singh",
+        phone: "9876543210",
+        balance: 1000,
+      };
 
     const transactions = this.getPartyTransactions(selectedParty);
 
@@ -175,19 +192,27 @@ window.PartiesModule = {
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                   </svg>
                 </button>
+                <button class="party-delete-trash-btn" id="deleteActivePartyBtn" title="Delete ${this.escapeHtml(selectedParty.name)}">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                  </svg>
+                </button>
               </div>
 
               <!-- Top Right Action Icons -->
               <div class="party-detail-actions">
                 <!-- SMS / Chat -->
-                <button class="party-action-circle-btn btn-circle-sms" id="partySmsBtn" title="Send SMS message to ${this.escapeHtml(selectedParty.phone || '')}">
+                <button class="party-action-circle-btn btn-circle-sms" id="partySmsBtn" title="Send SMS message to ${this.escapeHtml(selectedParty.phone || "")}">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
                   </svg>
                 </button>
 
                 <!-- WhatsApp -->
-                <button class="party-action-circle-btn btn-circle-whatsapp" id="partyWhatsappBtn" title="Send WhatsApp to ${this.escapeHtml(selectedParty.phone || '')}">
+                <button class="party-action-circle-btn btn-circle-whatsapp" id="partyWhatsappBtn" title="Send WhatsApp to ${this.escapeHtml(selectedParty.phone || "")}">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
                   </svg>
@@ -296,45 +321,52 @@ window.PartiesModule = {
       return `<div style="padding: 20px; text-align: center; color: #94a3b8; font-size: 13px;">No parties found</div>`;
     }
 
-    return parties.map(p => {
-      const b = Number(p.balance) || 0;
-      const formattedAmount = b.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      const isActive = p.id === activeId ? 'active' : '';
+    return parties
+      .map((p) => {
+        const b = Number(p.balance) || 0;
+        const formattedAmount = b.toLocaleString("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        const isActive = p.id === activeId ? "active" : "";
 
-      return `
-        <div class="party-row-card ${isActive}" data-party-id="${p.id}" data-name="${this.escapeHtml((p.name || '').toLowerCase())}">
+        return `
+        <div class="party-row-card ${isActive}" data-party-id="${p.id}" data-name="${this.escapeHtml((p.name || "").toLowerCase())}">
           <span class="party-row-name-text">${this.escapeHtml(p.name)}</span>
           <span class="party-row-amount-text">${formattedAmount}</span>
         </div>
       `;
-    }).join('');
+      })
+      .join("");
   },
 
   getPartyTransactions(party) {
     if (!window.Store) return [];
     const sales = window.Store.getSales() || [];
-    const partySales = sales.filter(s => s.partyId === party.id || s.partyName === party.name);
+    const partySales = sales.filter(
+      (s) => s.partyId === party.id || s.partyName === party.name,
+    );
 
     if (partySales.length > 0) {
-      return partySales.map(s => ({
-        type: s.docType || 'Sale',
-        number: s.number || '1',
-        date: s.date || '18/10/2026',
+      return partySales.map((s) => ({
+        type: s.docType || "Sale",
+        number: s.number || "1",
+        date: s.date || "18/10/2026",
         total: Number(s.total) || 1000,
-        balance: Number(s.balance !== undefined ? s.balance : s.total) || 1000
+        balance: Number(s.balance !== undefined ? s.balance : s.total) || 1000,
       }));
     }
 
     // Fallback for sample party "lalu singh" to match screenshot exactly
-    if (party.name && party.name.toLowerCase() === 'lalu singh') {
+    if (party.name && party.name.toLowerCase() === "lalu singh") {
       return [
         {
-          type: 'Sale',
-          number: '1',
-          date: '18/10/2026',
+          type: "Sale",
+          number: "1",
+          date: "18/10/2026",
           total: 1000,
-          balance: 1000
-        }
+          balance: 1000,
+        },
       ];
     }
 
@@ -342,12 +374,12 @@ window.PartiesModule = {
     if (Number(party.balance) > 0) {
       return [
         {
-          type: 'Sale',
-          number: '1',
-          date: party.createdAt || '18/10/2026',
+          type: "Sale",
+          number: "1",
+          date: party.createdAt || "18/10/2026",
           total: Number(party.balance),
-          balance: Number(party.balance)
-        }
+          balance: Number(party.balance),
+        },
       ];
     }
 
@@ -366,11 +398,18 @@ window.PartiesModule = {
       `;
     }
 
-    return transactions.map(t => {
-      const formattedTotal = Number(t.total).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      const formattedBalance = Number(t.balance).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return transactions
+      .map((t) => {
+        const formattedTotal = Number(t.total).toLocaleString("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        const formattedBalance = Number(t.balance).toLocaleString("en-IN", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
 
-      return `
+        return `
         <tr>
           <td><span style="font-weight: 500;">${this.escapeHtml(t.type)}</span></td>
           <td>${this.escapeHtml(t.number)}</td>
@@ -382,69 +421,120 @@ window.PartiesModule = {
           </td>
         </tr>
       `;
-    }).join('');
+      })
+      .join("");
   },
 
   bindEvents(container, currentParty) {
     // 1. Party list selection
-    container.querySelectorAll('.party-row-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const partyId = card.getAttribute('data-party-id');
+    container.querySelectorAll(".party-row-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        const partyId = card.getAttribute("data-party-id");
         this.selectedPartyId = partyId;
         this.render(container);
       });
     });
 
     // 2. Real-time search in party names
-    const searchInput = container.querySelector('#partyNameSearchInput');
+    const searchInput = container.querySelector("#partyNameSearchInput");
     if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
+      searchInput.addEventListener("input", (e) => {
         const query = e.target.value.trim().toLowerCase();
-        container.querySelectorAll('.party-row-card').forEach(row => {
-          const name = row.getAttribute('data-name') || '';
-          row.style.display = name.includes(query) ? '' : 'none';
+        container.querySelectorAll(".party-row-card").forEach((row) => {
+          const name = row.getAttribute("data-name") || "";
+          row.style.display = name.includes(query) ? "" : "none";
         });
       });
     }
 
     // 3. Add new party
-    const addBtn = container.querySelector('#addNewPartyBtn');
+    const addBtn = container.querySelector("#addNewPartyBtn");
     if (addBtn) {
-      addBtn.addEventListener('click', () => {
-        if (window.App && typeof window.App.openPartyModal === 'function') {
+      addBtn.addEventListener("click", () => {
+        if (window.App && typeof window.App.openPartyModal === "function") {
           window.App.openPartyModal();
         }
       });
     }
 
     // 4. Edit party
-    const editBtn = container.querySelector('#editActivePartyBtn');
+    const editBtn = container.querySelector("#editActivePartyBtn");
     if (editBtn) {
-      editBtn.addEventListener('click', () => {
-        if (window.App && typeof window.App.openPartyModal === 'function') {
+      editBtn.addEventListener("click", () => {
+        if (window.App && typeof window.App.openPartyModal === "function") {
           window.App.openPartyModal(currentParty);
         }
       });
     }
 
+    // 4b. Delete party
+    const deleteBtn = container.querySelector("#deleteActivePartyBtn");
+    if (deleteBtn) {
+      deleteBtn.addEventListener("click", () => {
+        if (!currentParty || !currentParty.id) return;
+        const partyName = currentParty.name || "this party";
+        const transactions = this.getPartyTransactions(currentParty);
+        const transCount = transactions.length;
+
+        let confirmMsg = `Are you sure you want to delete party "${partyName}"?`;
+        if (transCount > 0) {
+          confirmMsg += `\n\nNotice: This party has ${transCount} associated transaction(s). Existing invoice records will be preserved for financial auditing, but the party will be removed from your active parties list.`;
+        }
+
+        if (confirm(confirmMsg)) {
+          const success = window.Store.deleteParty(currentParty.id);
+          if (success) {
+            if (window.App && window.App.showToast) {
+              window.App.showToast(
+                `Party "${partyName}" deleted successfully.`,
+                "success",
+              );
+            }
+            this.selectedPartyId = null;
+            this.render(container);
+          } else {
+            if (window.App && window.App.showToast) {
+              window.App.showToast(
+                `Could not delete party "${partyName}".`,
+                "error",
+              );
+            }
+          }
+        }
+      });
+    }
+
     // 5. WhatsApp reminder
-    const waBtn = container.querySelector('#partyWhatsappBtn');
+    const waBtn = container.querySelector("#partyWhatsappBtn");
     if (waBtn) {
-      waBtn.addEventListener('click', () => {
-        const phone = currentParty.phone || '9876543210';
-        const business = (window.Store && window.Store.getBusiness()) || { name: 'LekhaJokha' };
-        const bal = Number(currentParty.balance || 1000).toLocaleString('en-IN', { minimumFractionDigits: 2 });
-        const text = encodeURIComponent(`Dear ${currentParty.name},\n\nThis is a friendly reminder from ${business.name}. Your outstanding balance is ₹${bal}.\n\nThank you for doing business with us!`);
-        window.open(`https://api.whatsapp.com/send?phone=91${phone}&text=${text}`, '_blank');
+      waBtn.addEventListener("click", () => {
+        const phone = currentParty.phone || "9876543210";
+        const business = (window.Store && window.Store.getBusiness()) || {
+          name: "LekhaJokha",
+        };
+        const bal = Number(currentParty.balance || 1000).toLocaleString(
+          "en-IN",
+          { minimumFractionDigits: 2 },
+        );
+        const text = encodeURIComponent(
+          `Dear ${currentParty.name},\n\nThis is a friendly reminder from ${business.name}. Your outstanding balance is ₹${bal}.\n\nThank you for doing business with us!`,
+        );
+        window.open(
+          `https://api.whatsapp.com/send?phone=91${phone}&text=${text}`,
+          "_blank",
+        );
       });
     }
 
     // 6. SMS message
-    const smsBtn = container.querySelector('#partySmsBtn');
+    const smsBtn = container.querySelector("#partySmsBtn");
     if (smsBtn) {
-      smsBtn.addEventListener('click', () => {
+      smsBtn.addEventListener("click", () => {
         if (window.App && window.App.showToast) {
-          window.App.showToast(`SMS dispatch queue ready for ${currentParty.name} (${currentParty.phone || '9876543210'})`, 'info');
+          window.App.showToast(
+            `SMS dispatch queue ready for ${currentParty.name} (${currentParty.phone || "9876543210"})`,
+            "info",
+          );
         } else {
           alert(`SMS reminder prepared for ${currentParty.name}`);
         }
@@ -452,27 +542,30 @@ window.PartiesModule = {
     }
 
     // 7. Clock Reminder
-    const remBtn = container.querySelector('#partyReminderBtn');
+    const remBtn = container.querySelector("#partyReminderBtn");
     if (remBtn) {
-      remBtn.addEventListener('click', () => {
+      remBtn.addEventListener("click", () => {
         if (window.App && window.App.showToast) {
-          window.App.showToast(`Payment reminder schedule set for ${currentParty.name}.`, 'success');
+          window.App.showToast(
+            `Payment reminder schedule set for ${currentParty.name}.`,
+            "success",
+          );
         }
       });
     }
 
     // 8. Excel export
-    const xlsBtn = container.querySelector('#transExportXlsBtn');
+    const xlsBtn = container.querySelector("#transExportXlsBtn");
     if (xlsBtn) {
-      xlsBtn.addEventListener('click', () => {
+      xlsBtn.addEventListener("click", () => {
         const transactions = this.getPartyTransactions(currentParty);
-        let csv = 'Type,Number,Date,Total,Balance\n';
-        transactions.forEach(t => {
+        let csv = "Type,Number,Date,Total,Balance\n";
+        transactions.forEach((t) => {
           csv += `"${t.type}","${t.number}","${t.date}",${t.total},${t.balance}\n`;
         });
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
         a.download = `${currentParty.name}_transactions.csv`;
         a.click();
@@ -481,24 +574,27 @@ window.PartiesModule = {
     }
 
     // 9. Print statement
-    const printBtn = container.querySelector('#transPrintBtn');
+    const printBtn = container.querySelector("#transPrintBtn");
     if (printBtn) {
-      printBtn.addEventListener('click', () => {
+      printBtn.addEventListener("click", () => {
         window.print();
       });
     }
 
     // 10. Phone contacts banner
-    const contactsBanner = container.querySelector('#convertPhoneContactsBtn');
+    const contactsBanner = container.querySelector("#convertPhoneContactsBtn");
     if (contactsBanner) {
-      contactsBanner.addEventListener('click', () => {
+      contactsBanner.addEventListener("click", () => {
         if (window.App && window.App.showToast) {
-          window.App.showToast('Phone contacts sync is ready. Select contacts to import.', 'info');
+          window.App.showToast(
+            "Phone contacts sync is ready. Select contacts to import.",
+            "info",
+          );
         }
-        if (window.App && typeof window.App.openPartyModal === 'function') {
+        if (window.App && typeof window.App.openPartyModal === "function") {
           window.App.openPartyModal();
         }
       });
     }
-  }
+  },
 };

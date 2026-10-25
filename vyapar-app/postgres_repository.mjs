@@ -3,7 +3,7 @@
 // Parameterized Queries, Transaction Boundaries, Strict Multi-Tenancy & Idempotency
 // ==============================================================================
 
-import { postgresDb } from './postgres_db_manager.mjs';
+import { postgresDb } from "./postgres_db_manager.mjs";
 
 export class PostgresRepository {
   constructor(db = postgresDb) {
@@ -18,10 +18,11 @@ export class PostgresRepository {
     if (!identifier) return null;
     const cleanIdent = String(identifier).trim().toLowerCase();
     // Strictly enforce minimum 10-digit normalized phone number to prevent substring ambiguity
-    const rawDigits = String(identifier).replace(/[^0-9]/g, '');
-    const phoneLookupKey = rawDigits.length >= 10 ? rawDigits.slice(-10) : '';
+    const rawDigits = String(identifier).replace(/[^0-9]/g, "");
+    const phoneLookupKey = rawDigits.length >= 10 ? rawDigits.slice(-10) : "";
 
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT u.*, s.plan_tier, s.status as subscriber_status
       FROM users u
       LEFT JOIN subscribers s ON u.subscriber_id = s.id
@@ -29,20 +30,25 @@ export class PostgresRepository {
          OR LOWER(u.email) = $1
          OR ($2 != '' AND u.phone IS NOT NULL AND u.phone LIKE '%' || $2)
       LIMIT 1;
-    `, [cleanIdent, phoneLookupKey]);
+    `,
+      [cleanIdent, phoneLookupKey],
+    );
 
     if (res.rows.length > 0) {
       return this._mapUser(res.rows[0]);
     }
 
     // Fallback check in subscribers table for owner accounts
-    const subRes = await this.db.query(`
+    const subRes = await this.db.query(
+      `
       SELECT * FROM subscribers
       WHERE LOWER(id) = $1
          OR LOWER(email) = $1
          OR ($2 != '' AND phone IS NOT NULL AND phone LIKE '%' || $2)
       LIMIT 1;
-    `, [cleanIdent, phoneLookupKey]);
+    `,
+      [cleanIdent, phoneLookupKey],
+    );
 
     if (subRes.rows.length > 0) {
       const sub = subRes.rows[0];
@@ -52,13 +58,13 @@ export class PostgresRepository {
         name: sub.name,
         email: sub.email,
         phone: sub.phone,
-        role: 'Owner',
-        permissions: ['*'],
+        role: "Owner",
+        permissions: ["*"],
         passwordHash: sub.password_hash,
         salt: sub.salt,
         pinHash: sub.pin_hash,
-        status: sub.status || 'Active',
-        plan: sub.plan_tier
+        status: sub.status || "Active",
+        plan: sub.plan_tier,
       };
     }
 
@@ -67,13 +73,16 @@ export class PostgresRepository {
 
   async findUserById(userId) {
     if (!userId) return null;
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT u.*, s.plan_tier
       FROM users u
       LEFT JOIN subscribers s ON u.subscriber_id = s.id
       WHERE u.id = $1
       LIMIT 1;
-    `, [userId]);
+    `,
+      [userId],
+    );
 
     return res.rows.length > 0 ? this._mapUser(res.rows[0]) : null;
   }
@@ -87,19 +96,23 @@ export class PostgresRepository {
       phone: row.phone,
       role: row.role,
       title: row.title,
-      permissions: typeof row.permissions === 'string' ? JSON.parse(row.permissions) : (row.permissions || []),
+      permissions:
+        typeof row.permissions === "string"
+          ? JSON.parse(row.permissions)
+          : row.permissions || [],
       passwordHash: row.password_hash,
       salt: row.salt,
       pin: row.pin,
       pinHash: row.pin_hash,
       status: row.status,
       createdAt: row.created_at,
-      plan: row.plan_tier
+      plan: row.plan_tier,
     };
   }
 
   async saveUser(user) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       INSERT INTO users (
         id, subscriber_id, name, email, phone, role, title,
         permissions, password_hash, salt, pin, pin_hash, status, created_at
@@ -117,22 +130,24 @@ export class PostgresRepository {
         status = EXCLUDED.status,
         updated_at = NOW()
       RETURNING *;
-    `, [
-      user.id,
-      user.subscriberId,
-      user.name,
-      user.email || null,
-      user.phone || null,
-      user.role || 'Biller',
-      user.title || null,
-      JSON.stringify(user.permissions || []),
-      user.passwordHash || null,
-      user.salt || null,
-      user.pin || null,
-      user.pinHash || null,
-      user.status || 'Active',
-      user.createdAt || new Date()
-    ]);
+    `,
+      [
+        user.id,
+        user.subscriberId,
+        user.name,
+        user.email || null,
+        user.phone || null,
+        user.role || "Biller",
+        user.title || null,
+        JSON.stringify(user.permissions || []),
+        user.passwordHash || null,
+        user.salt || null,
+        user.pin || null,
+        user.pinHash || null,
+        user.status || "Active",
+        user.createdAt || new Date(),
+      ],
+    );
     return this._mapUser(res.rows[0]);
   }
 
@@ -141,32 +156,38 @@ export class PostgresRepository {
   // ============================================================================
 
   async createSession(token, sessionData) {
-    await this.db.query(`
+    await this.db.query(
+      `
       INSERT INTO sessions (token, user_id, subscriber_id, business_id, ip_address, user_agent, expires_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       ON CONFLICT (token) DO UPDATE SET
         business_id = EXCLUDED.business_id,
         expires_at = EXCLUDED.expires_at;
-    `, [
-      token,
-      sessionData.userId,
-      sessionData.subscriberId || null,
-      sessionData.businessId || null,
-      sessionData.ipAddress || null,
-      sessionData.userAgent || null,
-      sessionData.expiresAt || new Date(Date.now() + 30 * 24 * 3600 * 1000)
-    ]);
+    `,
+      [
+        token,
+        sessionData.userId,
+        sessionData.subscriberId || null,
+        sessionData.businessId || null,
+        sessionData.ipAddress || null,
+        sessionData.userAgent || null,
+        sessionData.expiresAt || new Date(Date.now() + 30 * 24 * 3600 * 1000),
+      ],
+    );
   }
 
   async getSession(token) {
     if (!token) return null;
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT s.*, u.name, u.role, u.permissions, u.status as user_status
       FROM sessions s
       JOIN users u ON s.user_id = u.id
       WHERE s.token = $1 AND s.expires_at > NOW()
       LIMIT 1;
-    `, [token]);
+    `,
+      [token],
+    );
 
     if (res.rows.length === 0) return null;
     const row = res.rows[0];
@@ -177,16 +198,16 @@ export class PostgresRepository {
       businessId: row.business_id,
       user: this._mapUser(row),
       createdAt: row.created_at,
-      expiresAt: row.expires_at
+      expiresAt: row.expires_at,
     };
   }
 
   async revokeSession(token) {
-    await this.db.query('DELETE FROM sessions WHERE token = $1;', [token]);
+    await this.db.query("DELETE FROM sessions WHERE token = $1;", [token]);
   }
 
   async revokeAllUserSessions(userId) {
-    await this.db.query('DELETE FROM sessions WHERE user_id = $1;', [userId]);
+    await this.db.query("DELETE FROM sessions WHERE user_id = $1;", [userId]);
   }
 
   // ============================================================================
@@ -194,15 +215,18 @@ export class PostgresRepository {
   // ============================================================================
 
   async getBusinessesForUser(userId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT b.*, m.role as user_role
       FROM businesses b
       JOIN business_memberships m ON b.id = m.business_id
       WHERE m.user_id = $1 AND m.status = 'Active' AND b.status = 'Active'
       ORDER BY b.created_at ASC;
-    `, [userId]);
+    `,
+      [userId],
+    );
 
-    return res.rows.map(r => ({
+    return res.rows.map((r) => ({
       id: r.id,
       subscriberId: r.subscriber_id,
       name: r.name,
@@ -213,26 +237,33 @@ export class PostgresRepository {
       email: r.email,
       status: r.status,
       userRole: r.user_role,
-      createdAt: r.created_at
+      createdAt: r.created_at,
     }));
   }
 
   async getBusinessById(bizId) {
-    const res = await this.db.query('SELECT * FROM businesses WHERE id = $1 LIMIT 1;', [bizId]);
+    const res = await this.db.query(
+      "SELECT * FROM businesses WHERE id = $1 LIMIT 1;",
+      [bizId],
+    );
     return res.rows[0] || null;
   }
 
   async checkMembership(businessId, userId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT * FROM business_memberships
       WHERE business_id = $1 AND user_id = $2 AND status = 'Active'
       LIMIT 1;
-    `, [businessId, userId]);
+    `,
+      [businessId, userId],
+    );
     return res.rows[0] || null;
   }
 
   async saveBusiness(biz, subscriberId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       INSERT INTO businesses (id, subscriber_id, name, legal_name, gstin, state, phone, email, status)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (id) DO UPDATE SET
@@ -242,37 +273,51 @@ export class PostgresRepository {
         status = EXCLUDED.status,
         updated_at = NOW()
       RETURNING *;
-    `, [
-      biz.id,
-      subscriberId,
-      biz.name,
-      biz.legalName || biz.name,
-      biz.gstin || null,
-      biz.state || 'Delhi (07)',
-      biz.phone || null,
-      biz.email || null,
-      biz.status || 'Active'
-    ]);
+    `,
+      [
+        biz.id,
+        subscriberId,
+        biz.name,
+        biz.legalName || biz.name,
+        biz.gstin || null,
+        biz.state || "Delhi (07)",
+        biz.phone || null,
+        biz.email || null,
+        biz.status || "Active",
+      ],
+    );
 
     // Ensure business profile exists
-    await this.db.query(`
+    await this.db.query(
+      `
       INSERT INTO business_profiles (business_id, business_name, legal_name, state, gstin)
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (business_id) DO NOTHING;
-    `, [biz.id, biz.name, biz.legalName || biz.name, biz.state || 'Delhi (07)', biz.gstin || null]);
+    `,
+      [
+        biz.id,
+        biz.name,
+        biz.legalName || biz.name,
+        biz.state || "Delhi (07)",
+        biz.gstin || null,
+      ],
+    );
 
     return res.rows[0];
   }
 
-  async saveMembership(id, businessId, userId, role = 'Owner') {
-    const res = await this.db.query(`
+  async saveMembership(id, businessId, userId, role = "Owner") {
+    const res = await this.db.query(
+      `
       INSERT INTO business_memberships (id, business_id, user_id, role, status)
       VALUES ($1, $2, $3, $4, 'Active')
       ON CONFLICT (business_id, user_id) DO UPDATE SET
         role = EXCLUDED.role,
         status = 'Active'
       RETURNING *;
-    `, [id, businessId, userId, role]);
+    `,
+      [id, businessId, userId, role],
+    );
     return res.rows[0];
   }
 
@@ -281,28 +326,32 @@ export class PostgresRepository {
   // ============================================================================
 
   async getParties(businessId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT * FROM parties
       WHERE business_id = $1
       ORDER BY name ASC;
-    `, [businessId]);
+    `,
+      [businessId],
+    );
 
-    return res.rows.map(r => ({
+    return res.rows.map((r) => ({
       id: r.id,
       name: r.name,
       type: r.type,
-      phone: r.phone || '',
-      email: r.email || '',
-      gstin: r.gstin || '',
-      address: r.address || '',
-      state: r.state || '',
+      phone: r.phone || "",
+      email: r.email || "",
+      gstin: r.gstin || "",
+      address: r.address || "",
+      state: r.state || "",
       balance: parseFloat(r.current_balance || 0),
-      createdAt: r.created_at
+      createdAt: r.created_at,
     }));
   }
 
   async saveParty(businessId, party) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       INSERT INTO parties (
         id, business_id, name, type, phone, email, gstin, address, state, current_balance, created_at
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
@@ -317,33 +366,48 @@ export class PostgresRepository {
         current_balance = EXCLUDED.current_balance,
         updated_at = NOW()
       RETURNING *;
-    `, [
-      party.id,
-      businessId,
-      party.name,
-      party.type || 'Customer',
-      party.phone || null,
-      party.email || null,
-      party.gstin || null,
-      party.address || null,
-      party.state || null,
-      Number(party.balance || 0),
-      party.createdAt || new Date()
-    ]);
+    `,
+      [
+        party.id,
+        businessId,
+        party.name,
+        party.type || "Customer",
+        party.phone || null,
+        party.email || null,
+        party.gstin || null,
+        party.address || null,
+        party.state || null,
+        Number(party.balance || 0),
+        party.createdAt || new Date(),
+      ],
+    );
 
     const r = res.rows[0];
     return {
       id: r.id,
       name: r.name,
       type: r.type,
-      phone: r.phone || '',
-      email: r.email || '',
-      gstin: r.gstin || '',
-      address: r.address || '',
-      state: r.state || '',
+      phone: r.phone || "",
+      email: r.email || "",
+      gstin: r.gstin || "",
+      address: r.address || "",
+      state: r.state || "",
       balance: parseFloat(r.current_balance || 0),
-      createdAt: r.created_at
+      createdAt: r.created_at,
     };
+  }
+
+  async deleteParty(businessId, partyId) {
+    if (!businessId || !partyId) return false;
+    const res = await this.db.query(
+      `
+      DELETE FROM parties
+      WHERE business_id = $1 AND id = $2
+      RETURNING *;
+    `,
+      [businessId, partyId],
+    );
+    return res.rows.length > 0;
   }
 
   // ============================================================================
@@ -351,31 +415,35 @@ export class PostgresRepository {
   // ============================================================================
 
   async getItems(businessId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT * FROM items
       WHERE business_id = $1
       ORDER BY name ASC;
-    `, [businessId]);
+    `,
+      [businessId],
+    );
 
-    return res.rows.map(r => ({
+    return res.rows.map((r) => ({
       id: r.id,
-      barcode: r.barcode || '',
+      barcode: r.barcode || "",
       name: r.name,
-      category: r.category || 'General',
-      hsn: r.hsn || '',
-      unit: r.unit || 'PCS',
+      category: r.category || "General",
+      hsn: r.hsn || "",
+      unit: r.unit || "PCS",
       salePrice: parseFloat(r.sale_price || 0),
       purchasePrice: parseFloat(r.purchase_price || 0),
       gstRate: parseFloat(r.gst_rate || 0),
       stock: parseFloat(r.current_stock || 0),
       minStock: parseFloat(r.min_stock_alert || 0),
       status: r.status,
-      createdAt: r.created_at
+      createdAt: r.created_at,
     }));
   }
 
   async saveItem(businessId, item) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       INSERT INTO items (
         id, business_id, barcode, name, category, hsn, unit,
         sale_price, purchase_price, gst_rate, current_stock, min_stock_alert, status, created_at
@@ -394,38 +462,40 @@ export class PostgresRepository {
         status = EXCLUDED.status,
         updated_at = NOW()
       RETURNING *;
-    `, [
-      item.id,
-      businessId,
-      item.barcode || null,
-      item.name,
-      item.category || 'General',
-      item.hsn || null,
-      item.unit || 'PCS',
-      Number(item.salePrice || 0),
-      Number(item.purchasePrice || 0),
-      Number(item.gstRate || 0),
-      Number(item.stock || item.currentStock || 0),
-      Number(item.minStock || 5),
-      item.status || 'Active',
-      item.createdAt || new Date()
-    ]);
+    `,
+      [
+        item.id,
+        businessId,
+        item.barcode || null,
+        item.name,
+        item.category || "General",
+        item.hsn || null,
+        item.unit || "PCS",
+        Number(item.salePrice || 0),
+        Number(item.purchasePrice || 0),
+        Number(item.gstRate || 0),
+        Number(item.stock || item.currentStock || 0),
+        Number(item.minStock || 5),
+        item.status || "Active",
+        item.createdAt || new Date(),
+      ],
+    );
 
     const r = res.rows[0];
     return {
       id: r.id,
-      barcode: r.barcode || '',
+      barcode: r.barcode || "",
       name: r.name,
-      category: r.category || 'General',
-      hsn: r.hsn || '',
-      unit: r.unit || 'PCS',
+      category: r.category || "General",
+      hsn: r.hsn || "",
+      unit: r.unit || "PCS",
       salePrice: parseFloat(r.sale_price || 0),
       purchasePrice: parseFloat(r.purchase_price || 0),
       gstRate: parseFloat(r.gst_rate || 0),
       stock: parseFloat(r.current_stock || 0),
       minStock: parseFloat(r.min_stock_alert || 0),
       status: r.status,
-      createdAt: r.created_at
+      createdAt: r.created_at,
     };
   }
 
@@ -434,13 +504,16 @@ export class PostgresRepository {
   // ============================================================================
 
   async getSales(businessId) {
-    const res = await this.db.query(`
+    const res = await this.db.query(
+      `
       SELECT * FROM sales
       WHERE business_id = $1
       ORDER BY invoice_date DESC, created_at DESC;
-    `, [businessId]);
+    `,
+      [businessId],
+    );
 
-    return res.rows.map(r => ({
+    return res.rows.map((r) => ({
       id: r.id,
       number: r.invoice_number,
       invoiceNumber: r.invoice_number,
@@ -461,8 +534,11 @@ export class PostgresRepository {
       paymentStatus: r.payment_status,
       ewayBillNumber: r.eway_bill_number,
       notes: r.notes,
-      items: typeof r.items_json === 'string' ? JSON.parse(r.items_json) : (r.items_json || []),
-      createdAt: r.created_at
+      items:
+        typeof r.items_json === "string"
+          ? JSON.parse(r.items_json)
+          : r.items_json || [],
+      createdAt: r.created_at,
     }));
   }
 
@@ -470,16 +546,19 @@ export class PostgresRepository {
     return await this.db.withTransaction(async (client) => {
       // 1. Idempotency Check
       if (sale.idempotencyKey) {
-        const existing = await client.query(`
+        const existing = await client.query(
+          `
           SELECT * FROM sales WHERE business_id = $1 AND idempotency_key = $2 LIMIT 1;
-        `, [businessId, sale.idempotencyKey]);
+        `,
+          [businessId, sale.idempotencyKey],
+        );
         if (existing.rows.length > 0) {
           const r = existing.rows[0];
           return {
             id: r.id,
             invoiceNumber: r.invoice_number,
             grandTotal: parseFloat(r.grand_total),
-            _idempotent: true
+            _idempotent: true,
           };
         }
       }
@@ -489,11 +568,12 @@ export class PostgresRepository {
       const taxAmount = Number(sale.taxAmount || sale.tax || 0);
       const grandTotal = Number(sale.grandTotal || sale.total || 0);
       const paidAmount = Number(sale.paidAmount || sale.paid || 0);
-      const balanceDue = Number(sale.balanceDue || (grandTotal - paidAmount));
+      const balanceDue = Number(sale.balanceDue || grandTotal - paidAmount);
       const itemsList = Array.isArray(sale.items) ? sale.items : [];
 
       // 2. Insert or Update Sale Header
-      const res = await client.query(`
+      const res = await client.query(
+        `
         INSERT INTO sales (
           id, business_id, invoice_number, doc_type, invoice_date,
           party_id, party_name, place_of_supply, payment_mode,
@@ -512,68 +592,92 @@ export class PostgresRepository {
           notes = EXCLUDED.notes,
           updated_at = NOW()
         RETURNING *;
-      `, [
-        sId,
-        businessId,
-        sale.invoiceNumber || sale.number || sId,
-        sale.docType || 'Invoice',
-        sale.date || sale.invoiceDate || new Date().toISOString().slice(0, 10),
-        sale.partyId || null,
-        sale.partyName || 'Cash Sale',
-        sale.placeOfSupply || null,
-        sale.paymentMode || 'Credit',
-        subtotal,
-        taxAmount,
-        grandTotal,
-        paidAmount,
-        balanceDue,
-        sale.paymentStatus || (balanceDue <= 0 ? 'Paid' : (paidAmount > 0 ? 'Partial' : 'Unpaid')),
-        sale.ewayBillNumber || null,
-        sale.notes || null,
-        sale.idempotencyKey || null,
-        JSON.stringify(itemsList),
-        sale.createdAt || new Date()
-      ]);
+      `,
+        [
+          sId,
+          businessId,
+          sale.invoiceNumber || sale.number || sId,
+          sale.docType || "Invoice",
+          sale.date ||
+            sale.invoiceDate ||
+            new Date().toISOString().slice(0, 10),
+          sale.partyId || null,
+          sale.partyName || "Cash Sale",
+          sale.placeOfSupply || null,
+          sale.paymentMode || "Credit",
+          subtotal,
+          taxAmount,
+          grandTotal,
+          paidAmount,
+          balanceDue,
+          sale.paymentStatus ||
+            (balanceDue <= 0 ? "Paid" : paidAmount > 0 ? "Partial" : "Unpaid"),
+          sale.ewayBillNumber || null,
+          sale.notes || null,
+          sale.idempotencyKey || null,
+          JSON.stringify(itemsList),
+          sale.createdAt || new Date(),
+        ],
+      );
 
       // 3. Atomically Replace Line Items
-      await client.query('DELETE FROM sale_line_items WHERE business_id = $1 AND sale_id = $2;', [businessId, sId]);
+      await client.query(
+        "DELETE FROM sale_line_items WHERE business_id = $1 AND sale_id = $2;",
+        [businessId, sId],
+      );
 
       for (const item of itemsList) {
-        await client.query(`
+        await client.query(
+          `
           INSERT INTO sale_line_items (
             business_id, sale_id, item_id, item_name, hsn, quantity, unit, rate, gst_rate, tax_amount, total_amount
           ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);
-        `, [
-          businessId,
-          sId,
-          item.itemId || item.id || null,
-          item.name || item.itemName || 'Item',
-          item.hsn || null,
-          Number(item.qty || item.quantity || 1),
-          item.unit || 'PCS',
-          Number(item.rate || item.salePrice || 0),
-          Number(item.gstRate || 0),
-          Number(item.taxAmount || 0),
-          Number(item.total || item.amount || 0)
-        ]);
+        `,
+          [
+            businessId,
+            sId,
+            item.itemId || item.id || null,
+            item.name || item.itemName || "Item",
+            item.hsn || null,
+            Number(item.qty || item.quantity || 1),
+            item.unit || "PCS",
+            Number(item.rate || item.salePrice || 0),
+            Number(item.gstRate || 0),
+            Number(item.taxAmount || 0),
+            Number(item.total || item.amount || 0),
+          ],
+        );
 
         // Stock deduction for Invoices
-        if ((sale.docType || 'Invoice') === 'Invoice' && (item.itemId || item.id)) {
-          await client.query(`
+        if (
+          (sale.docType || "Invoice") === "Invoice" &&
+          (item.itemId || item.id)
+        ) {
+          await client.query(
+            `
             UPDATE items
             SET current_stock = current_stock - $1, updated_at = NOW()
             WHERE business_id = $2 AND id = $3;
-          `, [Number(item.qty || item.quantity || 1), businessId, item.itemId || item.id]);
+          `,
+            [
+              Number(item.qty || item.quantity || 1),
+              businessId,
+              item.itemId || item.id,
+            ],
+          );
         }
       }
 
       // 4. Update Party Balance if Credit Sale
       if (sale.partyId && balanceDue !== 0) {
-        await client.query(`
+        await client.query(
+          `
           UPDATE parties
           SET current_balance = current_balance + $1, updated_at = NOW()
           WHERE business_id = $2 AND id = $3;
-        `, [balanceDue, businessId, sale.partyId]);
+        `,
+          [balanceDue, businessId, sale.partyId],
+        );
       }
 
       const r = res.rows[0];
@@ -584,7 +688,7 @@ export class PostgresRepository {
         grandTotal: parseFloat(r.grand_total),
         paidAmount: parseFloat(r.paid_amount),
         balanceDue: parseFloat(r.balance_due),
-        status: r.payment_status
+        status: r.payment_status,
       };
     });
   }
@@ -595,41 +699,82 @@ export class PostgresRepository {
 
   async getCompleteTenantData(businessId) {
     const [
-      parties, items, sales, purchases, expenses, orders,
-      paymentsIn, paymentsOut, ewayBills, salesmen, profileRes, cashRes, bankRes
+      parties,
+      items,
+      sales,
+      purchases,
+      expenses,
+      orders,
+      paymentsIn,
+      paymentsOut,
+      ewayBills,
+      salesmen,
+      profileRes,
+      cashRes,
+      bankRes,
     ] = await Promise.all([
       this.getParties(businessId),
       this.getItems(businessId),
       this.getSales(businessId),
-      this.db.query('SELECT * FROM purchases WHERE business_id = $1 ORDER BY bill_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM expenses WHERE business_id = $1 ORDER BY expense_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM orders WHERE business_id = $1 ORDER BY order_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM payments_in WHERE business_id = $1 ORDER BY payment_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM payments_out WHERE business_id = $1 ORDER BY payment_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM eway_bills WHERE business_id = $1 ORDER BY eway_date DESC;', [businessId]),
-      this.db.query('SELECT * FROM salesmen WHERE business_id = $1 ORDER BY name ASC;', [businessId]),
-      this.db.query('SELECT * FROM business_profiles WHERE business_id = $1 LIMIT 1;', [businessId]),
-      this.db.query('SELECT * FROM cash_in_hand WHERE business_id = $1 LIMIT 1;', [businessId]),
-      this.db.query('SELECT * FROM cash_bank_accounts WHERE business_id = $1;', [businessId])
+      this.db.query(
+        "SELECT * FROM purchases WHERE business_id = $1 ORDER BY bill_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM expenses WHERE business_id = $1 ORDER BY expense_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM orders WHERE business_id = $1 ORDER BY order_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM payments_in WHERE business_id = $1 ORDER BY payment_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM payments_out WHERE business_id = $1 ORDER BY payment_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM eway_bills WHERE business_id = $1 ORDER BY eway_date DESC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM salesmen WHERE business_id = $1 ORDER BY name ASC;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM business_profiles WHERE business_id = $1 LIMIT 1;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM cash_in_hand WHERE business_id = $1 LIMIT 1;",
+        [businessId],
+      ),
+      this.db.query(
+        "SELECT * FROM cash_bank_accounts WHERE business_id = $1;",
+        [businessId],
+      ),
     ]);
 
     const bp = profileRes.rows[0] || {};
     const cashInHand = cashRes.rows[0] ? parseFloat(cashRes.rows[0].amount) : 0;
-    const bankAccounts = bankRes.rows.map(b => ({
+    const bankAccounts = bankRes.rows.map((b) => ({
       id: b.id,
       accountName: b.account_name,
       bankName: b.bank_name,
       accountNumber: b.account_number,
       ifsc: b.ifsc,
       openingBalance: parseFloat(b.opening_balance || 0),
-      currentBalance: parseFloat(b.current_balance || 0)
+      currentBalance: parseFloat(b.current_balance || 0),
     }));
 
     return {
       parties,
       items,
       sales,
-      purchases: purchases.rows.map(r => ({
+      purchases: purchases.rows.map((r) => ({
         id: r.id,
         number: r.bill_number,
         billNumber: r.bill_number,
@@ -643,10 +788,13 @@ export class PostgresRepository {
         grandTotal: parseFloat(r.grand_total || 0),
         paidAmount: parseFloat(r.paid_amount || 0),
         balanceDue: parseFloat(r.balance_due || 0),
-        items: typeof r.items_json === 'string' ? JSON.parse(r.items_json) : (r.items_json || []),
-        createdAt: r.created_at
+        items:
+          typeof r.items_json === "string"
+            ? JSON.parse(r.items_json)
+            : r.items_json || [],
+        createdAt: r.created_at,
       })),
-      orders: orders.rows.map(r => ({
+      orders: orders.rows.map((r) => ({
         id: r.id,
         orderNumber: r.order_number,
         date: r.order_date,
@@ -656,10 +804,13 @@ export class PostgresRepository {
         status: r.status,
         deliveryDate: r.delivery_date,
         notes: r.notes,
-        items: typeof r.items_json === 'string' ? JSON.parse(r.items_json) : (r.items_json || []),
-        createdAt: r.created_at
+        items:
+          typeof r.items_json === "string"
+            ? JSON.parse(r.items_json)
+            : r.items_json || [],
+        createdAt: r.created_at,
       })),
-      expenses: expenses.rows.map(r => ({
+      expenses: expenses.rows.map((r) => ({
         id: r.id,
         date: r.expense_date,
         category: r.category,
@@ -667,13 +818,13 @@ export class PostgresRepository {
         amount: parseFloat(r.amount || 0),
         paymentMode: r.payment_mode,
         referenceNumber: r.reference_number,
-        createdAt: r.created_at
+        createdAt: r.created_at,
       })),
       cashBank: {
         cashInHand,
-        bankAccounts
+        bankAccounts,
       },
-      paymentsIn: paymentsIn.rows.map(r => ({
+      paymentsIn: paymentsIn.rows.map((r) => ({
         id: r.id,
         number: r.payment_number,
         date: r.payment_date,
@@ -683,9 +834,9 @@ export class PostgresRepository {
         paymentMode: r.payment_mode,
         txRef: r.tx_ref,
         notes: r.notes,
-        createdAt: r.created_at
+        createdAt: r.created_at,
       })),
-      paymentsOut: paymentsOut.rows.map(r => ({
+      paymentsOut: paymentsOut.rows.map((r) => ({
         id: r.id,
         number: r.payment_number,
         date: r.payment_date,
@@ -695,9 +846,9 @@ export class PostgresRepository {
         paymentMode: r.payment_mode,
         txRef: r.tx_ref,
         notes: r.notes,
-        createdAt: r.created_at
+        createdAt: r.created_at,
       })),
-      ewayBills: ewayBills.rows.map(r => ({
+      ewayBills: ewayBills.rows.map((r) => ({
         id: r.id,
         ewayNumber: r.eway_number,
         ewayDate: r.eway_date,
@@ -709,9 +860,9 @@ export class PostgresRepository {
         transporterName: r.transporter_name,
         totalValue: parseFloat(r.total_value || 0),
         status: r.status,
-        createdAt: r.created_at
+        createdAt: r.created_at,
       })),
-      salesmen: salesmen.rows.map(r => ({
+      salesmen: salesmen.rows.map((r) => ({
         id: r.id,
         empId: r.emp_id,
         name: r.name,
@@ -720,27 +871,27 @@ export class PostgresRepository {
         territory: r.territory,
         role: r.role,
         status: r.status,
-        createdAt: r.created_at
+        createdAt: r.created_at,
       })),
       businessProfile: {
         businessName: bp.business_name || `Business ${businessId}`,
-        legalName: bp.legal_name || bp.business_name || '',
-        phone: bp.phone || '',
-        email: bp.email || '',
-        address: bp.address || '',
-        state: bp.state || 'Delhi (07)',
-        gstin: bp.gstin || '',
-        pan: bp.pan || '',
-        currency: bp.currency || 'INR (₹)',
-        invoicePrefix: bp.invoice_prefix || 'INV-2026-',
-        termsAndConditions: bp.terms_and_conditions || '',
-        bankName: bp.bank_name || '',
-        accountNumber: bp.account_number || '',
-        ifscCode: bp.ifsc_code || '',
-        branchName: bp.branch_name || '',
-        upiId: bp.upi_id || '',
-        logoUrl: bp.logo_url || ''
-      }
+        legalName: bp.legal_name || bp.business_name || "",
+        phone: bp.phone || "",
+        email: bp.email || "",
+        address: bp.address || "",
+        state: bp.state || "Delhi (07)",
+        gstin: bp.gstin || "",
+        pan: bp.pan || "",
+        currency: bp.currency || "INR (₹)",
+        invoicePrefix: bp.invoice_prefix || "INV-2026-",
+        termsAndConditions: bp.terms_and_conditions || "",
+        bankName: bp.bank_name || "",
+        accountNumber: bp.account_number || "",
+        ifscCode: bp.ifsc_code || "",
+        branchName: bp.branch_name || "",
+        upiId: bp.upi_id || "",
+        logoUrl: bp.logo_url || "",
+      },
     };
   }
 
@@ -750,8 +901,8 @@ export class PostgresRepository {
 
   async getEwayConfig(businessId) {
     const res = await this.db.query(
-      'SELECT * FROM business_eway_configs WHERE business_id = $1 LIMIT 1;',
-      [businessId]
+      "SELECT * FROM business_eway_configs WHERE business_id = $1 LIMIT 1;",
+      [businessId],
     );
     if (!res.rows[0]) return null;
     const r = res.rows[0];
@@ -766,7 +917,7 @@ export class PostgresRepository {
       gspBaseUrl: r.gsp_base_url,
       nicPublicKeyPem: r.nic_public_key_pem,
       authToken: r.auth_token,
-      tokenExpiry: r.token_expiry
+      tokenExpiry: r.token_expiry,
     };
   }
 
@@ -793,17 +944,17 @@ export class PostgresRepository {
     `;
     await this.db.query(query, [
       businessId,
-      config.provider || 'NIC_SANDBOX',
+      config.provider || "NIC_SANDBOX",
       config.isSandbox !== undefined ? config.isSandbox : true,
-      config.gstin || '',
-      config.username || '',
-      config.encryptedPassword || '',
-      config.clientId || '',
-      config.encryptedClientSecret || '',
-      config.gspBaseUrl || '',
-      config.nicPublicKeyPem || '',
+      config.gstin || "",
+      config.username || "",
+      config.encryptedPassword || "",
+      config.clientId || "",
+      config.encryptedClientSecret || "",
+      config.gspBaseUrl || "",
+      config.nicPublicKeyPem || "",
       config.authToken || null,
-      config.tokenExpiry || null
+      config.tokenExpiry || null,
     ]);
   }
 
@@ -855,10 +1006,10 @@ export class PostgresRepository {
       r.transporterName || null,
       parseFloat(r.totalInvoiceValue || 0),
       r.status,
-      r.docType || 'INV',
+      r.docType || "INV",
       r.docDate,
-      r.supplyType || 'O',
-      r.subSupplyType || '1',
+      r.supplyType || "O",
+      r.subSupplyType || "1",
       r.fromGstin,
       r.fromTrdName,
       r.fromAddr1,
@@ -877,10 +1028,10 @@ export class PostgresRepository {
       parseFloat(r.cessValue || 0),
       r.transporterId || null,
       parseFloat(r.transDistance || 0),
-      r.transMode || '1',
+      r.transMode || "1",
       r.transDocNo || null,
       r.transDocDate || null,
-      r.vehicleType || 'R',
+      r.vehicleType || "R",
       JSON.stringify(r.itemList || []),
       r.rawGovResponse ? JSON.stringify(r.rawGovResponse) : null,
       JSON.stringify(r.auditHistory || []),
@@ -889,14 +1040,14 @@ export class PostgresRepository {
       r.cancelRemarks || null,
       r.idempotencyKey || null,
       r.lastErrorCode || null,
-      r.lastErrorMessage || null
+      r.lastErrorMessage || null,
     ]);
   }
 
   async getEwayRecord(businessId, idOrNo) {
     const res = await this.db.query(
       `SELECT * FROM eway_bills WHERE business_id = $1 AND (id = $2 OR eway_number = $2) LIMIT 1;`,
-      [businessId, idOrNo]
+      [businessId, idOrNo],
     );
     if (!res.rows[0]) return null;
     return this._mapEwayRow(res.rows[0]);
@@ -905,7 +1056,7 @@ export class PostgresRepository {
   async findEwayByDocOrKey(businessId, docNo, idempotencyKey) {
     const res = await this.db.query(
       `SELECT * FROM eway_bills WHERE business_id = $1 AND (invoice_number = $2 OR idempotency_key = $3) LIMIT 1;`,
-      [businessId, docNo, idempotencyKey]
+      [businessId, docNo, idempotencyKey],
     );
     if (!res.rows[0]) return null;
     return this._mapEwayRow(res.rows[0]);
@@ -922,7 +1073,7 @@ export class PostgresRepository {
 
     query += ` ORDER BY created_at DESC;`;
     const res = await this.db.query(query, params);
-    return res.rows.map(r => this._mapEwayRow(r));
+    return res.rows.map((r) => this._mapEwayRow(r));
   }
 
   _mapEwayRow(r) {
@@ -933,7 +1084,7 @@ export class PostgresRepository {
       ewayBillDate: r.eway_date,
       validUpto: r.valid_until,
       docNo: r.invoice_number,
-      docType: r.doc_type || 'INV',
+      docType: r.doc_type || "INV",
       docDate: r.doc_date,
       status: r.status,
       fromGstin: r.from_gstin,
@@ -961,9 +1112,18 @@ export class PostgresRepository {
       transDocDate: r.trans_doc_date,
       vehicleNo: r.vehicle_number,
       vehicleType: r.vehicle_type,
-      itemList: typeof r.item_list_json === 'string' ? JSON.parse(r.item_list_json) : (r.item_list_json || []),
-      rawGovResponse: typeof r.raw_gov_response === 'string' ? JSON.parse(r.raw_gov_response) : r.raw_gov_response,
-      auditHistory: typeof r.audit_history_json === 'string' ? JSON.parse(r.audit_history_json) : (r.audit_history_json || []),
+      itemList:
+        typeof r.item_list_json === "string"
+          ? JSON.parse(r.item_list_json)
+          : r.item_list_json || [],
+      rawGovResponse:
+        typeof r.raw_gov_response === "string"
+          ? JSON.parse(r.raw_gov_response)
+          : r.raw_gov_response,
+      auditHistory:
+        typeof r.audit_history_json === "string"
+          ? JSON.parse(r.audit_history_json)
+          : r.audit_history_json || [],
       cancelDate: r.cancel_date,
       cancelReasonCode: r.cancel_reason_code,
       cancelRemarks: r.cancel_remarks,
@@ -971,7 +1131,7 @@ export class PostgresRepository {
       lastErrorCode: r.last_error_code,
       lastErrorMessage: r.last_error_message,
       createdAt: r.created_at,
-      updatedAt: r.updated_at
+      updatedAt: r.updated_at,
     };
   }
 }
