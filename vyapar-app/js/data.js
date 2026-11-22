@@ -1858,6 +1858,32 @@ class DataStore {
     return data;
   }
 
+  async forgotPassword(identifier) {
+    const res = await window.apiFetch("/api/v1/auth/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ identifier }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(
+        data.error || data.message || "Failed to initiate password reset",
+      );
+    }
+    return data;
+  }
+
+  async resetPassword(resetToken, newPassword) {
+    const res = await window.apiFetch("/api/v1/auth/reset-password", {
+      method: "POST",
+      body: JSON.stringify({ resetToken, newPassword }),
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || data.message || "Failed to reset password");
+    }
+    return data;
+  }
+
   async register(details) {
     const payload = {
       ...details,

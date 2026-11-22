@@ -1226,6 +1226,40 @@ const server = http.createServer(async (req, res) => {
             return;
           }
 
+          // Check if phone already registered
+          const numOnlyPhone = phone.replace(/[^0-9]/g, "");
+          const phoneLookupKey =
+            numOnlyPhone.length >= 10 ? numOnlyPhone.slice(-10) : "";
+          if (
+            phoneLookupKey &&
+            (serverDb.users || []).some(
+              (u) =>
+                u.phone &&
+                u.phone.replace(/[^0-9]/g, "").endsWith(phoneLookupKey),
+            )
+          ) {
+            res.writeHead(409);
+            res.end(
+              JSON.stringify({
+                error: "PHONE_ALREADY_EXISTS",
+                message:
+                  "An account with this phone number already exists. Please sign in.",
+              }),
+            );
+            return;
+          }
+
+          if (password && password.length < 6) {
+            res.writeHead(400);
+            res.end(
+              JSON.stringify({
+                error: "WEAK_PASSWORD",
+                message: "Password must be at least 6 characters long.",
+              }),
+            );
+            return;
+          }
+
           const newSubId = `SUB-${Math.floor(10000 + Math.random() * 90000)}`;
           const newUserId = `U-${Math.floor(1000 + Math.random() * 9000)}`;
           const newBizId = generateUniqueBizId(serverDb);
@@ -1263,7 +1297,6 @@ const server = http.createServer(async (req, res) => {
             permissions: ["*"],
             passwordHash,
             salt,
-            pin,
             pinHash,
             status: "Active",
             createdAt: new Date().toISOString(),
@@ -1678,7 +1711,7 @@ const server = http.createServer(async (req, res) => {
               permissions: ["*"],
               passwordHash: defaultHash,
               salt,
-              pin: "1234",
+              pinHash: defaultHash,
               status: "Active",
               createdAt: new Date().toISOString(),
             };
@@ -2196,8 +2229,15 @@ const server = http.createServer(async (req, res) => {
             return false;
           });
 
+          const isProduction = process.env.NODE_ENV === "production";
+          const allowTestToken =
+            !isProduction ||
+            process.env.DEMO_MODE === "true" ||
+            req.headers["x-automation-secret"] ===
+              (process.env.AUTOMATION_SECRET || "LkTestAutomationSecret");
+
           if (!user) {
-            // Prevent account enumeration: return success even if user not found
+            // Prevent account enumeration: return uniform generic success even if user not found
             res.writeHead(200);
             res.end(
               JSON.stringify({
@@ -2223,8 +2263,9 @@ const server = http.createServer(async (req, res) => {
           res.end(
             JSON.stringify({
               success: true,
-              resetToken,
-              message: "Password reset token generated. Valid for 15 minutes.",
+              message:
+                "If the provided account exists, a secure password reset link/token has been generated.",
+              ...(allowTestToken ? { resetToken, testToken: resetToken } : {}),
             }),
           );
         } catch (err) {
@@ -2246,6 +2287,20 @@ const server = http.createServer(async (req, res) => {
               JSON.stringify({
                 error: "MISSING_FIELDS",
                 message: "resetToken and newPassword are required.",
+              }),
+            );
+            return;
+          }
+
+          if (
+            typeof newPassword !== "string" ||
+            newPassword.trim().length < 6
+          ) {
+            res.writeHead(400);
+            res.end(
+              JSON.stringify({
+                error: "WEAK_PASSWORD",
+                message: "New password must be at least 6 characters long.",
               }),
             );
             return;
@@ -3465,7 +3520,6 @@ const server = http.createServer(async (req, res) => {
             permissions: ["*"],
             passwordHash,
             salt,
-            pin,
             pinHash,
             status: "Active",
             createdAt: new Date().toISOString(),

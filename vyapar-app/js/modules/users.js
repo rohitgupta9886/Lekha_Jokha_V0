@@ -15,7 +15,7 @@ window.UsersModule = {
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
           <div style="display:flex;align-items:center;gap:1.25rem;">
             <div style="font-size:3rem;background:rgba(255,255,255,0.1);width:70px;height:70px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid rgba(255,255,255,0.2);">
-              ${currentUser.avatar || '👨‍💼'}
+              ${currentUser.avatar || "👨‍💼"}
             </div>
             <div>
               <div style="display:flex;align-items:center;gap:0.5rem;">
@@ -68,22 +68,27 @@ window.UsersModule = {
         <h3 style="font-size:1.15rem;font-weight:700;">Local Counter Profiles & Quick PINs</h3>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));gap:1rem;margin-bottom:2rem;">
-        ${users.map(u => {
-          const isCurrent = u.id === currentUser.id;
-          return `
-            <div class="card" style="position:relative;border:${isCurrent ? '2px solid #ed1a3b' : '1px solid var(--border-subtle)'};">
-              ${isCurrent ? `
+        ${users
+          .map((u) => {
+            const isCurrent = u.id === currentUser.id;
+            return `
+            <div class="card" style="position:relative;border:${isCurrent ? "2px solid #ed1a3b" : "1px solid var(--border-subtle)"};">
+              ${
+                isCurrent
+                  ? `
                 <div style="position:absolute;top:12px;right:12px;">
                   <span class="badge badge-success">ACTIVE LOGGED-IN</span>
                 </div>
-              ` : `
+              `
+                  : `
                 <button class="btn btn-sm btn-outline select-user-btn" data-id="${u.id}" style="position:absolute;top:12px;right:12px;">
                   Switch Here
                 </button>
-              `}
+              `
+              }
               <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem;">
                 <div style="font-size:2.2rem;background:var(--bg-app);width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--border-subtle);">
-                  ${u.avatar || '🧑‍💻'}
+                  ${u.avatar || "🧑‍💻"}
                 </div>
                 <div>
                   <div style="font-weight:700;font-size:1.05rem;color:var(--text-main);">${u.name}</div>
@@ -91,23 +96,32 @@ window.UsersModule = {
                 </div>
               </div>
               <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.4;">
-                <div>📞 ${u.phone || 'N/A'}</div>
-                <div>✉️ ${u.email || 'N/A'}</div>
-                <div style="margin-top:2px;">🔑 Security PIN: <b class="mono-val">${u.pin || '****'}</b></div>
+                <div>📞 ${u.phone || "N/A"}</div>
+                <div>✉️ ${u.email || "N/A"}</div>
+                <div style="margin-top:2px;">🔑 Security PIN: <b class="mono-val">${u.pin || "****"}</b></div>
               </div>
               <div style="border-top:1px solid var(--border-subtle);padding-top:0.75rem;">
                 <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;">Permissions</div>
                 <div style="display:flex;flex-wrap:wrap;gap:4px;">
-                  ${u.role === 'Admin' ? `
+                  ${
+                    u.role === "Admin"
+                      ? `
                     <span class="badge badge-danger">Full Master Access</span>
-                  ` : (u.permissions || []).map(p => `
-                    <span class="badge badge-info" style="font-size:10px;">${p.replace('_', ' ')}</span>
-                  `).join('')}
+                  `
+                      : (u.permissions || [])
+                          .map(
+                            (p) => `
+                    <span class="badge badge-info" style="font-size:10px;">${p.replace("_", " ")}</span>
+                  `,
+                          )
+                          .join("")
+                  }
                 </div>
               </div>
             </div>
           `;
-        }).join('')}
+          })
+          .join("")}
       </div>
 
       <!-- Security Audit Trail -->
@@ -130,7 +144,10 @@ window.UsersModule = {
               </tr>
             </thead>
             <tbody>
-              ${auditLogs.slice(0, 20).map(log => `
+              ${auditLogs
+                .slice(0, 20)
+                .map(
+                  (log) => `
                 <tr>
                   <td class="mono-val" style="font-size:12px;color:var(--text-muted);">${log.timestamp}</td>
                   <td>
@@ -141,7 +158,9 @@ window.UsersModule = {
                   </td>
                   <td style="font-size:13px;color:var(--text-main);">${log.details}</td>
                 </tr>
-              `).join('')}
+              `,
+                )
+                .join("")}
             </tbody>
           </table>
         </div>
@@ -149,16 +168,18 @@ window.UsersModule = {
     `;
 
     // Bind User Switch Buttons
-    container.querySelectorAll('.select-user-btn').forEach(btn => {
+    container.querySelectorAll(".select-user-btn").forEach((btn) => {
       btn.onclick = () => {
-        const id = btn.getAttribute('data-id');
+        const id = btn.getAttribute("data-id");
         this.switchUser(id, container);
       };
     });
 
-    document.getElementById('switchUserQuickBtn').onclick = () => this.openSwitchModal(container);
-    document.getElementById('addNewUserBtn').onclick = () => this.openAddUserModal(container);
-    const inviteBtn = document.getElementById('inviteCompanyMemberBtn');
+    document.getElementById("switchUserQuickBtn").onclick = () =>
+      this.openSwitchModal(container);
+    document.getElementById("addNewUserBtn").onclick = () =>
+      this.openAddUserModal(container);
+    const inviteBtn = document.getElementById("inviteCompanyMemberBtn");
     if (inviteBtn) {
       inviteBtn.onclick = () => this.openInviteMemberModal(container);
     }
@@ -168,22 +189,25 @@ window.UsersModule = {
   },
 
   async loadCompanyMembers(container) {
-    const membersBox = document.getElementById('companyMembersContainer');
-    const badge = document.getElementById('teamMemberCountBadge');
-    const invBox = document.getElementById('companyInvitationsContainer');
-    const invList = document.getElementById('pendingInvitationsList');
+    const membersBox = document.getElementById("companyMembersContainer");
+    const badge = document.getElementById("teamMemberCountBadge");
+    const invBox = document.getElementById("companyInvitationsContainer");
+    const invList = document.getElementById("pendingInvitationsList");
     if (!membersBox) return;
 
     try {
       const [membersRes, invitesRes] = await Promise.all([
         window.Store.getBusinessMembers().catch(() => ({ members: [] })),
-        window.Store.getBusinessInvitations().catch(() => ({ invitations: [] }))
+        window.Store.getBusinessInvitations().catch(() => ({
+          invitations: [],
+        })),
       ]);
 
       const members = membersRes.members || [];
       const invitations = invitesRes.invitations || [];
 
-      if (badge) badge.innerText = `${members.length} Active Member${members.length === 1 ? '' : 's'}`;
+      if (badge)
+        badge.innerText = `${members.length} Active Member${members.length === 1 ? "" : "s"}`;
 
       if (members.length === 0) {
         membersBox.innerHTML = `<div style="padding:1rem;background:#f8fafc;border-radius:6px;text-align:center;">No authorized members found.</div>`;
@@ -202,13 +226,18 @@ window.UsersModule = {
                 </tr>
               </thead>
               <tbody>
-                ${members.map(m => {
-                  const isOwner = m.role === 'Owner';
-                  const roleBadgeClass = isOwner ? 'badge-danger' : m.role === 'Admin' ? 'badge-info' : 'badge-warning';
-                  return `
+                ${members
+                  .map((m) => {
+                    const isOwner = m.role === "Owner";
+                    const roleBadgeClass = isOwner
+                      ? "badge-danger"
+                      : m.role === "Admin"
+                        ? "badge-info"
+                        : "badge-warning";
+                    return `
                     <tr>
                       <td>
-                        <div style="font-weight:700;color:var(--text-main);">${m.name || 'Staff Member'}</div>
+                        <div style="font-weight:700;color:var(--text-main);">${m.name || "Staff Member"}</div>
                         <div style="font-size:12px;color:var(--text-muted);">${m.phone || m.email || m.userId}</div>
                       </td>
                       <td>
@@ -217,41 +246,53 @@ window.UsersModule = {
                       <td>
                         <span class="badge badge-success">Authorized</span>
                       </td>
-                      <td style="font-size:12px;color:var(--text-muted);">${m.joinedAt ? m.joinedAt.split('T')[0] : 'Active'}</td>
+                      <td style="font-size:12px;color:var(--text-muted);">${m.joinedAt ? m.joinedAt.split("T")[0] : "Active"}</td>
                       <td style="text-align:right;">
-                        ${isOwner ? `
+                        ${
+                          isOwner
+                            ? `
                           <span style="font-size:11px;color:var(--text-muted);font-weight:600;">Business Owner</span>
-                        ` : `
+                        `
+                            : `
                           <button class="btn btn-sm btn-danger revoke-member-btn" data-userid="${m.userId}" style="padding:2px 8px;font-size:11px;">
                             Revoke Access
                           </button>
-                        `}
+                        `
+                        }
                       </td>
                     </tr>
                   `;
-                }).join('')}
+                  })
+                  .join("")}
               </tbody>
             </table>
           </div>
         `;
 
         // Bind revoke buttons
-        membersBox.querySelectorAll('.revoke-member-btn').forEach(btn => {
+        membersBox.querySelectorAll(".revoke-member-btn").forEach((btn) => {
           btn.onclick = async () => {
-            const targetUserId = btn.getAttribute('data-userid');
-            if (confirm("Are you sure you want to revoke this user's access? Their active sessions for this business will be terminated immediately.")) {
+            const targetUserId = btn.getAttribute("data-userid");
+            if (
+              confirm(
+                "Are you sure you want to revoke this user's access? Their active sessions for this business will be terminated immediately.",
+              )
+            ) {
               btn.disabled = true;
-              btn.innerText = 'Revoking...';
+              btn.innerText = "Revoking...";
               try {
                 await window.Store.revokeBusinessMember(targetUserId);
                 if (window.app && window.app.showToast) {
-                  window.app.showToast("User access revoked immediately.", "warning");
+                  window.app.showToast(
+                    "User access revoked immediately.",
+                    "warning",
+                  );
                 }
                 this.loadCompanyMembers(container);
               } catch (err) {
-                alert(err.message || 'Failed to revoke access');
+                alert(err.message || "Failed to revoke access");
                 btn.disabled = false;
-                btn.innerText = 'Revoke Access';
+                btn.innerText = "Revoke Access";
               }
             }
           };
@@ -259,13 +300,21 @@ window.UsersModule = {
       }
 
       if (invitations.length > 0 && invBox && invList) {
-        invBox.style.display = 'block';
+        invBox.style.display = "block";
         invList.innerHTML = `
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
-            ${invitations.map(inv => {
-              const displayName = inv.recipientName || inv.name || '';
-              const contactInfo = inv.recipientPhone || inv.phone || inv.inviteePhone || inv.recipientEmail || inv.email || inv.inviteeEmail || 'Invited User';
-              return `
+            ${invitations
+              .map((inv) => {
+                const displayName = inv.recipientName || inv.name || "";
+                const contactInfo =
+                  inv.recipientPhone ||
+                  inv.phone ||
+                  inv.inviteePhone ||
+                  inv.recipientEmail ||
+                  inv.email ||
+                  inv.inviteeEmail ||
+                  "Invited User";
+                return `
               <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:0.75rem 1rem;border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
                 <div>
                   <div style="font-weight:700;font-size:0.9rem;color:#0f172a;">
@@ -279,34 +328,37 @@ window.UsersModule = {
                   </button>
                 </div>
               </div>
-            `;}).join('')}
+            `;
+              })
+              .join("")}
           </div>
         `;
 
-        invList.querySelectorAll('.copy-invite-code-btn').forEach(b => {
+        invList.querySelectorAll(".copy-invite-code-btn").forEach((b) => {
           b.onclick = () => {
-            const token = b.getAttribute('data-token');
+            const token = b.getAttribute("data-token");
             navigator.clipboard?.writeText(token);
             if (window.app && window.app.showToast) {
-              window.app.showToast(`Copied invite token: ${token}`, 'info');
+              window.app.showToast(`Copied invite token: ${token}`, "info");
             }
           };
         });
       } else if (invBox) {
-        invBox.style.display = 'none';
+        invBox.style.display = "none";
       }
     } catch (err) {
       console.warn("Failed to load company members:", err);
-      if (membersBox) membersBox.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem;">Offline or demo mode. Displaying local profiles below.</div>`;
+      if (membersBox)
+        membersBox.innerHTML = `<div style="color:var(--text-muted);font-size:0.85rem;">Offline or demo mode. Displaying local profiles below.</div>`;
     }
   },
 
   openInviteMemberModal(container) {
-    let modal = document.getElementById('inviteMemberModal');
+    let modal = document.getElementById("inviteMemberModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'inviteMemberModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "inviteMemberModal";
       document.body.appendChild(modal);
     }
 
@@ -351,22 +403,22 @@ window.UsersModule = {
       </div>
     `;
 
-    modal.classList.add('active');
-    const closeModal = () => modal.classList.remove('active');
-    document.getElementById('closeInviteModalBtn').onclick = closeModal;
-    document.getElementById('cancelInviteModalBtn').onclick = closeModal;
+    modal.classList.add("active");
+    const closeModal = () => modal.classList.remove("active");
+    document.getElementById("closeInviteModalBtn").onclick = closeModal;
+    document.getElementById("cancelInviteModalBtn").onclick = closeModal;
 
-    document.getElementById('sendInviteForm').onsubmit = async (e) => {
+    document.getElementById("sendInviteForm").onsubmit = async (e) => {
       e.preventDefault();
-      const alertBox = document.getElementById('inviteAlertBox');
-      const submitBtn = document.getElementById('submitInviteBtn');
-      alertBox.style.display = 'none';
+      const alertBox = document.getElementById("inviteAlertBox");
+      const submitBtn = document.getElementById("submitInviteBtn");
+      alertBox.style.display = "none";
       submitBtn.disabled = true;
-      submitBtn.innerText = 'Creating Invitation...';
+      submitBtn.innerText = "Creating Invitation...";
 
-      const contact = document.getElementById('inviteeContact').value.trim();
-      const name = document.getElementById('inviteeName').value.trim();
-      const role = document.getElementById('inviteeRole').value;
+      const contact = document.getElementById("inviteeContact").value.trim();
+      const name = document.getElementById("inviteeName").value.trim();
+      const role = document.getElementById("inviteeRole").value;
 
       const payload = {
         name,
@@ -374,9 +426,9 @@ window.UsersModule = {
         inviteeName: name,
         recipientName: name,
         role,
-        notes: `Invited as ${role} for company access`
+        notes: `Invited as ${role} for company access`,
       };
-      if (contact.includes('@')) {
+      if (contact.includes("@")) {
         payload.email = contact;
         payload.recipientEmail = contact;
         payload.inviteeEmail = contact;
@@ -390,17 +442,20 @@ window.UsersModule = {
       try {
         const res = await window.Store.createBusinessInvitation(payload);
         submitBtn.disabled = false;
-        submitBtn.innerText = 'Send Invitation';
+        submitBtn.innerText = "Send Invitation";
         if (window.app && window.app.showToast) {
-          window.app.showToast(`Invitation created for ${name || contact}! Token: ${res.invitation?.inviteToken}`, 'success');
+          window.app.showToast(
+            `Invitation created for ${name || contact}! Token: ${res.invitation?.inviteToken}`,
+            "success",
+          );
         }
         closeModal();
         if (container) this.render(container);
       } catch (err) {
-        alertBox.innerText = err.message || 'Failed to create invitation.';
-        alertBox.style.display = 'block';
+        alertBox.innerText = err.message || "Failed to create invitation.";
+        alertBox.style.display = "block";
         submitBtn.disabled = false;
-        submitBtn.innerText = 'Send Invitation';
+        submitBtn.innerText = "Send Invitation";
       }
     };
   },
@@ -409,7 +464,10 @@ window.UsersModule = {
     const user = window.Store.setCurrentUser(userId);
     if (user) {
       if (window.app && window.app.showToast) {
-        window.app.showToast(`Switched active user to ${user.name} (${user.role})`, 'success');
+        window.app.showToast(
+          `Switched active user to ${user.name} (${user.role})`,
+          "success",
+        );
       }
       this.updateTopbarUserDisplay();
       if (container) this.render(container);
@@ -418,13 +476,19 @@ window.UsersModule = {
 
   // Update Topbar User Badge & Avatar
   updateTopbarUserDisplay() {
-    const user = window.Store.getCurrentUser() || { name: 'Admin', role: 'Admin', avatar: '👨‍💼' };
-    const pill = document.getElementById('topbarUserPill');
+    const user = window.Store.getCurrentUser() || {
+      name: "Admin",
+      role: "Admin",
+      avatar: "👨‍💼",
+    };
+    const pill = document.getElementById("topbarUserPill");
     if (!pill) return;
 
-    const avatar = user.avatar || ((user.role === 'Admin' || user.role === 'Owner') ? '👨‍💼' : '🧑‍💻');
-    const name = user.name || 'Admin';
-    const role = (user.role || 'Admin').toUpperCase();
+    const avatar =
+      user.avatar ||
+      (user.role === "Admin" || user.role === "Owner" ? "👨‍💼" : "🧑‍💻");
+    const name = user.name || "Admin";
+    const role = (user.role || "Admin").toUpperCase();
 
     pill.innerHTML = `
       <span class="pill-icon" id="topbarUserAvatar" style="font-size:1.2rem;">${avatar}</span>
@@ -438,17 +502,21 @@ window.UsersModule = {
 
   // Quick User Switch Modal
   openSwitchModal(container) {
-    let modal = document.getElementById('switchUserModal');
+    let modal = document.getElementById("switchUserModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'switchUserModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "switchUserModal";
       document.body.appendChild(modal);
     }
 
     const users = window.Store.getUsers();
-    const current = window.Store.getCurrentUser() || { name: 'Admin', role: 'Admin', avatar: '👨‍💼' };
-    const activeBiz = window.Store.getBusiness() || { name: 'Active Business' };
+    const current = window.Store.getCurrentUser() || {
+      name: "Admin",
+      role: "Admin",
+      avatar: "👨‍💼",
+    };
+    const activeBiz = window.Store.getBusiness() || { name: "Active Business" };
 
     modal.innerHTML = `
       <div class="modal-dialog modal-md">
@@ -463,14 +531,14 @@ window.UsersModule = {
           <!-- Active User Profile Banner -->
           <div style="background:linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);border:1px solid #bae6fd;border-radius:var(--radius-md);padding:12px 14px;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;">
             <div style="display:flex;align-items:center;gap:12px;">
-              <span style="font-size:2rem;line-height:1;">${current.avatar || '👨‍💼'}</span>
+              <span style="font-size:2rem;line-height:1;">${current.avatar || "👨‍💼"}</span>
               <div>
                 <div style="font-weight:700;font-size:14px;color:var(--navy-900);display:flex;align-items:center;gap:6px;">
                   <span id="modalActiveUserNameText">${current.name}</span>
                   <button type="button" id="quickEditAdminNameBtn" title="Edit Admin Name" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--primary);padding:0 4px;font-weight:700;">✏️ Edit Name</button>
                 </div>
                 <div style="font-size:11.5px;color:#475569;">
-                  <span>🏢 ${activeBiz.name}</span> &bull; <span>${current.phone || current.email || 'Authorized Operator'}</span>
+                  <span>🏢 ${activeBiz.name}</span> &bull; <span>${current.phone || current.email || "Authorized Operator"}</span>
                 </div>
               </div>
             </div>
@@ -483,27 +551,36 @@ window.UsersModule = {
           </div>
 
           <div style="display:flex;flex-direction:column;gap:0.6rem;max-height:260px;overflow-y:auto;padding-right:2px;">
-            ${users.map(u => {
-              const isActive = u.id === current.id || (u.email && u.email === current.email);
-              const roleBadgeClass = (u.role === 'Admin' || u.role === 'Owner') ? 'badge-danger' : u.role === 'Accountant' ? 'badge-info' : 'badge-success';
-              return `
-                <div class="card select-switch-card" data-id="${u.id}" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:${isActive ? '2px solid var(--primary)' : '1px solid var(--border-subtle)'};background:${isActive ? '#eff6ff' : '#ffffff'};border-radius:var(--radius-md);transition:all 0.15s;">
+            ${users
+              .map((u) => {
+                const isActive =
+                  u.id === current.id || (u.email && u.email === current.email);
+                const roleBadgeClass =
+                  u.role === "Admin" || u.role === "Owner"
+                    ? "badge-danger"
+                    : u.role === "Accountant"
+                      ? "badge-info"
+                      : "badge-success";
+                return `
+                <div class="card select-switch-card" data-id="${u.id}" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:${isActive ? "2px solid var(--primary)" : "1px solid var(--border-subtle)"};background:${isActive ? "#eff6ff" : "#ffffff"};border-radius:var(--radius-md);transition:all 0.15s;">
                   <div style="display:flex;align-items:center;gap:0.75rem;">
-                    <div style="font-size:1.6rem;line-height:1;">${u.avatar || '🧑‍💻'}</div>
+                    <div style="font-size:1.6rem;line-height:1;">${u.avatar || "🧑‍💻"}</div>
                     <div>
                       <div style="font-weight:700;font-size:13.5px;color:var(--text-main);">${u.name}</div>
-                      <div style="font-size:11px;color:var(--text-muted);">${u.title || (u.role + ' Operator')} &bull; ${u.phone || u.email || ''}</div>
+                      <div style="font-size:11px;color:var(--text-muted);">${u.title || u.role + " Operator"} &bull; ${u.phone || u.email || ""}</div>
                     </div>
                   </div>
                   <div>
-                    ${isActive 
-                      ? '<span class="badge badge-primary" style="font-size:10.5px;">Active ✓</span>' 
-                      : `<button class="btn btn-sm btn-outline switch-user-action-btn" data-id="${u.id}" style="font-size:11px;padding:3px 10px;">Switch</button>`
+                    ${
+                      isActive
+                        ? '<span class="badge badge-primary" style="font-size:10.5px;">Active ✓</span>'
+                        : `<button class="btn btn-sm btn-outline switch-user-action-btn" data-id="${u.id}" style="font-size:11px;padding:3px 10px;">Switch</button>`
                     }
                   </div>
                 </div>
               `;
-            }).join('')}
+              })
+              .join("")}
           </div>
 
           <!-- Bottom Actions: Manage Team, Switch Account, & Logout -->
@@ -524,78 +601,88 @@ window.UsersModule = {
       </div>
     `;
 
-    modal.classList.add('active');
+    modal.classList.add("active");
 
-    document.getElementById('closeSwitchUserModalBtn').onclick = () => modal.classList.remove('active');
+    document.getElementById("closeSwitchUserModalBtn").onclick = () =>
+      modal.classList.remove("active");
 
-    const quickEditBtn = document.getElementById('quickEditAdminNameBtn');
+    const quickEditBtn = document.getElementById("quickEditAdminNameBtn");
     if (quickEditBtn) {
       quickEditBtn.onclick = async () => {
-        const newName = prompt("Enter your Admin Name (to be displayed across the app):", current.name);
+        const newName = prompt(
+          "Enter your Admin Name (to be displayed across the app):",
+          current.name,
+        );
         if (newName && newName.trim() && newName.trim() !== current.name) {
           await window.Store.updateAdminName(newName.trim());
           this.updateTopbarUserDisplay();
           if (window.app && window.app.showToast) {
-            window.app.showToast(`Admin Name updated to ${newName.trim()}`, 'success');
+            window.app.showToast(
+              `Admin Name updated to ${newName.trim()}`,
+              "success",
+            );
           }
           this.openSwitchModal(container);
         }
       };
     }
 
-    const switchAdminBtn = document.getElementById('modalSwitchAdminLoginBtn');
+    const switchAdminBtn = document.getElementById("modalSwitchAdminLoginBtn");
     if (switchAdminBtn) {
       switchAdminBtn.onclick = () => {
-        modal.classList.remove('active');
-        this.openAuthModal('login');
+        modal.classList.remove("active");
+        this.openAuthModal("login");
       };
     }
 
-    const manageLink = document.getElementById('modalManageTeamLink');
+    const manageLink = document.getElementById("modalManageTeamLink");
     if (manageLink) {
       manageLink.onclick = () => {
-        modal.classList.remove('active');
-        window.location.hash = '#users';
+        modal.classList.remove("active");
+        window.location.hash = "#users";
       };
     }
 
-    const logoutBtn = document.getElementById('modalLogoutBtn');
+    const logoutBtn = document.getElementById("modalLogoutBtn");
     if (logoutBtn) {
       logoutBtn.onclick = async () => {
-        modal.classList.remove('active');
+        modal.classList.remove("active");
         if (window.Store && window.Store.logout) {
           await window.Store.logout();
         } else {
-          localStorage.removeItem('lekhajokha_auth_token');
-          localStorage.removeItem('lekhajokha_current_user');
-          localStorage.removeItem('lekhajokha_active_business_id');
+          localStorage.removeItem("lekhajokha_auth_token");
+          localStorage.removeItem("lekhajokha_current_user");
+          localStorage.removeItem("lekhajokha_active_business_id");
         }
-        window.location.hash = '#home';
+        window.location.hash = "#home";
         if (window.app) {
           window.app.handleRoute();
           if (window.app.showToast) {
-            window.app.showToast('You have been logged out successfully.', 'info');
+            window.app.showToast(
+              "You have been logged out successfully.",
+              "info",
+            );
           }
         }
       };
     }
 
-    modal.querySelectorAll('.select-switch-card').forEach(card => {
+    modal.querySelectorAll(".select-switch-card").forEach((card) => {
       card.onclick = () => {
-        const id = card.getAttribute('data-id');
+        const id = card.getAttribute("data-id");
         this.switchUser(id, container);
-        modal.classList.remove('active');
+        modal.classList.remove("active");
       };
     });
   },
 
   // Modal to register a new user
   openAddUserModal(container) {
-    let modal = document.getElementById('addUserModal');
+    let modal = document.getElementById("addUserModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'addUserModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "addUserModal";
       document.body.appendChild(modal);
     }
 
@@ -642,44 +729,69 @@ window.UsersModule = {
       </div>
     `;
 
-    modal.classList.add('active');
+    modal.classList.add("active");
 
-    const closeModal = () => modal.classList.remove('active');
-    document.getElementById('closeAddUserModalBtn').onclick = closeModal;
-    document.getElementById('cancelAddUserBtn').onclick = closeModal;
+    const closeModal = () => modal.classList.remove("active");
+    document.getElementById("closeAddUserModalBtn").onclick = closeModal;
+    document.getElementById("cancelAddUserBtn").onclick = closeModal;
 
-    document.getElementById('addUserForm').onsubmit = async (e) => {
+    document.getElementById("addUserForm").onsubmit = async (e) => {
       e.preventDefault();
-      const role = document.getElementById('newUserRole').value;
-      const permissions = role === 'Admin' ? ['all'] :
-        role === 'Accountant' ? ['view_reports', 'create_sale', 'create_purchase', 'manage_expenses', 'cash_bank', 'eway_bill'] :
-        role === 'Biller' ? ['create_sale', 'view_items', 'view_parties', 'print_invoice', 'barcode_scan'] :
-        ['create_sale', 'view_items', 'view_parties'];
+      const role = document.getElementById("newUserRole").value;
+      const permissions =
+        role === "Admin"
+          ? ["all"]
+          : role === "Accountant"
+            ? [
+                "view_reports",
+                "create_sale",
+                "create_purchase",
+                "manage_expenses",
+                "cash_bank",
+                "eway_bill",
+              ]
+            : role === "Biller"
+              ? [
+                  "create_sale",
+                  "view_items",
+                  "view_parties",
+                  "print_invoice",
+                  "barcode_scan",
+                ]
+              : ["create_sale", "view_items", "view_parties"];
 
       const userPayload = {
-        name: document.getElementById('newUserName').value,
+        name: document.getElementById("newUserName").value,
         role: role,
-        title: role === 'Biller' ? 'Counter Cashier' : role === 'Accountant' ? 'Accounts Manager' : 'Staff',
-        phone: document.getElementById('newUserPhone').value,
-        pin: document.getElementById('newUserPin').value,
-        permissions: permissions
+        title:
+          role === "Biller"
+            ? "Counter Cashier"
+            : role === "Accountant"
+              ? "Accounts Manager"
+              : "Staff",
+        phone: document.getElementById("newUserPhone").value,
+        pin: document.getElementById("newUserPin").value,
+        permissions: permissions,
       };
 
       window.Store.addUser(userPayload);
 
       // Persist centrally to authoritative backend
       try {
-        await window.apiFetch('/api/v1/users', {
-          method: 'POST',
-          body: JSON.stringify(userPayload)
+        await window.apiFetch("/api/v1/users", {
+          method: "POST",
+          body: JSON.stringify(userPayload),
         });
       } catch (err) {
-        console.warn('Central user creation deferred:', err);
+        console.warn("Central user creation deferred:", err);
       }
 
       closeModal();
       if (window.app && window.app.showToast) {
-        window.app.showToast("New staff profile created successfully!", "success");
+        window.app.showToast(
+          "New staff profile created successfully!",
+          "success",
+        );
       }
       if (container) this.render(container);
     };
@@ -687,11 +799,11 @@ window.UsersModule = {
 
   // User Menu & Session Manager
   openUserMenuModal(container) {
-    let modal = document.getElementById('userMenuModal');
+    let modal = document.getElementById("userMenuModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'userMenuModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "userMenuModal";
       document.body.appendChild(modal);
     }
 
@@ -709,8 +821,8 @@ window.UsersModule = {
         </div>
         <div class="modal-body" style="padding:1rem;">
           <div style="background:var(--slate-50, #f8fafc);padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;border:1px solid var(--border-subtle, #e2e8f0);">
-            <div style="font-weight:700;color:var(--navy-900, #0f172a);">${activeBiz ? activeBiz.name : 'Business'}</div>
-            <div style="font-size:0.8rem;color:#64748b;">Role: <strong style="color:#ed1a3b;">${currentUser.role}</strong> • ${currentUser.email || currentUser.phone || 'Active'}</div>
+            <div style="font-weight:700;color:var(--navy-900, #0f172a);">${activeBiz ? activeBiz.name : "Business"}</div>
+            <div style="font-size:0.8rem;color:#64748b;">Role: <strong style="color:#ed1a3b;">${currentUser.role}</strong> • ${currentUser.email || currentUser.phone || "Active"}</div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:0.5rem;">
@@ -738,35 +850,35 @@ window.UsersModule = {
       </div>
     `;
 
-    modal.classList.add('active');
-    const closeModal = () => modal.classList.remove('active');
-    document.getElementById('closeUserMenuModalBtn').onclick = closeModal;
+    modal.classList.add("active");
+    const closeModal = () => modal.classList.remove("active");
+    document.getElementById("closeUserMenuModalBtn").onclick = closeModal;
 
-    document.getElementById('menuManageSessionsBtn').onclick = () => {
+    document.getElementById("menuManageSessionsBtn").onclick = () => {
       closeModal();
       this.openSessionManagerModal();
     };
 
-    document.getElementById('menuSwitchCashierBtn').onclick = () => {
+    document.getElementById("menuSwitchCashierBtn").onclick = () => {
       closeModal();
       this.openSwitchModal(container);
     };
 
-    document.getElementById('menuSwitchAccountBtn').onclick = () => {
+    document.getElementById("menuSwitchAccountBtn").onclick = () => {
       closeModal();
-      this.openAuthModal('login');
+      this.openAuthModal("login");
     };
 
-    document.getElementById('menuRegisterBizBtn').onclick = () => {
+    document.getElementById("menuRegisterBizBtn").onclick = () => {
       closeModal();
-      this.openAuthModal('register');
+      this.openAuthModal("register");
     };
 
-    document.getElementById('menuLogoutDeviceBtn').onclick = async () => {
+    document.getElementById("menuLogoutDeviceBtn").onclick = async () => {
       if (confirm("Are you sure you want to log out from this device?")) {
         closeModal();
         await window.Store.logout();
-        window.location.hash = '#home';
+        window.location.hash = "#home";
         if (window.app) {
           window.app.handleRoute();
           if (window.app.showToast) {
@@ -776,11 +888,15 @@ window.UsersModule = {
       }
     };
 
-    document.getElementById('menuLogoutAllBtn').onclick = async () => {
-      if (confirm("Are you sure you want to log out from ALL devices? All active web, mobile and desktop sessions will be terminated immediately.")) {
+    document.getElementById("menuLogoutAllBtn").onclick = async () => {
+      if (
+        confirm(
+          "Are you sure you want to log out from ALL devices? All active web, mobile and desktop sessions will be terminated immediately.",
+        )
+      ) {
         closeModal();
         await window.Store.logoutAll();
-        window.location.hash = '#home';
+        window.location.hash = "#home";
         if (window.app) {
           window.app.handleRoute();
           if (window.app.showToast) {
@@ -793,11 +909,11 @@ window.UsersModule = {
 
   // Active Sessions & Multi-Device Manager
   async openSessionManagerModal() {
-    let modal = document.getElementById('sessionManagerModal');
+    let modal = document.getElementById("sessionManagerModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'sessionManagerModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "sessionManagerModal";
       document.body.appendChild(modal);
     }
 
@@ -823,62 +939,78 @@ window.UsersModule = {
       </div>
     `;
 
-    modal.classList.add('active');
-    const closeModal = () => modal.classList.remove('active');
-    document.getElementById('closeSessionManagerModalBtn').onclick = closeModal;
+    modal.classList.add("active");
+    const closeModal = () => modal.classList.remove("active");
+    document.getElementById("closeSessionManagerModalBtn").onclick = closeModal;
 
     const loadSessions = async () => {
-      const loader = document.getElementById('sessionsLoadingIndicator');
-      const listContainer = document.getElementById('sessionsListContainer');
-      loader.style.display = 'block';
-      listContainer.style.display = 'none';
+      const loader = document.getElementById("sessionsLoadingIndicator");
+      const listContainer = document.getElementById("sessionsListContainer");
+      loader.style.display = "block";
+      listContainer.style.display = "none";
 
       try {
         const data = await window.Store.getSessions();
         const sessions = data.sessions || [];
         const currentId = data.currentSessionId;
 
-        loader.style.display = 'none';
-        listContainer.style.display = 'flex';
+        loader.style.display = "none";
+        listContainer.style.display = "flex";
 
         if (sessions.length === 0) {
-          listContainer.innerHTML = '<div style="color:#64748b;text-align:center;padding:1rem;">No other sessions active.</div>';
+          listContainer.innerHTML =
+            '<div style="color:#64748b;text-align:center;padding:1rem;">No other sessions active.</div>';
           return;
         }
 
-        listContainer.innerHTML = sessions.map(s => {
-          const isCurrent = s.isCurrent || s.id === currentId;
-          const platformIcon = (s.platform || '').toLowerCase().includes('android') ? '📱' :
-            (s.platform || '').toLowerCase().includes('desktop') ? '💻' : '🌐';
-          return `
-            <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid ${isCurrent ? '#0284c7' : '#e2e8f0'};padding:0.85rem 1rem;border-radius:8px;">
+        listContainer.innerHTML = sessions
+          .map((s) => {
+            const isCurrent = s.isCurrent || s.id === currentId;
+            const platformIcon = (s.platform || "")
+              .toLowerCase()
+              .includes("android")
+              ? "📱"
+              : (s.platform || "").toLowerCase().includes("desktop")
+                ? "💻"
+                : "🌐";
+            return `
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid ${isCurrent ? "#0284c7" : "#e2e8f0"};padding:0.85rem 1rem;border-radius:8px;">
               <div style="display:flex;align-items:center;gap:0.85rem;">
                 <span style="font-size:1.75rem;">${platformIcon}</span>
                 <div>
                   <div style="font-weight:700;font-size:0.95rem;color:#0f172a;display:flex;align-items:center;gap:0.5rem;">
-                    ${s.deviceName || s.platform || 'Device'}
-                    ${isCurrent ? '<span class="badge badge-success" style="font-size:9px;">THIS DEVICE</span>' : ''}
+                    ${s.deviceName || s.platform || "Device"}
+                    ${isCurrent ? '<span class="badge badge-success" style="font-size:9px;">THIS DEVICE</span>' : ""}
                   </div>
                   <div style="font-size:0.75rem;color:#64748b;">
-                    IP: ${s.ipAddress || '127.0.0.1'} • Last active: ${new Date(s.lastActiveAt || s.createdAt).toLocaleTimeString()}
+                    IP: ${s.ipAddress || "127.0.0.1"} • Last active: ${new Date(s.lastActiveAt || s.createdAt).toLocaleTimeString()}
                   </div>
                 </div>
               </div>
               <div>
-                ${isCurrent ? '' : `
+                ${
+                  isCurrent
+                    ? ""
+                    : `
                   <button class="btn btn-sm btn-outline revoke-session-btn" data-id="${s.id}" style="color:#dc2626;border-color:#fca5a5;">
                     Revoke
                   </button>
-                `}
+                `
+                }
               </div>
             </div>
           `;
-        }).join('');
+          })
+          .join("");
 
-        listContainer.querySelectorAll('.revoke-session-btn').forEach(btn => {
+        listContainer.querySelectorAll(".revoke-session-btn").forEach((btn) => {
           btn.onclick = async () => {
-            const sId = btn.getAttribute('data-id');
-            if (confirm("Revoke this device's access? The device will be disconnected immediately.")) {
+            const sId = btn.getAttribute("data-id");
+            if (
+              confirm(
+                "Revoke this device's access? The device will be disconnected immediately.",
+              )
+            ) {
               await window.Store.revokeSession(sId);
               if (window.app && window.app.showToast) {
                 window.app.showToast("Device session revoked.", "info");
@@ -892,12 +1024,16 @@ window.UsersModule = {
       }
     };
 
-    document.getElementById('refreshSessionsBtn').onclick = loadSessions;
-    document.getElementById('revokeAllSessionsBtn').onclick = async () => {
-      if (confirm("Log out all devices everywhere? All other active sessions will be terminated.")) {
+    document.getElementById("refreshSessionsBtn").onclick = loadSessions;
+    document.getElementById("revokeAllSessionsBtn").onclick = async () => {
+      if (
+        confirm(
+          "Log out all devices everywhere? All other active sessions will be terminated.",
+        )
+      ) {
         await window.Store.logoutAll();
         closeModal();
-        window.location.hash = '#home';
+        window.location.hash = "#home";
         if (window.app) {
           window.app.handleRoute();
           if (window.app.showToast) {
@@ -911,39 +1047,462 @@ window.UsersModule = {
   },
 
   // Central Unified Authentication & Registration Modal with LekhaJokha Mobile OTP Flow
-  openAuthModal(defaultMode = 'otp') {
-    let modal = document.getElementById('unifiedAuthModal');
+  // Supports: login, register (signup), forgot-password, reset-password views
+  openAuthModal(defaultMode = "otp") {
+    let modal = document.getElementById("unifiedAuthModal");
     if (!modal) {
-      modal = document.createElement('div');
-      modal.className = 'modal-overlay';
-      modal.id = 'unifiedAuthModal';
+      modal = document.createElement("div");
+      modal.className = "modal-overlay";
+      modal.id = "unifiedAuthModal";
       document.body.appendChild(modal);
     }
 
-    let activeTab = (defaultMode === 'login' || defaultMode === 'register') ? 'password' : 'otp';
+    // authView: 'login' | 'signup' | 'forgot' | 'reset'
+    let authView =
+      defaultMode === "register" || defaultMode === "signup"
+        ? "signup"
+        : "login";
+    let activeTab =
+      defaultMode === "login" ||
+      defaultMode === "register" ||
+      defaultMode === "signup"
+        ? "password"
+        : "otp";
     let otpSent = false;
-    let otpPhone = '';
-    let adminNameProvided = '';
+    let otpPhone = "";
+    let adminNameProvided = "";
     let countdownTimer = null;
     let secondsLeft = 30;
+    // Forgot password flow state
+    let resetToken = "";
+    let resetIdentifier = "";
 
     const render = () => {
+      // ==================== SIGNUP VIEW ====================
+      if (authView === "signup") {
+        modal.innerHTML = `
+          <div class="modal-dialog modal-md">
+            <div class="modal-header">
+              <div class="modal-title-group">
+                <span class="brand-badge" style="background:#10b981;color:#fff;">CREATE ACCOUNT</span>
+                <h2 class="modal-title">Register New Business Account</h2>
+              </div>
+              <button class="modal-close-btn" id="closeUnifiedAuthModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.25rem;">
+              <div id="authAlertBox" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+              <div id="authSuccessBox" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+
+              <div style="margin-bottom:1rem;color:#64748b;font-size:0.85rem;line-height:1.5;">
+                Create a free business account to start generating GST invoices, manage inventory, and track field salesmen. No credit card required.
+              </div>
+
+              <form id="signupForm">
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">Your Name (Owner / Admin) *</label>
+                  <input type="text" id="signupName" class="form-control" placeholder="e.g. Rohit Gupta" style="font-size:0.95rem;font-weight:600;" required autofocus>
+                </div>
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">Business / Shop Name *</label>
+                  <input type="text" id="signupBusinessName" class="form-control" placeholder="e.g. Gupta General Store" required>
+                </div>
+                <div class="form-grid-2" style="margin-bottom:0.85rem;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label style="font-weight:700;font-size:0.85rem;">Email Address *</label>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="you@business.com" required>
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label style="font-weight:700;font-size:0.85rem;">Mobile Number</label>
+                    <input type="tel" id="signupPhone" class="form-control" placeholder="+91 9876543210" maxlength="15">
+                  </div>
+                </div>
+                <div class="form-grid-2" style="margin-bottom:0.85rem;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label style="font-weight:700;font-size:0.85rem;">Password *</label>
+                    <input type="password" id="signupPassword" class="form-control" placeholder="Min 6 characters" minlength="6" required>
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label style="font-weight:700;font-size:0.85rem;">Quick PIN (4-digit)</label>
+                    <input type="password" id="signupPin" class="form-control" placeholder="e.g. 1234" maxlength="4" pattern="[0-9]{4}">
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">State (GST jurisdiction)</label>
+                  <select id="signupState" class="form-control">
+                    <option value="Delhi (07)">Delhi (07)</option>
+                    <option value="Maharashtra (27)">Maharashtra (27)</option>
+                    <option value="Karnataka (29)">Karnataka (29)</option>
+                    <option value="Uttar Pradesh (09)">Uttar Pradesh (09)</option>
+                    <option value="Gujarat (24)">Gujarat (24)</option>
+                    <option value="Tamil Nadu (33)">Tamil Nadu (33)</option>
+                    <option value="Rajasthan (08)">Rajasthan (08)</option>
+                    <option value="West Bengal (19)">West Bengal (19)</option>
+                    <option value="Telangana (36)">Telangana (36)</option>
+                    <option value="Andhra Pradesh (37)">Andhra Pradesh (37)</option>
+                    <option value="Kerala (32)">Kerala (32)</option>
+                    <option value="Punjab (03)">Punjab (03)</option>
+                    <option value="Haryana (06)">Haryana (06)</option>
+                    <option value="Bihar (10)">Bihar (10)</option>
+                    <option value="Madhya Pradesh (23)">Madhya Pradesh (23)</option>
+                  </select>
+                </div>
+
+                <div style="margin-top:1.25rem;">
+                  <button type="submit" class="btn btn-success" id="signupSubmitBtn" style="width:100%;padding:0.75rem;font-size:1rem;font-weight:700;">
+                    ✨ Create Free Business Account →
+                  </button>
+                </div>
+              </form>
+
+              <div style="margin-top:1.25rem;text-align:center;padding-top:1rem;border-top:1px solid #e2e8f0;">
+                <span style="font-size:0.85rem;color:#64748b;">Already have an account?</span>
+                <button type="button" class="btn btn-link" id="switchToLoginFromSignup" style="font-weight:700;color:#ed1a3b;padding:0 0.25rem;font-size:0.85rem;">
+                  Sign In →
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // --- SIGNUP EVENT HANDLERS ---
+        document.getElementById("closeUnifiedAuthModalBtn").onclick = () => {
+          modal.classList.remove("active");
+        };
+        document.getElementById("switchToLoginFromSignup").onclick = () => {
+          authView = "login";
+          activeTab = "password";
+          render();
+        };
+        const alertBox = document.getElementById("authAlertBox");
+        const signupForm = document.getElementById("signupForm");
+        signupForm.onsubmit = async (e) => {
+          e.preventDefault();
+          alertBox.style.display = "none";
+          const submitBtn = document.getElementById("signupSubmitBtn");
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Creating account...";
+
+          try {
+            const name = document.getElementById("signupName").value.trim();
+            const businessName = document
+              .getElementById("signupBusinessName")
+              .value.trim();
+            const email = document.getElementById("signupEmail").value.trim();
+            const phone = document.getElementById("signupPhone").value.trim();
+            const password = document.getElementById("signupPassword").value;
+            const pin = document.getElementById("signupPin").value.trim();
+            const state = document.getElementById("signupState").value;
+
+            if (!name || !businessName || !email) {
+              alertBox.innerText =
+                "Name, business name, and email are required.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "✨ Create Free Business Account →";
+              return;
+            }
+            if (password.length < 6) {
+              alertBox.innerText = "Password must be at least 6 characters.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "✨ Create Free Business Account →";
+              return;
+            }
+
+            const data = await window.Store.register({
+              name,
+              businessName,
+              email,
+              phone,
+              password,
+              pin: pin || "1234",
+              state,
+            });
+
+            this.updateTopbarUserDisplay();
+            modal.classList.remove("active");
+
+            if (window.app) {
+              if (window.app.showToast) {
+                window.app.showToast(
+                  `Account created successfully! Welcome, ${data.user?.name || name}.`,
+                  "success",
+                );
+              }
+              window.location.hash = "#dashboard";
+              if (window.app.updateBadges) window.app.updateBadges();
+              if (window.app.handleRoute) window.app.handleRoute();
+            }
+          } catch (err) {
+            alertBox.innerText =
+              err.message || "Registration failed. Please try again.";
+            alertBox.style.display = "block";
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "✨ Create Free Business Account →";
+          }
+        };
+        return;
+      }
+
+      // ==================== FORGOT PASSWORD VIEW ====================
+      if (authView === "forgot") {
+        modal.innerHTML = `
+          <div class="modal-dialog modal-md">
+            <div class="modal-header">
+              <div class="modal-title-group">
+                <span class="brand-badge" style="background:#f59e0b;color:#000;">PASSWORD RECOVERY</span>
+                <h2 class="modal-title">Forgot Password</h2>
+              </div>
+              <button class="modal-close-btn" id="closeUnifiedAuthModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.25rem;">
+              <div id="authAlertBox" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+              <div id="authSuccessBox" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+
+              <div style="margin-bottom:1.25rem;color:#64748b;font-size:0.85rem;line-height:1.5;">
+                Enter your registered email address or mobile number. We'll generate a secure password reset token for you.
+              </div>
+
+              <form id="forgotPasswordForm">
+                <div class="form-group" style="margin-bottom:1rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">Email or Mobile Number *</label>
+                  <input type="text" id="forgotIdentifier" class="form-control" placeholder="e.g. sharma@business.com or 9876543210" required autofocus>
+                </div>
+                <div style="margin-top:1.25rem;">
+                  <button type="submit" class="btn btn-primary" id="forgotSubmitBtn" style="width:100%;padding:0.75rem;font-size:1rem;font-weight:700;">
+                    🔐 Send Password Reset Token →
+                  </button>
+                </div>
+              </form>
+
+              <div style="margin-top:1.25rem;text-align:center;padding-top:1rem;border-top:1px solid #e2e8f0;">
+                <span style="font-size:0.85rem;color:#64748b;">Remember your password?</span>
+                <button type="button" class="btn btn-link" id="backToLoginFromForgot" style="font-weight:700;color:#ed1a3b;padding:0 0.25rem;font-size:0.85rem;">
+                  Back to Sign In →
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // --- FORGOT PASSWORD EVENT HANDLERS ---
+        document.getElementById("closeUnifiedAuthModalBtn").onclick = () => {
+          modal.classList.remove("active");
+        };
+        document.getElementById("backToLoginFromForgot").onclick = () => {
+          authView = "login";
+          activeTab = "password";
+          render();
+        };
+        const alertBox = document.getElementById("authAlertBox");
+        const successBox = document.getElementById("authSuccessBox");
+        const forgotForm = document.getElementById("forgotPasswordForm");
+        forgotForm.onsubmit = async (e) => {
+          e.preventDefault();
+          alertBox.style.display = "none";
+          successBox.style.display = "none";
+          const submitBtn = document.getElementById("forgotSubmitBtn");
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Sending reset request...";
+
+          try {
+            const identifier = document
+              .getElementById("forgotIdentifier")
+              .value.trim();
+            if (!identifier) {
+              alertBox.innerText = "Please enter your email or mobile number.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "🔐 Send Password Reset Token →";
+              return;
+            }
+            resetIdentifier = identifier;
+            const data = await window.Store.forgotPassword(identifier);
+
+            if (data.resetToken) {
+              resetToken = data.resetToken;
+              authView = "reset";
+              render();
+              const sBox = document.getElementById("authSuccessBox");
+              if (sBox) {
+                sBox.innerText = `Reset token generated! Token: ${data.resetToken}. Valid for 15 minutes.`;
+                sBox.style.display = "block";
+              }
+            } else {
+              successBox.innerText =
+                data.message ||
+                "If the account exists, a reset token has been generated.";
+              successBox.style.display = "block";
+            }
+          } catch (err) {
+            alertBox.innerText =
+              err.message || "Failed to process reset request.";
+            alertBox.style.display = "block";
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "🔐 Send Password Reset Token →";
+          }
+        };
+        return;
+      }
+
+      // ==================== RESET PASSWORD VIEW ====================
+      if (authView === "reset") {
+        modal.innerHTML = `
+          <div class="modal-dialog modal-md">
+            <div class="modal-header">
+              <div class="modal-title-group">
+                <span class="brand-badge" style="background:#2563eb;color:#fff;">SET NEW PASSWORD</span>
+                <h2 class="modal-title">Reset Your Password</h2>
+              </div>
+              <button class="modal-close-btn" id="closeUnifiedAuthModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.25rem;">
+              <div id="authAlertBox" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+              <div id="authSuccessBox" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
+
+              <div style="margin-bottom:1.25rem;color:#64748b;font-size:0.85rem;line-height:1.5;">
+                Enter the reset token you received and your new password below.
+              </div>
+
+              <form id="resetPasswordForm">
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">Reset Token *</label>
+                  <input type="text" id="resetTokenInput" class="form-control mono-val" placeholder="RST-XXXXXXXX..." value="${resetToken}" style="font-size:0.9rem;letter-spacing:0.5px;" required autofocus>
+                </div>
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">New Password *</label>
+                  <input type="password" id="resetNewPassword" class="form-control" placeholder="Enter new password (min 6 characters)" minlength="6" required>
+                </div>
+                <div class="form-group" style="margin-bottom:0.85rem;">
+                  <label style="font-weight:700;font-size:0.85rem;">Confirm New Password *</label>
+                  <input type="password" id="resetConfirmPassword" class="form-control" placeholder="Re-enter new password" minlength="6" required>
+                </div>
+                <div style="margin-top:1.25rem;">
+                  <button type="submit" class="btn btn-primary" id="resetSubmitBtn" style="width:100%;padding:0.75rem;font-size:1rem;font-weight:700;">
+                    🔑 Set New Password & Sign In →
+                  </button>
+                </div>
+              </form>
+
+              <div style="margin-top:1.25rem;text-align:center;padding-top:1rem;border-top:1px solid #e2e8f0;">
+                <button type="button" class="btn btn-link" id="backToForgotFromReset" style="font-weight:600;color:#0284c7;padding:0 0.25rem;font-size:0.85rem;">
+                  ← Request a new token
+                </button>
+                <span style="font-size:0.85rem;color:#cbd5e1;margin:0 0.5rem;">|</span>
+                <button type="button" class="btn btn-link" id="backToLoginFromReset" style="font-weight:700;color:#ed1a3b;padding:0 0.25rem;font-size:0.85rem;">
+                  Back to Sign In →
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // --- RESET PASSWORD EVENT HANDLERS ---
+        document.getElementById("closeUnifiedAuthModalBtn").onclick = () => {
+          modal.classList.remove("active");
+        };
+        document.getElementById("backToForgotFromReset").onclick = () => {
+          authView = "forgot";
+          render();
+        };
+        document.getElementById("backToLoginFromReset").onclick = () => {
+          authView = "login";
+          activeTab = "password";
+          render();
+        };
+        const alertBox = document.getElementById("authAlertBox");
+        const successBox = document.getElementById("authSuccessBox");
+        const resetForm = document.getElementById("resetPasswordForm");
+        resetForm.onsubmit = async (e) => {
+          e.preventDefault();
+          alertBox.style.display = "none";
+          successBox.style.display = "none";
+          const submitBtn = document.getElementById("resetSubmitBtn");
+          submitBtn.disabled = true;
+          submitBtn.innerText = "Resetting password...";
+
+          try {
+            const token = document
+              .getElementById("resetTokenInput")
+              .value.trim();
+            const newPassword =
+              document.getElementById("resetNewPassword").value;
+            const confirmPassword = document.getElementById(
+              "resetConfirmPassword",
+            ).value;
+
+            if (!token) {
+              alertBox.innerText = "Please enter the reset token.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "🔑 Set New Password & Sign In →";
+              return;
+            }
+            if (newPassword.length < 6) {
+              alertBox.innerText = "Password must be at least 6 characters.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "🔑 Set New Password & Sign In →";
+              return;
+            }
+            if (newPassword !== confirmPassword) {
+              alertBox.innerText = "Passwords do not match. Please re-enter.";
+              alertBox.style.display = "block";
+              submitBtn.disabled = false;
+              submitBtn.innerText = "🔑 Set New Password & Sign In →";
+              return;
+            }
+
+            await window.Store.resetPassword(token, newPassword);
+
+            successBox.innerText =
+              "Password reset successfully! You can now sign in with your new password.";
+            successBox.style.display = "block";
+
+            // Auto-switch to login view after 2 seconds
+            setTimeout(() => {
+              authView = "login";
+              activeTab = "password";
+              render();
+              const sBox = document.getElementById("authSuccessBox");
+              if (sBox) {
+                sBox.innerText =
+                  "Password was reset successfully. Sign in with your new password.";
+                sBox.style.display = "block";
+              }
+            }, 2000);
+          } catch (err) {
+            alertBox.innerText =
+              err.message ||
+              "Failed to reset password. Token may be expired or invalid.";
+            alertBox.style.display = "block";
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "🔑 Set New Password & Sign In →";
+          }
+        };
+        return;
+      }
+
+      // ==================== LOGIN VIEW (default) ====================
       modal.innerHTML = `
         <div class="modal-dialog modal-md">
           <div class="modal-header">
             <div class="modal-title-group">
               <span class="brand-badge" style="background:#ed1a3b;color:#fff;">LEKHA JOKHA SAAS</span>
-              <h2 class="modal-title">Sign In or Register Business</h2>
+              <h2 class="modal-title">Sign In to Your Account</h2>
             </div>
             <button class="modal-close-btn" id="closeUnifiedAuthModalBtn">&times;</button>
           </div>
           <div class="modal-body" style="padding:1.25rem;">
             <!-- Dual Mode Tabs -->
             <div style="display:flex;border-bottom:2px solid #e2e8f0;margin-bottom:1.25rem;gap:0.5rem;">
-              <button type="button" class="btn btn-sm ${activeTab === 'otp' ? 'btn-primary' : 'btn-outline'}" id="tabOtpBtn" style="border-bottom-left-radius:0;border-bottom-right-radius:0;font-weight:700;">
+              <button type="button" class="btn btn-sm ${activeTab === "otp" ? "btn-primary" : "btn-outline"}" id="tabOtpBtn" style="border-bottom-left-radius:0;border-bottom-right-radius:0;font-weight:700;">
                 📱 Mobile OTP (Instant & Secure)
               </button>
-              <button type="button" class="btn btn-sm ${activeTab === 'password' ? 'btn-primary' : 'btn-outline'}" id="tabPasswordBtn" style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
+              <button type="button" class="btn btn-sm ${activeTab === "password" ? "btn-primary" : "btn-outline"}" id="tabPasswordBtn" style="border-bottom-left-radius:0;border-bottom-right-radius:0;">
                 🔑 Password / PIN
               </button>
             </div>
@@ -951,10 +1510,14 @@ window.UsersModule = {
             <div id="authAlertBox" style="display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
             <div id="authSuccessBox" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;padding:0.75rem 1rem;border-radius:8px;font-size:0.85rem;margin-bottom:1rem;"></div>
 
-            ${activeTab === 'otp' ? `
+            ${
+              activeTab === "otp"
+                ? `
               <!-- Mobile OTP Flow -->
               <form id="mobileOtpForm">
-                ${!otpSent ? `
+                ${
+                  !otpSent
+                    ? `
                   <div style="margin-bottom:1rem;color:#64748b;font-size:0.85rem;line-height:1.4;">
                     Enter your Admin name and 10-digit mobile number. We'll send a 6-digit verification code.
                   </div>
@@ -976,12 +1539,13 @@ window.UsersModule = {
                       Get 6-Digit Verification Code →
                     </button>
                   </div>
-                ` : `
+                `
+                    : `
                   <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;">
                     <div>
                       <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;font-weight:700;">Verification Code Sent To</div>
                       <div style="font-weight:800;color:#0f172a;font-size:1.05rem;">+91 ${otpPhone}</div>
-                      ${adminNameProvided ? `<div style="font-size:0.8rem;color:#0369a1;margin-top:2px;">Logging in as: <strong>${adminNameProvided}</strong></div>` : ''}
+                      ${adminNameProvided ? `<div style="font-size:0.8rem;color:#0369a1;margin-top:2px;">Logging in as: <strong>${adminNameProvided}</strong></div>` : ""}
                     </div>
                     <button type="button" class="btn btn-sm btn-link" id="changePhoneBtn" style="font-size:0.85rem;color:#0284c7;">Change</button>
                   </div>
@@ -1014,9 +1578,11 @@ window.UsersModule = {
                       Verify & Open Business Dashboard ✓
                     </button>
                   </div>
-                `}
+                `
+                }
               </form>
-            ` : `
+            `
+                : `
               <!-- Password / Quick PIN Form -->
               <form id="passwordAuthForm">
                 <div class="form-group" style="margin-bottom:0.85rem;">
@@ -1027,11 +1593,16 @@ window.UsersModule = {
                   <label style="font-weight:700;font-size:0.85rem;">Email / Mobile Number / Username *</label>
                   <input type="text" id="authIdentifier" class="form-control" placeholder="Enter email or 10-digit mobile number" required>
                 </div>
-                <div class="form-group" style="margin-bottom:0.85rem;">
+                <div class="form-group" style="margin-bottom:0.5rem;">
                   <label style="font-weight:700;font-size:0.85rem;">Password or Quick PIN *</label>
                   <input type="password" id="authPassword" class="form-control" placeholder="Enter password or 4-digit PIN" required>
                 </div>
-                <div style="margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;">
+                <div style="text-align:right;margin-bottom:0.75rem;">
+                  <button type="button" class="btn btn-link" id="forgotPasswordLink" style="padding:0;font-size:0.82rem;color:#ef4444;font-weight:600;">
+                    Forgot Password?
+                  </button>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
                   <button type="button" class="btn btn-link" id="switchToOtpBtn" style="padding:0;font-size:0.85rem;color:#0284c7;">
                     Sign in with Mobile OTP instead
                   </button>
@@ -1040,177 +1611,218 @@ window.UsersModule = {
                   </button>
                 </div>
               </form>
-            `}
+            `
+            }
+
+            <!-- Signup CTA Footer -->
+            <div style="margin-top:1.25rem;text-align:center;padding-top:1rem;border-top:1px solid #e2e8f0;">
+              <span style="font-size:0.85rem;color:#64748b;">Don't have an account?</span>
+              <button type="button" class="btn btn-link" id="switchToSignupFromLogin" style="font-weight:700;color:#10b981;padding:0 0.25rem;font-size:0.85rem;">
+                Create Free Account →
+              </button>
+            </div>
           </div>
         </div>
       `;
 
       // Event handlers
-      document.getElementById('closeUnifiedAuthModalBtn').onclick = () => {
+      document.getElementById("closeUnifiedAuthModalBtn").onclick = () => {
         if (countdownTimer) clearInterval(countdownTimer);
-        modal.classList.remove('active');
+        modal.classList.remove("active");
       };
 
-      document.getElementById('tabOtpBtn').onclick = () => {
-        activeTab = 'otp';
+      // Switch to Signup
+      document.getElementById("switchToSignupFromLogin").onclick = () => {
+        authView = "signup";
         render();
       };
 
-      document.getElementById('tabPasswordBtn').onclick = () => {
-        activeTab = 'password';
+      document.getElementById("tabOtpBtn").onclick = () => {
+        activeTab = "otp";
         render();
       };
 
-      const alertBox = document.getElementById('authAlertBox');
-      const successBox = document.getElementById('authSuccessBox');
+      document.getElementById("tabPasswordBtn").onclick = () => {
+        activeTab = "password";
+        render();
+      };
 
-      if (activeTab === 'otp') {
-        const otpForm = document.getElementById('mobileOtpForm');
+      const alertBox = document.getElementById("authAlertBox");
+      const successBox = document.getElementById("authSuccessBox");
+
+      if (activeTab === "otp") {
+        const otpForm = document.getElementById("mobileOtpForm");
         if (!otpSent) {
           otpForm.onsubmit = async (e) => {
             e.preventDefault();
-            alertBox.style.display = 'none';
-            successBox.style.display = 'none';
+            alertBox.style.display = "none";
+            successBox.style.display = "none";
 
-            const nameInput = document.getElementById('otpInitialName')?.value.trim();
+            const nameInput = document
+              .getElementById("otpInitialName")
+              ?.value.trim();
             if (!nameInput) {
-              alertBox.innerText = 'Please enter your Admin / Owner Name.';
-              alertBox.style.display = 'block';
+              alertBox.innerText = "Please enter your Admin / Owner Name.";
+              alertBox.style.display = "block";
               return;
             }
             adminNameProvided = nameInput;
 
-            const phone = document.getElementById('otpPhoneInput').value.trim();
+            const phone = document.getElementById("otpPhoneInput").value.trim();
             if (!/^[6-9]\d{9}$/.test(phone)) {
-              alertBox.innerText = 'Please enter a valid 10-digit Indian mobile number.';
-              alertBox.style.display = 'block';
+              alertBox.innerText =
+                "Please enter a valid 10-digit Indian mobile number.";
+              alertBox.style.display = "block";
               return;
             }
-            const submitBtn = document.getElementById('sendOtpSubmitBtn');
+            const submitBtn = document.getElementById("sendOtpSubmitBtn");
             submitBtn.disabled = true;
-            submitBtn.innerText = 'Sending OTP...';
+            submitBtn.innerText = "Sending OTP...";
 
             try {
-              const res = await window.Store.sendOtp(phone, 'login');
+              const res = await window.Store.sendOtp(phone, "login");
               otpPhone = phone;
               otpSent = true;
               secondsLeft = res.cooldownSeconds || 30;
               render();
               startTimer();
               if (res.testOtp) {
-                const alertEl = document.getElementById('authSuccessBox');
+                const alertEl = document.getElementById("authSuccessBox");
                 if (alertEl) {
                   alertEl.innerText = `Verification code sent to ${phone}. (Dev code: ${res.testOtp})`;
-                  alertEl.style.display = 'block';
+                  alertEl.style.display = "block";
                 }
               }
             } catch (err) {
-              alertBox.innerText = err.message || 'Failed to send OTP.';
-              alertBox.style.display = 'block';
+              alertBox.innerText = err.message || "Failed to send OTP.";
+              alertBox.style.display = "block";
               submitBtn.disabled = false;
-              submitBtn.innerText = 'Get 6-Digit Verification Code →';
+              submitBtn.innerText = "Get 6-Digit Verification Code →";
             }
           };
         } else {
           // Verify form
-          document.getElementById('changePhoneBtn').onclick = () => {
+          document.getElementById("changePhoneBtn").onclick = () => {
             if (countdownTimer) clearInterval(countdownTimer);
             otpSent = false;
             render();
           };
 
-          const resendBtn = document.getElementById('resendOtpBtn');
+          const resendBtn = document.getElementById("resendOtpBtn");
           if (resendBtn) {
             resendBtn.onclick = async () => {
               try {
                 resendBtn.disabled = true;
-                const res = await window.Store.sendOtp(otpPhone, 'login');
+                const res = await window.Store.sendOtp(otpPhone, "login");
                 secondsLeft = res.cooldownSeconds || 30;
                 startTimer();
                 if (res.testOtp) {
-                  const sBox = document.getElementById('authSuccessBox');
+                  const sBox = document.getElementById("authSuccessBox");
                   if (sBox) {
                     sBox.innerText = `New code sent! (Dev code: ${res.testOtp})`;
-                    sBox.style.display = 'block';
+                    sBox.style.display = "block";
                   }
                 }
               } catch (err) {
-                alertBox.innerText = err.message || 'Failed to resend OTP.';
-                alertBox.style.display = 'block';
+                alertBox.innerText = err.message || "Failed to resend OTP.";
+                alertBox.style.display = "block";
               }
             };
           }
 
           otpForm.onsubmit = async (e) => {
             e.preventDefault();
-            alertBox.style.display = 'none';
-            const otpCode = document.getElementById('otpCodeInput').value.trim();
+            alertBox.style.display = "none";
+            const otpCode = document
+              .getElementById("otpCodeInput")
+              .value.trim();
             if (otpCode.length !== 6) {
-              alertBox.innerText = 'Please enter the complete 6-digit OTP.';
-              alertBox.style.display = 'block';
+              alertBox.innerText = "Please enter the complete 6-digit OTP.";
+              alertBox.style.display = "block";
               return;
             }
-            const verifyBtn = document.getElementById('verifyOtpSubmitBtn');
+            const verifyBtn = document.getElementById("verifyOtpSubmitBtn");
             verifyBtn.disabled = true;
-            verifyBtn.innerText = 'Verifying & Initializing...';
+            verifyBtn.innerText = "Verifying & Initializing...";
 
-            const userName = document.getElementById('otpUserName')?.value.trim() || adminNameProvided;
-            const businessName = document.getElementById('otpBusinessName')?.value.trim();
+            const userName =
+              document.getElementById("otpUserName")?.value.trim() ||
+              adminNameProvided;
+            const businessName = document
+              .getElementById("otpBusinessName")
+              ?.value.trim();
 
             try {
               if (countdownTimer) clearInterval(countdownTimer);
               const data = await window.Store.verifyOtp(otpPhone, otpCode, {
                 name: userName || undefined,
                 adminName: userName || undefined,
-                businessName: businessName || undefined
+                businessName: businessName || undefined,
               });
 
               this.updateTopbarUserDisplay();
 
-              modal.classList.remove('active');
+              modal.classList.remove("active");
               if (window.app) {
                 if (window.app.showToast) {
-                  window.app.showToast(`Welcome! Verified as ${data.user?.name || data.user?.phone}`, 'success');
+                  window.app.showToast(
+                    `Welcome! Verified as ${data.user?.name || data.user?.phone}`,
+                    "success",
+                  );
                 }
                 if (window.app.updateBadges) window.app.updateBadges();
                 if (window.app.handleRoute) window.app.handleRoute();
               }
             } catch (err) {
-              alertBox.innerText = err.message || 'Invalid or expired OTP. Please try again.';
-              alertBox.style.display = 'block';
+              alertBox.innerText =
+                err.message || "Invalid or expired OTP. Please try again.";
+              alertBox.style.display = "block";
               verifyBtn.disabled = false;
-              verifyBtn.innerText = 'Verify & Open Business Dashboard ✓';
+              verifyBtn.innerText = "Verify & Open Business Dashboard ✓";
             }
           };
         }
       } else {
         // Password form
-        const switchOtpBtn = document.getElementById('switchToOtpBtn');
+        const switchOtpBtn = document.getElementById("switchToOtpBtn");
         if (switchOtpBtn) {
           switchOtpBtn.onclick = () => {
-            activeTab = 'otp';
+            activeTab = "otp";
             render();
           };
         }
 
-        const passForm = document.getElementById('passwordAuthForm');
+        // Forgot Password link
+        const forgotLink = document.getElementById("forgotPasswordLink");
+        if (forgotLink) {
+          forgotLink.onclick = () => {
+            authView = "forgot";
+            render();
+          };
+        }
+
+        const passForm = document.getElementById("passwordAuthForm");
         passForm.onsubmit = async (e) => {
           e.preventDefault();
-          alertBox.style.display = 'none';
-          const submitBtn = document.getElementById('submitPassAuthBtn');
+          alertBox.style.display = "none";
+          const submitBtn = document.getElementById("submitPassAuthBtn");
           submitBtn.disabled = true;
-          submitBtn.innerText = 'Signing in...';
+          submitBtn.innerText = "Signing in...";
 
           try {
-            const adminName = document.getElementById('authAdminName')?.value.trim();
-            const identifier = document.getElementById('authIdentifier').value.trim();
-            const password = document.getElementById('authPassword').value;
+            const adminName = document
+              .getElementById("authAdminName")
+              ?.value.trim();
+            const identifier = document
+              .getElementById("authIdentifier")
+              .value.trim();
+            const password = document.getElementById("authPassword").value;
 
             if (!adminName) {
-              alertBox.innerText = 'Please enter your Admin Name.';
-              alertBox.style.display = 'block';
+              alertBox.innerText = "Please enter your Admin Name.";
+              alertBox.style.display = "block";
               submitBtn.disabled = false;
-              submitBtn.innerText = 'Sign In';
+              submitBtn.innerText = "Sign In";
               return;
             }
 
@@ -1218,25 +1830,30 @@ window.UsersModule = {
               identifier,
               password,
               name: adminName,
-              adminName: adminName
+              adminName: adminName,
             });
 
             this.updateTopbarUserDisplay();
 
-            modal.classList.remove('active');
+            modal.classList.remove("active");
             if (window.app) {
               if (window.app.showToast) {
-                window.app.showToast(`Signed in successfully as ${data.user?.name || adminName}!`, 'success');
+                window.app.showToast(
+                  `Signed in successfully as ${data.user?.name || adminName}!`,
+                  "success",
+                );
               }
               if (window.app.updateBadges) window.app.updateBadges();
               if (window.app.handleRoute) window.app.handleRoute();
             }
           } catch (err) {
-            alertBox.innerText = err.message || 'Authentication failed. Please check your credentials.';
-            alertBox.style.display = 'block';
+            alertBox.innerText =
+              err.message ||
+              "Authentication failed. Please check your credentials.";
+            alertBox.style.display = "block";
           } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = 'Sign In';
+            submitBtn.innerText = "Sign In";
           }
         };
       }
@@ -1244,20 +1861,20 @@ window.UsersModule = {
 
     const startTimer = () => {
       if (countdownTimer) clearInterval(countdownTimer);
-      const countdownText = document.getElementById('countdownText');
-      const secondsSpan = document.getElementById('secondsSpan');
-      const resendBtn = document.getElementById('resendOtpBtn');
-      if (countdownText) countdownText.style.display = 'inline';
-      if (resendBtn) resendBtn.style.display = 'none';
+      const countdownText = document.getElementById("countdownText");
+      const secondsSpan = document.getElementById("secondsSpan");
+      const resendBtn = document.getElementById("resendOtpBtn");
+      if (countdownText) countdownText.style.display = "inline";
+      if (resendBtn) resendBtn.style.display = "none";
 
       countdownTimer = setInterval(() => {
         secondsLeft--;
         if (secondsSpan) secondsSpan.innerText = `${secondsLeft}s`;
         if (secondsLeft <= 0) {
           clearInterval(countdownTimer);
-          if (countdownText) countdownText.style.display = 'none';
+          if (countdownText) countdownText.style.display = "none";
           if (resendBtn) {
-            resendBtn.style.display = 'inline';
+            resendBtn.style.display = "inline";
             resendBtn.disabled = false;
           }
         }
@@ -1265,7 +1882,6 @@ window.UsersModule = {
     };
 
     render();
-    modal.classList.add('active');
-  }
+    modal.classList.add("active");
+  },
 };
-
